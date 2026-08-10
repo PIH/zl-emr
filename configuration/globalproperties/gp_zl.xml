@@ -42,12 +42,17 @@
             <value>d760dcec-f2b3-46c5-a6af-7e83c2165fd1=164126AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</value>
         </globalProperty>
 
-
         <!-- Lab Workflow OWA -->
         <globalProperty>
             <property>labworkflowowa.locationOfLaboratory</property>
             <!-- Concept: Location of laboratory (Haiti) -->
             <value>e9732df4-971d-4a9a-9129-e2e610552468</value>
+        </globalProperty>
+
+        <!-- Enable use of PIH Apps for Lab workflow and results -->
+        <globalProperty>
+            <property>pihcore.usePihAppsLabs</property>
+            <value>true</value>
         </globalProperty>
 
     </globalProperties>

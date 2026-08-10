@@ -23,54 +23,12 @@
 
     <style type="text/css">
 
-        .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
-        }
-
         .simple-form-ui input {
             min-width: 80%
         }
 
         form fieldset {
             min-width: 90%
-        }
-
-        #encounterDate input {
-            min-width: 15%
-        }
-
-        textarea {
-            overflow-y: hidden; /* fixes scrollbar flash - kudos to @brettjonesdev */
-            padding-top: 1.1em; /* fixes text jump on Enter keypress */
-        }
-
-        @media print {
-            .print-form-datestamps { display: block !important }
-            button.cancel, button.submit { display: none }
-            label { font-weight: bold }
-            label[for] { font-weight: normal } /* refers to the radio set label */
-        }
-
-        .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-        .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
-        }
-
-        .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
-        }
-
-       - .section {
-            width: 100%;
         }
 
         form input[type="checkbox"], form input[type="radio"], .form input[type="checkbox"], .form input[type="radio"] {
@@ -80,40 +38,6 @@
 
         form label, .form label {
             display: inline-block;
-        }
-
-        .five-columns, .four-columns, .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-columns > div {
-            display: table-cell;
-            width: 50%;
-        }
-
-        .narrow {
-            width: 200px;
-        }
-
-        .list-inline label, .list-inline input[type="radio"], .list-inline span,
-        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
-        .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
-            display: inline-block;
-            float: none;
-        }
-
-        .list-inline label:first-child {
-            width: 220px;
-        }
-
-        .list-inline-wide label:first-child {
-            width: 320px;
-        }
-
-        .list-inline-extra-wide label:first-child {
-            width: 420px;
         }
 
         <ifMode mode="EDIT" include="true">

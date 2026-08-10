@@ -1,39 +1,6 @@
 <htmlform formUuid="889327c0-4ad7-11e7-a919-92ebcb67fe33"
           formName="HIV Symptoms" formVersion="1.0">
 
-    <style type="text/css">
-        <ifMode mode="VIEW" include="false">
-
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
-
-            .two-columns {
-                column-count: 2;
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
-            }
-
-            .section-container {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-            .section-container input[type="checkbox"] {
-                margin: 0px 5px; /*changed values to vertical, horizontal*/
-                top:5px; /*added to offset the checkbox position to line up*/
-            }
-
-            .section-container label { /*new definition to override labels inside section-containers*/
-                margin: 0px;
-            }
-        </ifMode>
-    </style>
-
     <ifMode mode="VIEW" include="false">
         <h3>
             <uimessage code="pihcore.hiv.symptomSigns"/>
@@ -53,7 +20,7 @@
     </ifMode>
 
     <div class="hiv-symptoms">
-        <div class="two-columns">
+        <div class="two-columns-without-divs">
         <repeat>
             <template>
                 <p>

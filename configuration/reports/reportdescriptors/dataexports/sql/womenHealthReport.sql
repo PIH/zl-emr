@@ -866,13 +866,14 @@ SELECT
         END)
 INTO @VAGINAL_BIRTH_SEVERE_PREMATURITY,@VAGINAL_BIRTH_MODERATE_PREMATURITY,@VAGINAL_BIRTH_EXTREME_PREMATURITY,@VAGINAL_BIRTH_PREMATURITY_UNKNOWN,
 	@CESAREAN_BIRTH_SEVERE_PREMATURITY, @CESAREAN_BIRTH_MODERATE_PREMATURITY,@CESAREAN_BIRTH_EXTREME_PREMATURITY,@CESAREAN_BIRTH_PREMATURITY_UNKNOWN
-FROM
+
+	FROM
 (
     SELECT
         d.person_id,
         d.encounter_id,
         t.value_coded AS delivery_type,
-        p.value_coded AS prematurity
+        p.prematurity
 
     FROM obs d
 
@@ -881,17 +882,34 @@ FROM
        AND e.voided = 0
     INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 
-    INNER JOIN obs t
+    INNER JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded) value_coded
+        FROM obs
+        WHERE concept_id = @type_of_delivery_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) t
         ON t.encounter_id = d.encounter_id
        AND t.person_id = d.person_id
-       AND t.concept_id = @type_of_delivery_concept_id
-       AND t.voided = 0
-
-    LEFT JOIN obs p
+       
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS prematurity
+        FROM obs
+        WHERE concept_id = @diagnosis_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) p
         ON p.encounter_id = d.encounter_id
        AND p.person_id = d.person_id
-       AND p.concept_id = @diagnosis_concept_id
-       AND p.voided = 0
+
 
     WHERE d.concept_id =  @delivery_date_concept_id
       AND d.value_datetime IS NOT NULL
@@ -1062,6 +1080,141 @@ FROM
       AND v.location_id = @location
 ) x;
 
+
+SELECT
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.disposition = concept_from_mapping('PIH','8619')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.preg_outcome = concept_from_mapping('PIH','8391')
+             AND x.mace_fetus = concept_from_mapping('PIH','1065')
+            THEN 1 ELSE 0
+        END),
+        
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.preg_outcome = concept_from_mapping('PIH','8391')
+             AND x.mace_fetus = concept_from_mapping('PIH','1066')
+            THEN 1 ELSE 0
+        END),
+
+        
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.disposition = concept_from_mapping('PIH','8619')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.preg_outcome = concept_from_mapping('PIH','8391')
+             AND x.mace_fetus = concept_from_mapping('PIH','1065')
+            THEN 1 ELSE 0
+        END),
+        
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.preg_outcome = concept_from_mapping('PIH','8391')
+             AND x.mace_fetus = concept_from_mapping('PIH','1066')
+            THEN 1 ELSE 0
+        END)
+
+
+INTO
+    @VAGINAL_DELIVERY_NEWBORN_DEATHS,
+    @VAGINAL_DELIVERY_MACERATED_STILLBIRTH,
+    @VAGINAL_DELIVERY_NON_MACERATED_STILLBIRTH,
+   
+
+    @CESAREAN_DELIVERY_NEWBORN_DEATHS,
+    @CESAREAN_DELIVERY_MACERATED_STILLBIRTH,
+    @CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH
+
+FROM
+(
+    SELECT
+        d.person_id,
+        d.encounter_id,
+        t.value_coded AS delivery_type,
+        disp.disposition,
+        pregout.preg_outcome,
+        mf.mace_fetus
+
+    FROM obs d
+
+    INNER JOIN encounter e
+        ON e.encounter_id = d.encounter_id
+       AND e.voided = 0
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
+
+    INNER JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded) value_coded
+        FROM obs
+        WHERE concept_id = @type_of_delivery_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) t
+        ON t.encounter_id = d.encounter_id
+       AND t.person_id = d.person_id
+
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS disposition
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','8620')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) disp
+        ON disp.encounter_id = d.encounter_id
+       AND disp.person_id = d.person_id
+       
+	LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS preg_outcome
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','12899')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) pregout
+        ON pregout.encounter_id = d.encounter_id
+       AND pregout.person_id = d.person_id
+       
+     LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS mace_fetus
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13544')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) mf
+        ON mf.encounter_id = d.encounter_id
+       AND mf.person_id = d.person_id
+
+    WHERE d.concept_id = @delivery_date_concept_id
+      AND d.value_datetime IS NOT NULL
+      AND d.voided = 0
+      AND e.encounter_datetime >= @startDate
+      AND e.encounter_datetime < @endDate
+      AND v.location_id = @location
+) x;
+
 SELECT 
         @MET_COC_LESS_THAN_25_ACCEPTED 'MET_COC_LESS_THAN_25_ACCEPTED',
         @MET_COP_LESS_THAN_25_ACCEPTED 'MET_COP_LESS_THAN_25_ACCEPTED',
@@ -1100,4 +1253,6 @@ SELECT
         @VAGINAL_BIRTH_SEVERE_PREMATURITY 'VAGINAL_BIRTH_SEVERE_PREMATURITY',@VAGINAL_BIRTH_MODERATE_PREMATURITY 'VAGINAL_BIRTH_MODERATE_PREMATURITY',@VAGINAL_BIRTH_EXTREME_PREMATURITY 'VAGINAL_BIRTH_EXTREME_PREMATURITY',@VAGINAL_BIRTH_PREMATURITY_UNKNOWN 'VAGINAL_BIRTH_PREMATURITY_UNKNOWN',
 	    @CESAREAN_BIRTH_SEVERE_PREMATURITY 'CESAREAN_BIRTH_SEVERE_PREMATURITY', @CESAREAN_BIRTH_MODERATE_PREMATURITY 'CESAREAN_BIRTH_MODERATE_PREMATURITY',@CESAREAN_BIRTH_EXTREME_PREMATURITY 'CESAREAN_BIRTH_EXTREME_PREMATURITY',@CESAREAN_BIRTH_PREMATURITY_UNKNOWN 'CESAREAN_BIRTH_PREMATURITY_UNKNOWN',
         @VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@VAGINAL_DELIVERY_APGAR_RECORDED 'VAGINAL_DELIVERY_APGAR_RECORDED',@VAGINAL_DELIVERY_NEWBORN_RESUSCITATED 'VAGINAL_DELIVERY_NEWBORN_RESUSCITATED',
-	    @CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@CESAREAN_DELIVERY_APGAR_RECORDED 'CESAREAN_DELIVERY_APGAR_RECORDED',@CESAREAN_DELIVERY_NEWBORN_RESUSCITATED 'CESAREAN_DELIVERY_NEWBORN_RESUSCITATED';
+	    @CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@CESAREAN_DELIVERY_APGAR_RECORDED 'CESAREAN_DELIVERY_APGAR_RECORDED',@CESAREAN_DELIVERY_NEWBORN_RESUSCITATED 'CESAREAN_DELIVERY_NEWBORN_RESUSCITATED',
+        @VAGINAL_DELIVERY_NEWBORN_DEATHS 'VAGINAL_DELIVERY_NEWBORN_DEATHS',@VAGINAL_DELIVERY_MACERATED_STILLBIRTH 'VAGINAL_DELIVERY_MACERATED_STILLBIRTH',@VAGINAL_DELIVERY_NON_MACERATED_STILLBIRTH 'VAGINAL_DELIVERY_NON_MACERATED_STILLBIRTH',
+   		@CESAREAN_DELIVERY_NEWBORN_DEATHS 'CESAREAN_DELIVERY_NEWBORN_DEATHS',@CESAREAN_DELIVERY_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_MACERATED_STILLBIRTH',@CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH';

@@ -13,29 +13,6 @@
             display: inline-block;
             }
 
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
-
-            .two-columns {
-                column-count: 2;
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
-            }
-
-            .five-columns, .four-columns, .three-columns, .two-column {
-                display: table;
-                height: 100%;
-                width: 100%;
-            }
-
-            .two-column > div {
-                display: table-cell;
-                width: 50%;
-            }
-
             p.radio > * {
                 display: inline;
                 float: none !important;
@@ -57,64 +34,12 @@
                 display: block;
             }
 
-            .section-container {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-            .section-container-color {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-            .section-container input[type="checkbox"] {
-                margin: 0px 5px; /*changed values to vertical, horizontal*/
-                top:5px; /*added to offset the checkbox position to line up*/
-            }
-
             .cb-align input[type=checkbox] {
                 margin: 0px 5px;
                 top:0px;
             }
 
-            .section-container label,
-            .section-container-color label {
-                margin: 0px;
-            }
-
-            .section {
-                width: 95%;
-            }
-
-            .date-one-line {
-                display: flex;
-            }
-            
-            .date-one-line label {
-                align-self: center;
-                margin-right: 1em;
-            }
-            
-            .date-one-line span {
-                display: flex;
-            }
-            
-            .hasDatepicker {
-                min-width: 120px;
-                margin-top: 0px;
-             }
-             
-             .hfe-hours, .hfe-minutes, .hfe-seconds {
-                width: 70px;
-                min-width: 70px;
-                margin: 0px 10px 0px 10px;
-             }
-
-             .hpd input[type="radio"] {
+            .hpd input[type="radio"] {
                 float: none;
                 display: inline-block;
             }
@@ -222,7 +147,7 @@
     <section id="hiv-program" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.hiv.programEnroll.title">
         <div class="section-container">
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <label>
                     <uimessage code="pihcore.progEnrollDate"/>
                 </label>
@@ -323,11 +248,11 @@
         </div>
     </section>
 
-<!--    Arv section-->
+<!-- Arv section-->
     <section id="arv" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.arvTreatment">
         <div class="section-container-color">
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.hiv.needsART" />
@@ -407,7 +332,7 @@
     <section id="hiv-serology" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.hiv.serology.title">
         <div class="section-container">
-            <div class="two-column">
+            <div class="two-columns">
                 <div>
                     <label>
                         <uimessage code="pihcore.testOrderedBy"/>
@@ -602,7 +527,7 @@
         <section id="birth-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.birth-history" >
             <div class="section-container">
-                <div class="two-column">
+                <div class="two-columns">
                     <div>
                         <p class="radio">
                             <label>
@@ -891,7 +816,7 @@
         <section id="mother-info" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.infoMother">
             <div class="section-container">
-                <div class="two-column">
+                <div class="two-columns">
                     <div>
                         <p class="side-by-side">
                             <label>
@@ -988,7 +913,7 @@
                         </obs>
 
                         <div id="mom-tb-section">
-                            <div class="two-column">
+                            <div class="two-columns">
                                 <div>
                                     <label>
                                         anti-TB
@@ -1407,7 +1332,7 @@
     <section id="habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.habits">
         <div class="section-container">
-            <div class="two-column">
+            <div class="two-columns">
                 <!-- Tobacco use -->
                 <div>
                     <p class="side-by-side">
@@ -1447,7 +1372,7 @@
                      answerSeparator="" style="radio"/>
             </p>
 
-            <div class="two-column">
+            <div class="two-columns">
                 <!-- Alcohol use -->
                 <div>
                     <p class="side-by-side">
@@ -1485,7 +1410,7 @@
             </div>
             <br/>
 
-            <div class="two-column">
+            <div class="two-columns">
                 <!-- Drug use -->
                 <div>
                     <p class="side-by-side">
@@ -1538,7 +1463,7 @@
                 </p>
 
                 <!-- Based on HIV EMR form and questions -->
-                <div class="two-column">
+                <div class="two-columns">
                     <div>
                         <!-- Location of TB:  Pulmonary or EP -->
                         <obs conceptId="CIEL:160040" style="checkbox"
@@ -1649,7 +1574,7 @@
     <section id="tb-screen" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbscreen.title">
         <div class="section-container">
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <repeat with="['feverSweats','11565'],['wtLoss3kg','11566'],['cough','11567'],['tbContact','11568'],['painfulNodes','11569'],['bloodyCough','970'],['dyspnea','5960'],['chestPain','136']">
                     <div class="radio tb-screening-question">
                         <obs conceptIds="PIH:11563,PIH:11564"
@@ -1949,7 +1874,7 @@
                              answerConceptId="{1}" toggle="{2}"
                              answerCode="pihcore.rad.{2}"
                              style="checkbox"/>
-                        <div id="{2}" class="two-columns">
+                        <div id="{2}" class="two-columns-without-divs">
                             <obs conceptId="PIH:Radiology report comments"
                                  labelCode="pihcore.findings.label" />
                             <obs conceptId="PIH:12847" labelCode="Date" />
@@ -1966,7 +1891,7 @@
                     <obs conceptId="PIH:Radiology procedure performed"
                          answerClasses="Radiology/Imaging Procedure"
                          style="checkbox"/>
-                    <div class="two-columns">
+                    <div class="two-columns-without-divs">
                         <obs conceptId="PIH:Radiology report comments"
                              labelCode="pihcore.findings.label"/>
                         <obs conceptId="PIH:12847" labelCode="Date" />

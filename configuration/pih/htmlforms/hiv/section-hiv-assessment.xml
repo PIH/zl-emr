@@ -6,39 +6,12 @@
     <style type="text/css">
         <ifMode mode="VIEW" include="false">
 
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
-
-            #encounter-diagnoses-target {
-                display: inline-block;
-                width: 40%;
-                vertical-align: top;
-            }
-
-            #encounter-diagnoses-app {
-                margin-bottom: 20px;
-            }
-
             form fieldset {
                 min-width: 90%;
                 display: block;
             }
 
-            /* A div with class="two-columns" must have exactly two children divs */
-            .two-columns {
-                display: table;
-                height: 100%;
-                width: 100%;
-            }
-            .two-columns > div {
-                display: table-cell;
-                width: 50%;
-            }
-
-            .four-columns {
+            .four-columns-without-divs {
                 column-count: 4;
                 -webkit-column-count: 4;
                 -moz-column-count: 4;
@@ -51,36 +24,6 @@
             form input[type="checkbox"], form input[type="radio"], .form input[type="checkbox"], .form input[type="radio"] {
                 float: none;
                 display: inline-block;
-            }
-
-            .section-container {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-            .section-container-color {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-            .section-container input[type="checkbox"],
-            .section-container-color input[type="checkbox"] {
-                margin: 0px 5px; /*changed values to vertical, horizontal*/
-                top:5px; /*added to offset the checkbox position to line up*/
-            }
-
-            .section-container label,
-            .section-container-color label {
-                /*new definition to override labels inside section-containers*/
-                margin: 0px;
-            }
-
-           - .section {
-                width: 100%;
             }
 
             .who-stage {
@@ -107,7 +50,7 @@
     <ifMode mode="VIEW" include="true">
         <script type="text/javascript">
             jq(document).ready(function() {
-            hideIfEmpty(".who-stage");
+                hideIfEmpty(".who-stage");
             });
         </script>
     </ifMode>
@@ -519,7 +462,7 @@
                     <label>
                         <uimessage code="pihcore.listOI" />
                     </label>
-                    <div class="four-columns small">
+                    <div class="four-columns-without-divs small">
                         Tuberculose <br/>
                         Tuberculose pulmonaire <br/>
                         Tuberculose extra-pulmonaire <br/>

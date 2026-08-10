@@ -7,12 +7,10 @@
         form fieldset {
             display: block;
         }
-        .side-by-side label {
-        display: inline-block;
-        }
+
         form input[type="radio"], .form input[type="radio"] {
-        float: none;
-        display: inline-block;
+            float: none;
+            display: inline-block;
         }
 
         #id-treatment, #family-plan-section {
@@ -31,63 +29,16 @@
             top:0px;
         }
 
-        .five-column, .four-column, .three-column, .two-column {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-column > div {
-            display: table-cell;
-            width: 50%;
-        }
-
-        .two-columns {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-        }
-
-        .three-columns {
-            column-count: 3;
-            -webkit-column-count: 3;
-            -moz-column-count: 3;
-        }
-
         p.radio > * {
             display: inline;
             float: none !important;
             min-width: initial;
         }
 
-
-        .section-container label,
-        .section-container-color label {
-            margin: 0px;
-        }
-
-        .section-container-color {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-       - .section {
-        width: 100%;
-        }
-
         label {
             padding: 0px 3px 0px 0px
         }
 
-        .narrow {
-            width: 200px;
-        }
-
-        .small-input input[type=text] {
-            width: 12em;
-        }
         .space-remove {
             margin-left: -5px !important;
         }
@@ -184,7 +135,7 @@
                          answerConceptIds="CIEL:1065,CIEL:1066"/>
                 </p>
 
-                <div class="two-column">
+                <div class="two-columns">
                     <div>
                         <b>
                             <uimessage code="pihcore.patientReceivedAdvice" />
@@ -325,7 +276,7 @@
 
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <br/>
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <p class="radio">
                         <label>
                             <uimessage code="pihcore.hiv.startARVforPMTCT"/>
@@ -350,7 +301,7 @@
     <section id="id-treatment-tb" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbTreatment">
         <div class="section-container-color">
-            <div class="two-column">
+            <div class="two-columns">
                 <div>
                     <p class="radio">
                         <label>
@@ -420,7 +371,7 @@
         <section id="id-treatment-sti-screening" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.stiScreeningOnly">
             <div class="section-container-color">
 
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p class="radio">
@@ -451,7 +402,7 @@
         <section id="id-treatment-sti-treatment" sectionTag="fieldset"
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
-            <div class="section-container-color two-column">
+            <div class="section-container-color two-columns">
                 <div>
                     <p class="radio">
                         <label>
@@ -488,19 +439,22 @@
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
         <div class="section-container-color">
-                <label>
-                    <uimessage code="pihcore.syph.needTreatment"/>
-                </label>
-                <p class="side-by-side">
-                    <obs id="syph-treatment-need"
-                         conceptId="CIEL:165331" style="radio"
-                         answerConceptIds="CIEL:1065,CIEL:1066"
-                         answerCodes="emr.yes,emr.no">
-                        <controls>
-                            <when value="CIEL:1065" thenDisplay="#start-date-syph-treatment"/>
-                        </controls>
-                    </obs>
-                </p>
+            <div class="two-columns">
+                <div>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.syph.needTreatment"/>
+                        </label>
+                        <obs id="syph-treatment-need"
+                             conceptId="CIEL:165331" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="emr.yes,emr.no">
+                            <controls>
+                                <when value="CIEL:1065" thenDisplay="#start-date-syph-treatment"/>
+                            </controls>
+                        </obs>
+                    </p>
+                </div>
 
                 <div id="start-date-syph-treatment" class="narrow">
                     <label>
@@ -509,12 +463,13 @@
                     <obs conceptId="PIH:13023"/>
                     <br/>
                 </div>
+            </div>
 
                 <!--Other STD -->
-                <label>
-                    <uimessage code="pihcore.treatmentNeededOtherSTI"/>?
-                </label>
                 <p class="side-by-side">
+                    <label>
+                        <uimessage code="pihcore.treatmentNeededOtherSTI"/>?
+                    </label>
                     <obs id="other-sti-treatment-need"
                          conceptId="PIH:13077" style="radio"
                          answerConceptIds="CIEL:1065,CIEL:1066"
@@ -525,7 +480,7 @@
                     </obs>
                 </p>
 
-                <div id="other-sti-details" class="two-column">
+                <div id="other-sti-details" class="two-columns">
                     <obsgroup groupingConceptId="PIH:13027">
                         <div>
                             <label>
@@ -789,7 +744,7 @@
                  headerCode="pihcore.familyPlanning.title">
 
             <div class="section-container-color">
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p>

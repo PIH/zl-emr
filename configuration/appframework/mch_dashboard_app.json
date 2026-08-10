@@ -80,7 +80,7 @@
     "label": "pihcore.lab.hemoglobin.caps",
     "config": {
       "encounterTypes": "${encounterType.LAB_SPECIMEN_COLLECTION.uuid},${encounterType.LAB_RESULTS.uuid},${encounterType.COVID19_INTAKE.uuid},${encounterType.COVID19_FOLLOWUP.uuid},${encounterType.HIV_INTAKE.uuid},${encounterType.HIV_FOLLOWUP.uuid}",
-      "detailsUrl": "owa/labworkflow/index.html?patient={{patient.uuid}}&returnUrl=/coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}#/LabResults",
+      "detailsUrl": "pihcore/router/labRouter.page?patient={{patient.uuid}}&dashboard=${program.mch.uuid}",
       "obsTypes": "LabSet,Test",
       "labCategoriesSet": "${concept.hemoglobin.uuid}",
       "maxToDisplay": "2"
@@ -110,7 +110,7 @@
     "label": "pihcore.lab.lab_results.caps",
     "config": {
       "encounterTypes": "${encounterType.LAB_SPECIMEN_COLLECTION.uuid},${encounterType.LAB_RESULTS.uuid},${encounterType.COVID19_INTAKE.uuid},${encounterType.COVID19_FOLLOWUP.uuid},${encounterType.HIV_INTAKE.uuid},${encounterType.HIV_FOLLOWUP.uuid}",
-      "detailsUrl": "owa/labworkflow/index.html?patient={{patient.uuid}}&returnUrl=/coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}#/LabResults",
+      "detailsUrl": "pihcore/router/labRouter.page?patient={{patient.uuid}}&dashboard=${program.mch.uuid}",
       "obsTypes": "LabSet,Test",
       "labCategoriesSet": "${concept.laboratoryCategories.uuid}",
       "maxToDisplay": "5"

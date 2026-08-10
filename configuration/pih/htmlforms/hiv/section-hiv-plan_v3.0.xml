@@ -30,18 +30,6 @@
             top:0px;
         }
 
-        .two-columns {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-        }
-
-        .three-columns {
-            column-count: 3;
-            -webkit-column-count: 3;
-            -moz-column-count: 3;
-        }
-
         .radio > * {
             display: inline;
             float: none !important;
@@ -52,29 +40,10 @@
             display: none !important;
         }
 
-        .section-container label,
-        .section-container-color label {
-            margin: 0px;
-        }
-
-        .section-container-color {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-       - .section {
-        width: 100%;
-        }
-
         label {
-            padding: 0px 3px 0px 0px
+            padding: 0px 3px 0px 0px;
         }
 
-        .narrow {
-            width: 200px;
-        }
     </style>
 
     <ifMode mode="VIEW" include="false">
@@ -107,7 +76,7 @@
         <div class="section-container-color">
             <!-- UHM-4784 Use Lab results or workflow to enter lab data.  Using includeif to comment out the section -->
             <includeIf velocityTest="$patient.gender == 'NoLabEntryHere' ">
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <obsgroup groupingConceptId="CIEL:164853">
                         <obs conceptId="CIEL:5497" labelCode="CD4"/>
                         <obs conceptId="CIEL:159951"
@@ -128,7 +97,7 @@
                      style="checkbox" />
             </p>
 
-            <div class="three-columns">
+            <div class="three-columns-without-divs">
                 <p>
                     <label>
                         <uimessage code="pihcore.lab.hematology.title"/>
@@ -567,7 +536,7 @@
                 <uimessage code="pihcore.arvTreatment"/>
             </h4>
 
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.hiv.needsART" />
@@ -671,7 +640,7 @@
 
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <br/>
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <p class="radio">
                         <label>
                             <uimessage code="pihcore.hiv.startARVforPMTCT"/>
@@ -695,7 +664,7 @@
             <h4>
                 <uimessage code="pihcore.tbTreatment"/>
             </h4>
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.tb.needTreatment" />
@@ -753,7 +722,7 @@
                 <label>
                     <uimessage code="pihcore.ifChangeSpecifyReason" />:
                 </label>
-                <div class="three-columns">
+                <div class="three-columns-without-divs">
                     <repeat>
                         <template>
                             <p>
@@ -779,7 +748,7 @@
                 <h4>
                     <uimessage code="pihcore.stiScreeningOnly"/>
                 </h4>
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p class="radio">
@@ -809,7 +778,7 @@
 
         <!-- HIV intake only-->
         <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-            <div class="two-columns">
+            <div class="two-columns-without-divs">
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.syph.needTreatment"/>
@@ -956,7 +925,7 @@
                  headerCode="pihcore.familyPlanning.title">
 
             <div class="section-container-color">
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p>

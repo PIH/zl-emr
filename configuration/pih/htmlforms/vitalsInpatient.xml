@@ -16,15 +16,18 @@
 		  formEncounterType="4fb47712-34a6-40d2-8ed3-e153abbd25b7"
 		  formVersion="2.2">
 
+	<style type="text/css">
+		form input[type="radio"], form input[type="radio"],
+		.form input[type="radio"], .form input[type="radio"] {
+			float: none;
+			display: inline-block;
+			margin-left: 10px;
+		}
+	</style>
+
 	<ifMode mode="VIEW" include="false">
 		<style type="text/css">
-			form input[type="radio"], form input[type="radio"]
-			.form input[type="radio"], .form input[type="radio"] {
-				float: none;
-				display: inline-block;
-				margin-left: 10px;
-			}
-			
+
 			#vitals-inpatient .append-to-value {
 				padding-left: 5px;
 				margin: 10px 10px;
@@ -33,12 +36,9 @@
 			form label, .form label {
 				display: inline-block;
 			}
-			
-			- .section {
-				width: 100%;
-			}
 		</style>
 	</ifMode>
+
 	<ifMode mode="VIEW" include="true">
 		<!--
 		a template to display the "view" version of an html form provided by the htmlfromentryui getAsHtml method
@@ -96,17 +96,7 @@
 			#vitals-inpatient .append-to-value {
 				padding-left: 5px;
 			}
-			
-			form input[type="radio"], form input[type="radio"]
-			.form input[type="radio"], .form input[type="radio"] {
-				float: none;
-				display: inline-block;
-				margin-left: 10px;
-			}
-			
-			.side-by-side label {
-				display: inline-block;
-			}
+
 		</style>
 	</ifMode>
 	<!-- only show/handle the English conversion fields if we are in 'ENTER' or 'EDIT' mode -->

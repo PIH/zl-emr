@@ -7,12 +7,10 @@
         form fieldset {
             display: block;
         }
-        .side-by-side label {
-        display: inline-block;
-        }
+
         form input[type="radio"], .form input[type="radio"] {
-        float: none;
-        display: inline-block;
+            float: none;
+            display: inline-block;
         }
 
         #test-orders input[type=checkbox],
@@ -37,63 +35,16 @@
             top:0px;
         }
 
-        .five-column, .four-column, .three-column, .two-column {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-column > div {
-            display: table-cell;
-            width: 50%;
-        }
-
-        .two-columns {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-        }
-
-        .three-columns {
-            column-count: 3;
-            -webkit-column-count: 3;
-            -moz-column-count: 3;
-        }
-
         p.radio > * {
             display: inline;
             float: none !important;
             min-width: initial;
         }
 
-
-        .section-container label,
-        .section-container-color label {
-            margin: 0px;
-        }
-
-        .section-container-color {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-       - .section {
-        width: 100%;
-        }
-
         label {
             padding: 0px 3px 0px 0px
         }
 
-        .narrow {
-            width: 200px;
-        }
-
-        .small-input input[type=text] {
-            width: 12em;
-        }
         .space-remove {
             margin-left: -5px !important;
         }
@@ -103,7 +54,7 @@
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
     note that we already do this on the history section, but add here case the history section is skipped
     the special case for infants (less than 2 years old) is only handled on the history section, as it prompts the user for a question of whether to enroll in EID or HIV
--->
+    -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 1">
         <enrollInProgram programId="HIV" locationTag="Program Location"/>
     </includeIf>
@@ -190,7 +141,7 @@
                          answerConceptIds="CIEL:1065,CIEL:1066"/>
                 </p>
 
-                <div class="two-column">
+                <div class="two-columns">
                     <div>
                         <b>
                             <uimessage code="pihcore.patientReceivedAdvice" />
@@ -259,7 +210,7 @@
         <div class="section-container-color">
             <!-- UHM-4784 Use Lab results or workflow to enter lab data.  Using includeif to comment out the section -->
             <includeIf velocityTest="$patient.gender == 'NoLabEntryHere' ">
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <obsgroup groupingConceptId="CIEL:164853">
                         <obs conceptId="CIEL:5497" labelCode="CD4"/>
                         <obs conceptId="CIEL:159951"
@@ -280,7 +231,7 @@
                      style="checkbox" />
             </p>
 
-            <div class="three-columns">
+            <div class="three-columns-without-divs">
                 <p>
                     <label>
                         <uimessage code="pihcore.lab.hematology.title"/>
@@ -650,7 +601,7 @@
 
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <br/>
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <p class="radio">
                         <label>
                             <uimessage code="pihcore.hiv.startARVforPMTCT"/>
@@ -674,67 +625,65 @@
 
     <section id="id-treatment-tb" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbTreatment">
-        <div class="section-container-color">
-            <div class="two-column">
-                <div>
-                    <p class="radio">
-                        <label>
-                            <uimessage code="pihcore.tb.needTreatment"/>
-                        </label>
-                        <br/>
+        <div class="section-container-color two-columns">
+            <div>
+                <p class="radio">
+                    <label>
+                        <uimessage code="pihcore.tb.needTreatment"/>
+                    </label>
+                    <br/>
 
-                        <!-- for HIV intake -->
-                        <includeIf
-                                velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                            <obs conceptId="PIH:1559" style="radio"
-                                 answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,PIH:1432"
-                                 answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
-                                 answerSeparator="&lt;br /&gt;"/>
-                        </includeIf>
-
-                        <!-- for HIV followup -->
-                        <includeIf
-                                velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                            <obs conceptId="PIH:1559" style="radio"
-                                 answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,CIEL:163057"
-                                 answerCodes="pihcore.tb.medsNotIndicated,pihcore.tb.medsStarted,pihcore.tb.medsStopped,pihcore.tb.medsChanged,pihcore.tb.ongoing"
-                                 answerSeparator="&lt;br /&gt;"/>
-                            <br/>
-                            <br/>
-                        </includeIf>
-                    </p>
-
-                    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                        <label>
-                            <uimessage code="pihcore.startDate"/>
-                        </label>
-                    </includeIf>
-                    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                        <label>Date</label>
-                    </includeIf>
-
-                    <obs conceptId="CIEL:1113"/>
-                </div>
-                <div>
-
-                    <p class="radio">
-                        <!-- this label for HIV intake encounter -->
-                        <includeIf
-                                velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                            <uimessage code="pihcore.tb.startTBTreatmentComment"/>
-                        </includeIf>
-                        <!-- this label for HIV followup -->
-                        <includeIf
-                                velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                            <uimessage code="pihcore.specifyRegimen"/>:
-                        </includeIf>
-                        <br/>
-                        <obs conceptId="CIEL:159792" style="radio"
-                             answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
-                             answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
+                    <!-- for HIV intake -->
+                    <includeIf
+                            velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                        <obs conceptId="PIH:1559" style="radio"
+                             answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,PIH:1432"
+                             answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
                              answerSeparator="&lt;br /&gt;"/>
-                    </p>
-                </div>
+                    </includeIf>
+
+                    <!-- for HIV followup -->
+                    <includeIf
+                            velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                        <obs conceptId="PIH:1559" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,CIEL:163057"
+                             answerCodes="pihcore.tb.medsNotIndicated,pihcore.tb.medsStarted,pihcore.tb.medsStopped,pihcore.tb.medsChanged,pihcore.tb.ongoing"
+                             answerSeparator="&lt;br /&gt;"/>
+                        <br/>
+                        <br/>
+                    </includeIf>
+                </p>
+
+                <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                    <label>
+                        <uimessage code="pihcore.startDate"/>
+                    </label>
+                </includeIf>
+                <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                    <label>Date</label>
+                </includeIf>
+
+                <obs conceptId="CIEL:1113"/>
+            </div>
+            <div>
+
+                <p class="radio">
+                    <!-- this label for HIV intake encounter -->
+                    <includeIf
+                            velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                        <uimessage code="pihcore.tb.startTBTreatmentComment"/>
+                    </includeIf>
+                    <!-- this label for HIV followup -->
+                    <includeIf
+                            velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                        <uimessage code="pihcore.specifyRegimen"/>:
+                    </includeIf>
+                    <br/>
+                    <obs conceptId="CIEL:159792" style="radio"
+                         answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
+                         answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
+                         answerSeparator="&lt;br /&gt;"/>
+                </p>
             </div>
         </div>
 
@@ -745,7 +694,7 @@
         <section id="id-treatment-sti-screening" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.stiScreeningOnly">
             <div class="section-container-color">
 
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p class="radio">
@@ -776,7 +725,7 @@
         <section id="id-treatment-sti-treatment" sectionTag="fieldset"
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
-            <div class="section-container-color two-column">
+            <div class="section-container-color two-columns">
                 <div>
                     <p class="radio">
                         <label>
@@ -850,7 +799,7 @@
                     </obs>
                 </p>
 
-                <div id="other-sti-details" class="two-column">
+                <div id="other-sti-details" class="two-columns">
                     <obsgroup groupingConceptId="PIH:13027">
                         <div>
                             <label>
@@ -1111,7 +1060,7 @@
                  headerCode="pihcore.familyPlanning.title">
 
             <div class="section-container-color">
-                <div class="two-columns">
+                <div class="two-columns-without-divs">
                     <repeat>
                         <template>
                             <p>

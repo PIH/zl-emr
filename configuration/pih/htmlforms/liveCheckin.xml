@@ -28,13 +28,6 @@
     <!-- TODO: end code to remove -->
 
 
-    <style>
-        .encounter-summary-container {
-            font-size: 1em;
-            font-weight: normal;
-        }
-    </style>
-
     <ifMode mode="VIEW" include="true">
         <!-- a template to display the "view" version of an html form provided by the htmlfromentryui getAsHtml method
       specifically designed to reformat our "one-question-per-screen" forms to should line-by-line obs -->
@@ -89,11 +82,6 @@
                 display: none;
             }
 
-            .section-container input[type="checkbox"] {
-                margin: 0px 5px; /* changed values to vertical, horizontal */
-                top: 5px; /* added to offset the checkbox position to line up */
-            }
-
             #check-in-form input[type="checkbox"], #check-in-form .form input[type="checkbox"] {
                 float: none;
                 display: inline-block;
@@ -104,24 +92,6 @@
             }
         </style>
     </ifMode>
-
-    <style>
-        .encounter-summary-container {
-            font-size: 1em;
-            font-weight: normal;
-        }
-
-        .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-columns > div {
-            display: table-cell;
-            width: 50%;
-        }
-    </style>
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
@@ -227,7 +197,7 @@
                                 <repeat>
                                     <template>
                                         <field>
-                                            <div class="section-container">
+                                            <div>
                                                 <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                      answerConceptId="{acId}" answerCodeXX=""/>
                                             </div>
@@ -241,7 +211,6 @@
                                     <render acId="CIEL:1171" aLabel="c-section"/>
                                 </repeat>
                             </div>
-                            <br/>
                         </includeIf>
 
                         <div>
@@ -253,7 +222,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>
@@ -275,7 +244,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>
@@ -304,7 +273,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}"/>
                                         </div>
@@ -321,7 +290,6 @@
                                 <render acId="PIH:21179" aLabel="exciseCyst"/>
                             </repeat>
                         </div>
-                        <br/>
 
                         <div>
                             <field>
@@ -332,7 +300,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>

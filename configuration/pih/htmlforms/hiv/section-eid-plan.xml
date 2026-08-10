@@ -15,85 +15,16 @@
                 top:0px;
             }
 
-            .four-columns, .three-columns, .two-columns, .five-columns {
-                display: table;
-                height: 100%;
-                width: 100%;
-            }
-
-            .two-columns > div {
-                display: table-cell;
-                width: 50%;
-            }
-
-            .three-columns > div {
-                display: table-cell;
-                width: 33%;
-            }
-
-            .four-columns > div {
-                display: table-cell;
-                width: 25%;
-            }
-
-            .five-columns > div {
-                display: table-cell;
-                width: 20%;
-            }
-
             p.radio > * {
                 display: inline;
                 float: none !important;
                 min-width: initial;
             }
 
-            .section-container label,
-            .section-container-color label {
-                margin: 0px;
-            }
-
-            .section-container-color {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-           - .section {
-            width: 100%;
-            }
-
             label {
-                padding: 0px 3px 0px 0px
+                padding: 0px 3px 0px 0px;
             }
 
-            .narrow {
-                width: 200px;
-            }
-
-            .small-input input[type=text] {
-                width: 12em;
-            }
-
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
-
-            #encounter-diagnoses-target {
-                display: inline-block;
-                width: 40%;
-                vertical-align: top;
-            }
-
-            #encounter-diagnoses-app {
-                margin-bottom: 20px;
-            }
-
-            .hasDatepicker {
-                min-width: 100%;
-            }
         </ifMode>
     </style>
 

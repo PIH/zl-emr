@@ -4,22 +4,6 @@
     <style type="text/css">
         <ifMode mode="VIEW" include="false">
 
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
-
-            .hasDatepicker {
-                min-width: 100%;
-            }
-
-            .two-columns {
-                column-count: 2;
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
-            }
-
             form input[type="checkbox"], form input[type="radio"], .form input[type="checkbox"], .form input[type="radio"] {
                 float: none;
                 display: inline-block;

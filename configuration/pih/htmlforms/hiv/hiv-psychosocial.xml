@@ -3,92 +3,14 @@
     formName="HIV Psychosocial Evaluation" formVersion="1.0">
 
     <style type="text/css">
-        #who-when-where {
-            margin-bottom: 6px;
-            border-bottom: 1px solid #ccc;
-        }
-        
-        #who-when-where p {
-            display: inline-block;
-            padding-right: 20px;
-        }
-        
-        #where > input[type=text] {
-            display: inline-block;
-        }
-        
+
         form fieldset {
             min-width: 90%;
             display: block;
         }
         
-        .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
-        }
-        
         form fieldset {
             min-width: 90%
-        }
-        
-        #encounterDate input {
-            min-width: 15%
-        }
-        
-        textarea {
-            overflow-y: hidden;
-            /* fixes scrollbar
-        flash - kudos to @brettjonesdev */
-            padding-top: 1.1em;
-            /* fixes text jump on Enter keypress
-        */
-        }
-        
-        @media print {
-            .print-form-datestamps {
-                display: block !important
-            }
-        
-            button.cancel,
-            button.submit {
-                display: none
-            }
-        
-            label {
-                font-weight: bold
-            }
-        
-            label[for] {
-                font-weight: normal
-            }
-        
-            /* refers to the radio set label */
-        }
-        
-        .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height:
-                1.5em;
-            /*add this for vertical spacing between elements*/
-        }
-        
-        .section-container input[type="checkbox"] {
-            margin: 0px 5px;
-            /*changed values to vertical, horizontal*/
-            top: 5px;
-            /*added to offset the checkbox position to line up*/
-        }
-        
-        .section-container label,
-        .section-container-color label {
-            margin: 0px;
-        }
-        
-        .section {
-            width: 95%;
         }
         
         form input[type="radio"],
@@ -101,43 +23,15 @@
         .form label {
             display: inline-block;
         }
-        
-        .five-columns,
-        .four-columns,
-        .three-columns,
-        .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-        
-        .two-column > div {
-            display:
-                table-cell;
-            width: 50%;
-        }
-        
-        .side-by-side label {
-            display: inline-block;
-        }
-         <ifMode mode="VIEW"
-            include="false">
-            #data-collection {
-            display: inline-block;
-            width: 58%;
-            vertical-align: top;
-            }
-        </ifMode>
 
-        <ifMode
-            mode="EDIT">
+        <ifMode mode="EDIT">
             #disposition small {
-            font-size: 100%;
-            display: block;
+                font-size: 100%;
+                display: block;
             }
 
             #disposition span {
-            padding-left: 15px;
+                padding-left: 15px;
             }
         </ifMode>
     </style>
