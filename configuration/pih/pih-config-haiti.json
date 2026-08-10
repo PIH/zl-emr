@@ -31,7 +31,8 @@
         "showCountryInAddressHierarchy": true,
         "afterCreatedUrl": "pihcore/patientRegistration/afterRegistration.page?patientId={{patientId}}&encounterId={{encounterId}}",
         "afterCreatedActions": [
-          "bean:assignDossierNumber"
+          "bean:assignDossierNumber",
+          "bean:assignHealthCenter"
         ],
         "matchingPatientsPropertiesToDisplay" : [
           "personName",

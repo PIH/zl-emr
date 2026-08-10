@@ -29,8 +29,6 @@
   ],
 
   "registrationConfig": {
-    "afterCreatedActions": [
-    ],
     "demographics": {
       "mothersName": {
         "required": false
