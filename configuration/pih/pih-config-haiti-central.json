@@ -66,12 +66,6 @@
     "wristbands",
     "zika"
   ],
-  "registrationConfig": {
-    "afterCreatedActions": [
-      "bean:assignDossierNumber",
-      "bean:assignHealthCenter"
-    ]
-  },
   "findPatientColumnConfig": [
     {
       "type": "identifier",
