@@ -23,6 +23,7 @@
     "markPatientDead",
     "medicationOrder",
     "myAccount",
+    "patientDocuments",
     "patientRegistration",
     "pmtct",
     "prep",
