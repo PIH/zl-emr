@@ -21,6 +21,7 @@ Ijans Resepsyon,,,,,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,,,
 Klinik Ekstèn,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE,,
 Klinik Ekstèn Famasi,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
 Klinik MNT,,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,,TRUE,,TRUE,,,,,TRUE,,,,TRUE,,,,,,,,,,TRUE,,
+Klinik Mobil,,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,,TRUE,,TRUE,,,,,TRUE,,,,TRUE,,,,,,,,,,TRUE,,
 Laboratwa Ekstèn pou Fanm,,,TRUE,,,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,,,,,,,,,,,,,
 Laboratwa Prensipal,,,TRUE,,,,,,,,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,TRUE,,,,,,,,,,,,,,
 Planin Familyal,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,,,,,,
@@ -43,6 +44,7 @@ Sal Timoun,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRU
 Sal Timoun A,,TRUE,,,,,,TRUE,,TRUE,,,,,,TRUE,,TRUE,,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,,,,,TRUE,
 Sal Timoun B,,TRUE,,,,,,TRUE,,TRUE,,,,,,TRUE,,TRUE,,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,,,,,TRUE,
 Sante Fanm,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,,,TRUE
+Sante Eskolè,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,,,TRUE
 Famasi Famn ak Ti moun,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
 Sante Kominotè,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,
 Suites de Couches,TRUE,TRUE,,,,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,,TRUE
