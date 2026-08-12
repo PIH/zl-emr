@@ -31,7 +31,11 @@ Component versions are defined in `distro/pom.xml` and resolved into `distro/ope
 | `haitihivtest` | `haiti,haiti-hiv,haiti-hiv-ci` |
 | `zl-ci` | `haiti,haiti-central,haiti-local-idgen` |
 
-These are the four sites with automated CI/CD (seeded images and Bamboo deploy triggers). Many
+These are the four sites with automated CI/CD (Bamboo deploy triggers). Nightly seed images are
+built per base config lineage rather than per site: `hum-ci` (`mirebalais,mirebalais-humci`) uses
+the `mirebalais` lineage, published as `partnersinhealth/zl-emr-seed-mirebalais`, while `ci`,
+`haitihivtest`, and `zl-ci` all use the `haiti` lineage, published as
+`partnersinhealth/zl-emr-seed-haiti`. See [CI and Publishing](#ci-and-publishing) below. Many
 other `pih-config-*.json` profiles exist under `content/configuration/backend_configuration/pih/`
 for Zanmi Lasante's production and field-site deployments — those are deployed through separate,
 existing infrastructure outside this repository's GitHub Actions.
@@ -141,6 +145,6 @@ CI is handled by GitHub Actions. On every push to `master`, the [Build and deplo
 2. Builds and pushes a multi-platform Docker image (amd64 + arm64) to Docker Hub at [`partnersinhealth/zl-emr`](https://hub.docker.com/r/partnersinhealth/zl-emr), tagged with both `latest` and the Maven project version.
 3. Fires the existing Bamboo `hum-ci`, `ci`, `haitihivtest`, and `zl-ci` deploy triggers, exactly as the legacy `deploy.yml` workflow did.
 
-A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes pre-initialized seed images to Docker Hub for all four sites (`partnersinhealth/zl-emr-seed-hum-ci`, `-seed-ci`, `-seed-haitihivtest`, `-seed-zl-ci`).
+A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes pre-initialized seed images to Docker Hub for the two base config lineages: `partnersinhealth/zl-emr-seed-haiti` (general Haiti/ZL-network config) and `partnersinhealth/zl-emr-seed-mirebalais` (Mirebalais hospital config).
 
 A separate [Update Versions](.github/workflows/update-versions.yml) workflow runs hourly and automatically commits any available snapshot dependency updates to `master`.
