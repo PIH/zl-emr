@@ -39,7 +39,7 @@ Configuration files live under `configuration/`, split into two subdirectories:
 | Property | Description |
 |---|---|
 | `var.patientIdentifierType.*` | UUIDs of Zanmi Lasante patient identifier types (national ID, CIN, dossier numbers, HIV-EMR legacy IDs, REDCap IDs) |
-| `var.encounterType.*` | UUIDs/French names of Zanmi Lasante-specific and shared encounter types |
+| `var.encounterType.*` | UUIDs of Zanmi Lasante-specific and shared encounter types (French name overrides for parent-owned encounter types live in `distro/openmrs-distro.properties` instead — see that module's README) |
 | `var.concept.*` | UUIDs of concepts referenced by Zanmi Lasante's MCH/vitals forms — most are defined in the parent `pihemr-content` and duplicated here because constants aren't shared across content packages |
 | `var.expression.*` | Spring-EL boolean expressions (patient-age checks) used by `appframework/mch_dashboard_app.json` extension visibility rules |
 | `var.privilege.app_coreapps_patient_dashboard` | Privilege name used by an `appframework/mch_dashboard_app.json` dashboard extension — defined in the parent `pihemr-content`, duplicated here for the same reason |
