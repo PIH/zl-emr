@@ -1215,6 +1215,242 @@ FROM
       AND v.location_id = @location
 ) x;
 
+
+SELECT
+    SUM(CASE
+            WHEN  x.adopt_pf =  concept_from_mapping('PIH','1065')
+            THEN 1 ELSE 0
+        END),
+        
+        
+        SUM(CASE
+               WHEN  x.nb_pv > 0
+               THEN 1 ELSE 0
+         END),
+        
+         SUM(CASE
+                WHEN  x.nb_pv = 0
+                THEN 1 ELSE 0
+         END),
+         
+         
+         SUM(CASE
+            	WHEN  x.diag_value_coded =   concept_from_mapping('PIH','9344')
+           		THEN 1 ELSE 0
+       	 END),
+        
+          SUM(CASE
+           		 WHEN  x.dys_type IN (concept_from_mapping('PIH','13530'),
+            					concept_from_mapping('PIH','13529'),
+            					concept_from_mapping('PIH','5622')
+            					)
+            	THEN 1 ELSE 0
+        	END),
+        	
+          SUM(CASE
+            	WHEN  x.vag_bleed =   concept_from_mapping('PIH','1065')
+           		THEN 1 ELSE 0
+       	  END),
+       	  
+       	  
+       	   SUM(CASE
+            	WHEN  x.postp_hemo =  concept_from_mapping('PIH','1065')
+           		THEN 1 ELSE 0
+       	  END),
+       	  
+       	  
+       	  SUM(CASE
+            	WHEN  x.diag_value_coded =  concept_from_mapping('PIH','7252')
+           		THEN 1 ELSE 0
+       	  END),
+       	  
+       	   SUM(CASE
+            	WHEN  x.perineal_lac =  concept_from_mapping('PIH','1065')
+           		THEN 1 ELSE 0
+       	   END),
+       	  
+       	  
+       	  SUM(CASE
+            	WHEN  x.partogram =  concept_from_mapping('PIH','1065')
+           		THEN 1 ELSE 0
+       	   END),
+       	   
+   	   	  SUM(CASE
+	        	WHEN  x.manage_th_stage_labor =  concept_from_mapping('PIH','1065')
+	       		THEN 1 ELSE 0
+   	   	  END)
+
+INTO
+    @POSTPARTUM_FP_METHOD_ADOPTED,
+    @WOMEN_WITH_PRENATAL_VISITS,
+    @WOMEN_WITHOUT_PRENATAL_VISITS_COUNT,
+    @WOMEN_WITH_PREECLAMPSIA_COUNT,
+    @WOMEN_DYSTOCIA_MECHANICAL_DYNAMIC_OTHER_COUNT,
+    @WOMEN_WITH_VAGINAL_HEMORRHAGE_COUNT,
+    @WOMEN_WITH_POSTPARTUM_HEMORRHAGE_COUNT,
+    @WOMEN_WITH_PUERPERAL_INFECTION_COUNT,
+    @WOMEN_WITH_PERINEAL_LACERATION_COUNT,
+    @WOMEN_WITH_PARTOGRAM_COUNT,
+    @WOMEN_WITH_AMTSL_COUNT
+
+FROM
+(
+    SELECT
+        d.person_id,
+        d.encounter_id,
+        adtpf.adopt_pf,
+        nbpv.nb_pv,
+        diag.diag_value_coded,
+        dys.dys_type,
+        vb.vag_bleed,
+        pph.postp_hemo,
+        pl.perineal_lac,
+        pcd.partogram,
+        amtsl.manage_th_stage_labor
+
+    FROM obs d
+
+    INNER JOIN encounter e
+        ON e.encounter_id = d.encounter_id
+       AND e.voided = 0
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
+
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS adopt_pf
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13564')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) adtpf
+        ON adtpf.encounter_id = d.encounter_id
+       AND adtpf.person_id = d.person_id
+       
+	LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_numeric  ) AS nb_pv
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13321')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) nbpv
+        ON nbpv.encounter_id = d.encounter_id
+       AND nbpv.person_id = d.person_id
+       
+     LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS diag_value_coded
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','3064')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) diag
+        ON diag.encounter_id = d.encounter_id
+       AND diag.person_id = d.person_id
+       
+       
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS dys_type
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13531')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) dys
+        ON dys.encounter_id = d.encounter_id
+       AND dys.person_id = d.person_id
+       
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS vag_bleed
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13343')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) vb
+        ON vb.encounter_id = d.encounter_id
+       AND vb.person_id = d.person_id
+       
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS postp_hemo
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','POSTPARTUM HEMORRHAGE')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) pph
+       ON pph.encounter_id = d.encounter_id
+       AND pph.person_id = d.person_id
+       
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS perineal_lac
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','12372')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) pl
+       ON pl.encounter_id = d.encounter_id
+       AND pl.person_id = d.person_id
+       
+   
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS partogram 
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13964')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) pcd
+       ON pcd.encounter_id = d.encounter_id
+       AND pcd.person_id = d.person_id     
+  
+   LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS manage_th_stage_labor 
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13533')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) amtsl
+       ON amtsl.encounter_id = d.encounter_id
+       AND amtsl.person_id = d.person_id  
+       
+    WHERE d.concept_id = @delivery_date_concept_id
+      AND d.value_datetime IS NOT NULL
+      AND d.voided = 0
+      AND e.encounter_datetime >= @startDate
+      AND e.encounter_datetime < @endDate
+      AND v.location_id = @location
+) x;
+
 SELECT 
         @MET_COC_LESS_THAN_25_ACCEPTED 'MET_COC_LESS_THAN_25_ACCEPTED',
         @MET_COP_LESS_THAN_25_ACCEPTED 'MET_COP_LESS_THAN_25_ACCEPTED',
@@ -1255,4 +1491,5 @@ SELECT
         @VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@VAGINAL_DELIVERY_APGAR_RECORDED 'VAGINAL_DELIVERY_APGAR_RECORDED',@VAGINAL_DELIVERY_NEWBORN_RESUSCITATED 'VAGINAL_DELIVERY_NEWBORN_RESUSCITATED',
 	    @CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@CESAREAN_DELIVERY_APGAR_RECORDED 'CESAREAN_DELIVERY_APGAR_RECORDED',@CESAREAN_DELIVERY_NEWBORN_RESUSCITATED 'CESAREAN_DELIVERY_NEWBORN_RESUSCITATED',
         @VAGINAL_DELIVERY_NEWBORN_DEATHS 'VAGINAL_DELIVERY_NEWBORN_DEATHS',@VAGINAL_DELIVERY_MACERATED_STILLBIRTH 'VAGINAL_DELIVERY_MACERATED_STILLBIRTH',@VAGINAL_DELIVERY_NON_MACERATED_STILLBIRTH 'VAGINAL_DELIVERY_NON_MACERATED_STILLBIRTH',
-   		@CESAREAN_DELIVERY_NEWBORN_DEATHS 'CESAREAN_DELIVERY_NEWBORN_DEATHS',@CESAREAN_DELIVERY_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_MACERATED_STILLBIRTH',@CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH';
+   		@CESAREAN_DELIVERY_NEWBORN_DEATHS 'CESAREAN_DELIVERY_NEWBORN_DEATHS',@CESAREAN_DELIVERY_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_MACERATED_STILLBIRTH',@CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH 'CESAREAN_DELIVERY_NON_MACERATED_STILLBIRTH',
+        @POSTPARTUM_FP_METHOD_ADOPTED 'POSTPARTUM_FP_METHOD_ADOPTED',@WOMEN_WITH_PRENATAL_VISITS 'WOMEN_WITH_PRENATAL_VISITS',@WOMEN_WITHOUT_PRENATAL_VISITS_COUNT 'WOMEN_WITHOUT_PRENATAL_VISITS_COUNT',@WOMEN_WITH_PREECLAMPSIA_COUNT 'WOMEN_WITH_PREECLAMPSIA_COUNT',@WOMEN_DYSTOCIA_MECHANICAL_DYNAMIC_OTHER_COUNT 'WOMEN_DYSTOCIA_MECHANICAL_DYNAMIC_OTHER_COUNT',@WOMEN_WITH_VAGINAL_HEMORRHAGE_COUNT 'WOMEN_WITH_VAGINAL_HEMORRHAGE_COUNT',@WOMEN_WITH_POSTPARTUM_HEMORRHAGE_COUNT 'WOMEN_WITH_POSTPARTUM_HEMORRHAGE_COUNT',@WOMEN_WITH_PUERPERAL_INFECTION_COUNT 'WOMEN_WITH_PUERPERAL_INFECTION_COUNT',@WOMEN_WITH_PERINEAL_LACERATION_COUNT 'WOMEN_WITH_PERINEAL_LACERATION_COUNT',@WOMEN_WITH_PARTOGRAM_COUNT 'WOMEN_WITH_PARTOGRAM_COUNT',@WOMEN_WITH_AMTSL_COUNT 'WOMEN_WITH_AMTSL_COUNT';
