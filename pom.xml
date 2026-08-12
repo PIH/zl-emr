@@ -2,9 +2,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.pih.openmrs</groupId>
-    <artifactId>openmrs-config-zl</artifactId>
-    <name>ZL OpenMRS Configuration</name>
-    <description>Top-Level configuration for Zanmi Lasante OpenMRS distro</description>
+    <artifactId>zl-emr</artifactId>
+    <name>Zanmi Lasante EMR</name>
+    <description>Zanmi Lasante EMR</description>
     <url>https://github.com/PIH/openmrs-config-zl</url>
     <version>1.78.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -31,32 +31,35 @@
         <connection>scm:git:https://github.com/PIH/openmrs-config-zl.git</connection>
         <developerConnection>scm:git:https://github.com/PIH/openmrs-config-zl.git</developerConnection>
         <url>https://github.com/PIH/openmrs-config-zl</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <sdkVersion>6.9.0-SNAPSHOT</sdkVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <modules>
         <module>content</module>
+        <module>distro</module>
     </modules>
 
-    <properties>
-        <pihemrConfigVersion>1.12.0-SNAPSHOT</pihemrConfigVersion>
-    </properties>
-
     <build>
-        <filters>
-            <filter>${project.build.directory}/openmrs-packager-config/configuration/constants.properties</filter>
-        </filters>
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.7.1</version>
+                    <groupId>org.openmrs.maven.plugins</groupId>
+                    <artifactId>openmrs-sdk-maven-plugin</artifactId>
+                    <version>${sdkVersion}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.openmrs.maven.plugins</groupId>
-                    <artifactId>openmrs-packager-maven-plugin</artifactId>
-                    <version>1.9.0</version>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.8.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.central</groupId>
@@ -77,6 +80,15 @@
                         <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.16.0</version>
+                    <configuration>
+                        <generateBackupPoms>false</generateBackupPoms>
+                        <excludeProperties>sdkVersion</excludeProperties>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -89,33 +101,6 @@
                     <autoPublish>true</autoPublish>
                     <waitUntil>published</waitUntil>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openmrs.maven.plugins</groupId>
-                <artifactId>openmrs-packager-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-resource-filters</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>generate-resource-filters</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>compile-configurations</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile-configurations</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>package-configurations</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package-configurations</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -133,12 +118,8 @@
                 <plugins>
                     <!--
                     To deploy non-snapshot versions to Sonatype, signatures must be generated using gpg
-                    Note that gpg2 key must exist on Bamboo server and the key and passphrase can be
-                    passed on the command line.
-
                     Instructions for creating a key:
                     https://central.sonatype.org/pages/working-with-pgp-signatures.html
-
                     Command to run: clean deploy -U -DdeployRelease -Dgpg.passphrase=*** -Dgpg.keyname=[email_address_associated_with_generated_key]
                     -->
                     <plugin>
@@ -202,6 +183,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
 </project>

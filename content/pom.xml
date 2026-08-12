@@ -3,165 +3,41 @@
 
     <parent>
         <groupId>org.pih.openmrs</groupId>
-        <artifactId>openmrs-config-zl</artifactId>
+        <artifactId>zl-emr</artifactId>
         <version>1.78.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>zl-content</artifactId>
-    <name>ZL OpenMRS Content Package</name>
-    <description>Top-Level content package for ZL OpenMRS distro</description>
+    <name>Zanmi Lasante Content Package</name>
+    <description>Zanmi Lasante Content Package</description>
     <packaging>pom</packaging>
-
-    <properties>
-        <pihemrContentGroupId>org.pih.openmrs</pihemrContentGroupId>
-        <pihemrContentArtifactId>pihemr-content</pihemrContentArtifactId>
-        <pihemrContentVersion>${pihemrConfigVersion}</pihemrContentVersion>
-
-        <parentBuildDir>${project.build.directory}/parent</parentBuildDir>
-        <childBuildDir>${project.build.directory}/child</childBuildDir>
-        <parentConfigDir>${parentBuildDir}/configuration</parentConfigDir>
-        <childConfigDir>${childBuildDir}/configuration</childConfigDir>
-        <finalBuildDir>${project.build.directory}/package</finalBuildDir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <developers>
-        <developer>
-            <name>Partners In Health</name>
-        </developer>
-    </developers>
-
-    <organization>
-        <name>Partners In Health</name>
-        <url>http://pih.org</url>
-    </organization>
-
-    <dependencies>
-        <dependency>
-            <groupId>${pihemrContentGroupId}</groupId>
-            <artifactId>${pihemrContentArtifactId}</artifactId>
-            <version>${pihemrContentVersion}</version>
-            <type>zip</type>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
-
-            <!-- Download and unpack the parent content package into target/parent -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack</id>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
+                        <id>copy-resources</id>
                         <phase>process-resources</phase>
-                        <configuration>
-                            <includeGroupIds>${pihemrContentGroupId}</includeGroupIds>
-                            <includeArtifactIds>${pihemrContentArtifactId}</includeArtifactIds>
-                            <outputDirectory>${parentBuildDir}</outputDirectory>
-                            <type>jar</type>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Build this content package into target/child -->
-            <plugin>
-                <groupId>org.openmrs.maven.plugins</groupId>
-                <artifactId>openmrs-packager-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-properties</id>
-                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>generate-resource-filters</goal>
+                            <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <sourceFile>../constants.yml</sourceFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-content-package</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>create-content-package</goal>
-                        </goals>
-                        <configuration>
-                            <sourceConfigurationDir>../configuration</sourceConfigurationDir>
-                            <targetDir>${childBuildDir}</targetDir>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Merge the parent and child configuration files -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <copy todir="${finalBuildDir}/configuration">
-                                    <fileset dir="${parentConfigDir}" />
-                                </copy>
-                                <copy todir="${finalBuildDir}/configuration" overwrite="true">
-                                    <fileset dir="${childConfigDir}" />
-                                </copy>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Merge the parent and child content.properties files -->
-            <plugin>
-                <groupId>org.polago.maven.plugins</groupId>
-                <artifactId>merge-properties-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>merge</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${finalBuildDir}</outputDirectory>
-                            <outputFile>content.properties</outputFile>
-                            <overwriteProperties>true</overwriteProperties>
-                            <useBuildFilters>false</useBuildFilters>
-                            <encoding>UTF-8</encoding>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                             <resources>
                                 <resource>
-                                    <filtering>false</filtering>
-                                    <directory>${parentBuildDir}</directory>
+                                    <directory>${project.basedir}</directory>
                                     <includes>
                                         <include>content.properties</include>
                                     </includes>
-                                </resource>
-                                <resource>
-                                    <filtering>false</filtering>
-                                    <directory>${childBuildDir}</directory>
-                                    <includes>
-                                        <include>content.properties</include>
-                                    </includes>
+                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>

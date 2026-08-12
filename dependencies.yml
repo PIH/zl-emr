@@ -1,4 +1,0 @@
-
-- groupId: "org.pih.openmrs"
-  artifactId: "openmrs-config-pihemr"
-  version: "${pihemrConfigVersion}"
