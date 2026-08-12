@@ -6,50 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  hum-ci:
+  haiti:
     if: github.repository_owner == 'PIH'
     concurrency:
-      group: build-seeded-images-hum-ci-${{ github.ref }}
+      group: build-seeded-images-haiti-${{ github.ref }}
       cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
     with:
       image_name: partnersinhealth/zl-emr
-      site: hum-ci
-      pih_config: mirebalais,mirebalais-humci
+      site: haiti
+      pih_config: haiti
     secrets: inherit
 
-  ci:
+  mirebalais:
     if: github.repository_owner == 'PIH'
     concurrency:
-      group: build-seeded-images-ci-${{ github.ref }}
+      group: build-seeded-images-mirebalais-${{ github.ref }}
       cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
     with:
       image_name: partnersinhealth/zl-emr
-      site: ci
-      pih_config: haiti,haiti-hsn,haiti-local-idgen
-    secrets: inherit
-
-  haitihivtest:
-    if: github.repository_owner == 'PIH'
-    concurrency:
-      group: build-seeded-images-haitihivtest-${{ github.ref }}
-      cancel-in-progress: true
-    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
-    with:
-      image_name: partnersinhealth/zl-emr
-      site: haitihivtest
-      pih_config: haiti,haiti-hiv,haiti-hiv-ci
-    secrets: inherit
-
-  zl-ci:
-    if: github.repository_owner == 'PIH'
-    concurrency:
-      group: build-seeded-images-zl-ci-${{ github.ref }}
-      cancel-in-progress: true
-    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
-    with:
-      image_name: partnersinhealth/zl-emr
-      site: zl-ci
-      pih_config: haiti,haiti-central,haiti-local-idgen
+      site: mirebalais
+      pih_config: mirebalais
     secrets: inherit
