@@ -14,7 +14,6 @@ jobs:
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
     with:
       image_name: partnersinhealth/zl-emr
-      site: haiti
       pih_config: haiti
     secrets: inherit
 
@@ -26,6 +25,5 @@ jobs:
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
     with:
       image_name: partnersinhealth/zl-emr
-      site: mirebalais
       pih_config: mirebalais
     secrets: inherit
