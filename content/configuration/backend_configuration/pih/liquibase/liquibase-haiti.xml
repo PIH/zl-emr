@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20260810-backfill-health-center-attribute" author="mgoodrich">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from global_property where property = 'pihcore.site' and (property_value = 'CROSS_SITE' or property_value='CENTRAL');
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            HAI-1223: Backfill "Health Center" person attribute for existing patients missing it,
+            using the single most common visit location on this server. Skipped entirely on the
+            HIV/cross-site server (pihcore.site = CROSS_SITE).
+        </comment>
+        <sql>
+            select person_attribute_type_id into @healthCenterType from person_attribute_type where uuid = '8d87236c-c2cc-11de-8d13-0010c6dffd0f';
+            select now() into @now;
+
+            select location_id into @mostCommonVisitLocation
+            from visit
+            where voided = 0
+            group by location_id
+            order by count(*) desc, location_id asc
+            limit 1;
+
+            insert into person_attribute (person_id, value, person_attribute_type_id, creator, date_created, voided, uuid)
+            select p.person_id, @mostCommonVisitLocation, @healthCenterType, 1, @now, 0, uuid()
+            from person p
+            inner join patient pt on pt.patient_id = p.person_id
+            where p.voided = 0
+            and @mostCommonVisitLocation is not null
+            and not exists (
+                select 1 from person_attribute pa
+                where pa.person_id = p.person_id
+                and pa.person_attribute_type_id = @healthCenterType
+                and pa.voided = 0
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
