@@ -17,12 +17,10 @@
             HIV/cross-site server (pihcore.site = CROSS_SITE).
         </comment>
         <sql>
-            select user_id into @adminUser from users where system_id = 'admin';
             select person_attribute_type_id into @healthCenterType from person_attribute_type where uuid = '8d87236c-c2cc-11de-8d13-0010c6dffd0f';
+            select now() into @now;
 
-            DROP TEMPORARY TABLE IF EXISTS temp_most_common_visit_location;
-            create temporary table temp_most_common_visit_location
-            select location_id
+            select location_id into @mostCommonVisitLocation
             from visit
             where voided = 0
             group by location_id
@@ -30,11 +28,11 @@
             limit 1;
 
             insert into person_attribute (person_id, value, person_attribute_type_id, creator, date_created, voided, uuid)
-            select p.person_id, tmcvl.location_id, @healthCenterType, @adminUser, now(), 0, uuid()
+            select p.person_id, @mostCommonVisitLocation, @healthCenterType, 1, @now, 0, uuid()
             from person p
             inner join patient pt on pt.patient_id = p.person_id
-            cross join temp_most_common_visit_location tmcvl
             where p.voided = 0
+            and @mostCommonVisitLocation is not null
             and not exists (
                 select 1 from person_attribute pa
                 where pa.person_id = p.person_id
