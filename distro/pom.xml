@@ -30,7 +30,7 @@
         <parentType>jar</parentType>
         <parentContentGroupId>org.pih.openmrs</parentContentGroupId>
         <parentContentArtifactId>pihemr-content</parentContentArtifactId>
-        <parentContentVersion>1.12.0-SNAPSHOT</parentContentVersion>
+        <parentContentVersion>3.0.0-SNAPSHOT</parentContentVersion>
         <parentContentType>zip</parentContentType>
     </properties>
 
