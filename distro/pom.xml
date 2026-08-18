@@ -24,9 +24,9 @@
         <frontendArtifact>openmrs-frontend-pihemr</frontendArtifact>
         <frontendVersion>1.41.0-SNAPSHOT</frontendVersion>
         <frontendType>zip</frontendType>
-        <parentGroup>org.openmrs.distro</parentGroup>
-        <parentArtifact>pihemr</parentArtifact>
-        <parentVersion>2.2.0-SNAPSHOT</parentVersion>
+        <parentGroup>org.pih.openmrs</parentGroup>
+        <parentArtifact>pihemr-distro</parentArtifact>
+        <parentVersion>3.0.0-SNAPSHOT</parentVersion>
         <parentType>jar</parentType>
         <parentContentGroupId>org.pih.openmrs</parentContentGroupId>
         <parentContentArtifactId>pihemr-content</parentContentArtifactId>
