@@ -78,7 +78,6 @@
                     <configuration>
                         <tagNameFormat>@{project.version}</tagNameFormat>
                         <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-                        <ignoreSnapshots>true</ignoreSnapshots>
                     </configuration>
                 </plugin>
                 <plugin>
