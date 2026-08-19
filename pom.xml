@@ -78,7 +78,8 @@
                     <configuration>
                         <tagNameFormat>@{project.version}</tagNameFormat>
                         <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-                        <ignoreSnapshots>true</ignoreSnapshots>
+                        <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                        <autoResolveSnapshots>all</autoResolveSnapshots>
                     </configuration>
                 </plugin>
                 <plugin>
