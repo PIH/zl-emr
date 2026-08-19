@@ -1235,7 +1235,7 @@ SELECT
          
          
          SUM(CASE
-            	WHEN  x.diag_value_coded =   concept_from_mapping('PIH','9344')
+            	WHEN  x.eclempsia is not null
            		THEN 1 ELSE 0
        	 END),
         
@@ -1252,7 +1252,6 @@ SELECT
            		THEN 1 ELSE 0
        	  END),
        	  
-       	  
        	   SUM(CASE
             	WHEN  x.postp_hemo =  concept_from_mapping('PIH','1065')
            		THEN 1 ELSE 0
@@ -1260,7 +1259,7 @@ SELECT
        	  
        	  
        	  SUM(CASE
-            	WHEN  x.diag_value_coded =  concept_from_mapping('PIH','7252')
+            	WHEN  x.puerperal_infection is not null
            		THEN 1 ELSE 0
        	  END),
        	  
@@ -1300,7 +1299,8 @@ FROM
         d.encounter_id,
         adtpf.adopt_pf,
         nbpv.nb_pv,
-        diag.diag_value_coded,
+        diag.eclempsia,
+        dgc.puerperal_infection,
         dys.dys_type,
         vb.vag_bleed,
         pph.postp_hemo,
@@ -1348,14 +1348,30 @@ FROM
         SELECT
             encounter_id,
             person_id,
-            MAX(value_coded ) AS diag_value_coded
+            MAX(value_coded ) AS eclempsia
         FROM obs
         WHERE concept_id = concept_from_mapping('PIH','3064')
+          AND value_coded =    concept_from_mapping('PIH','9344')
           AND voided = 0
         GROUP BY encounter_id, person_id
     ) diag
         ON diag.encounter_id = d.encounter_id
        AND diag.person_id = d.person_id
+       
+     LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS puerperal_infection
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','3064')
+          AND value_coded =    concept_from_mapping('PIH','7252')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) dgc
+        ON dgc.encounter_id = d.encounter_id
+       AND dgc.person_id = d.person_id
        
        
    LEFT JOIN
