@@ -23,40 +23,14 @@
         .form label {
             display: inline-block;
         }
-
-        <ifMode mode="EDIT">
-            #disposition small {
-                font-size: 100%;
-                display: block;
-            }
-
-            #disposition span {
-                padding-left: 15px;
-            }
-        </ifMode>
     </style>
 
-    <ifMode mode="VIEW" include="false">
-        <script type="text/javascript">
-            jq(document).ready(function() {
-
+    <script type="text/javascript">
+        jq(function() {
             // handlers for next and submit buttons, see nextAndSubmitButtons.js
             setUpNextAndSubmitButtons();
-
-            });
-        </script>
-    </ifMode>
-
-    <ifMode mode="EDIT" include="true">
-        <script type="text/javascript">
-            jq(function() {
-            jq('.htmlform').show();
-
-            // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            setUpNextAndSubmitButtons();
-            });
-        </script>
-    </ifMode>
+        });
+    </script>
 
     <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
         <script type="text/javascript">
@@ -140,122 +114,12 @@
             <uimessage code="ui.i18n.EncounterType.name.83081f7d-ffd7-4d43-9571-a86e1bc19d7f" />
         </h2>
 
-        <!-- users with retroConsultNote privilege can edit provider, location, and date for both
-        retro and active visits -->
-        <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
-            <div id="who-when-where">
-                <p id="who">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.providerRequired" />
-                    </label>
-                    <span>
-                        <encounterProviderAndRole default="currentUser"
-                            encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05" required="true" />
-                    </span>
-                </p>
-                <p id="where">
-                    <label>
-                        <uimessage code="emr.locationRequired" />
-                    </label>
-                    <span>
-                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
-                            tags="HIV Consult Location" />
-                    </span>
-                </p>
-                <p id="when">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.date" />
-                    </label>
-                    <span>
-                        <encounterDate id="encounterDate" default="now" />
-                    </span>
-                </p>
-            </div>
-        </includeIf>
-
-        <!-- users with retroConsultNoteThisProviderOnly can edit location and date (but not
-        provider) for retro visits -->
-        <includeIf
-            velocityTest="$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !($user.hasPrivilege('Task: emr.retroConsultNote')) and (!$visit.open)">
-            <div style="display:none">
-                <encounterProviderAndRole default="currentUser"
-                    encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
-                    required="true" />
-            </div>
-
-            <div id="who-when-where">
-                <p id="who">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.provider" />
-                    </label>
-                    <span>
-                        <lookup expression="user.person.personName" />
-                    </span>
-                </p>
-                <p id="where">
-                    <label>
-                        <uimessage code="emr.locationRequired" />
-                    </label>
-                    <span>
-                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
-                            tags="HIV Consult Location" />
-                    </span>
-                </p>
-                <p id="when">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.date" />
-                    </label>
-                    <span>
-                        <encounterDate id="encounterDate" default="now" />
-                    </span>
-                </p>
-            </div>
-        </includeIf>
-
-        <!-- all users that don't have either retro privilege, or those with
-        retro-this-provider-only but with an active visit, can only edit location -->
-        <includeIf
-            velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
-            <div style="display:none">
-                <encounterProviderAndRole default="currentUser"
-                    encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
-                    required="true" />
-                <encounterDate id="encounterDate" default="now" />
-            </div>
-            <div id="who-when-where">
-                <table id="who-where-when-view">
-                    <tr>
-                        <td>
-                            <label>
-                                <uimessage code="emr.patientDashBoard.provider" />
-                            </label>
-                            <span>
-                                <lookup
-                                    complexExpression="#if($encounter) $ui.format($encounter.provider) #else $ui.format($user.person) #end" />
-                            </span>
-                        </td>
-                        <td>
-                            <label>
-                                <uimessage code="emr.locationRequired" />
-                            </label>
-                            <span>
-                                <encounterLocation
-                                    default="SessionAttribute:emrContext.sessionLocationId" />
-                            </span>
-                        </td>
-                        <td>
-                            <label>
-                                <uimessage code="emr.patientDashBoard.date" />
-                            </label>
-                            <span>
-                                <lookup
-                                    complexExpression="#if($encounter) $ui.format($fn.startOfDay($encounter.encounterDatetime)) #else $ui.format($fn.startOfDay($formGeneratedDatetime)) #end" />
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </includeIf>
+        <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
+            <span subform-parameter="encounter-location-widget">
+                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                   tags="HIV Consult Location"/>
+            </span>
+        </subform>
     </ifMode>
 
     <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
