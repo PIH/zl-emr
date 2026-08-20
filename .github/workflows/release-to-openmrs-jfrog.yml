@@ -9,4 +9,7 @@ permissions:
 jobs:
   release:
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/release-to-openmrs-jfrog.yml@main
+    with:
+      image_name: partnersinhealth/zl-emr
+      maven_profiles: distro-zip
     secrets: inherit
