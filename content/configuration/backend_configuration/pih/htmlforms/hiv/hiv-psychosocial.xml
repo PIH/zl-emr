@@ -25,12 +25,27 @@
         }
     </style>
 
-    <script type="text/javascript">
-        jq(function() {
-            // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            setUpNextAndSubmitButtons();
-        });
-    </script>
+    <ifMode mode="VIEW" include="false">
+        <script type="text/javascript">
+            jq(document).ready(function() {
+
+                // handlers for next and submit buttons, see nextAndSubmitButtons.js
+                setUpNextAndSubmitButtons();
+
+            });
+        </script>
+    </ifMode>
+
+    <ifMode mode="EDIT" include="true">
+        <script type="text/javascript">
+            jq(function() {
+                jq('.htmlform').show();
+
+                // handlers for next and submit buttons, see nextAndSubmitButtons.js
+                setUpNextAndSubmitButtons();
+            });
+        </script>
+    </ifMode>
 
     <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
         <script type="text/javascript">

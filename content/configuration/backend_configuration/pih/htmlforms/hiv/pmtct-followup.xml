@@ -2,13 +2,36 @@
           formEncounterType="95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5"
           formName="PMTCT Followup" formVersion="2.0">
 
-    <script type="text/javascript">
-        jq(function() {
 
-            // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            setUpNextAndSubmitButtons();
-        });
-    </script>
+    <!-- the two ifMode blocks below enable a bit of hack: when opening in ENTER mode, we just want to create the encounter,
+       we don't actually want to display the form, so we hae it hidden by default, and then automatically trigger the submit;
+       note that this will fail in the case where there isn't a default provider or date (which I don't think we have in our use cases -->
+
+    <ifMode mode="ENTER" include="true">
+        <script type="text/javascript">
+            jq(function() {
+                // if for some reason there's no encounter location selected (likely because the session location isn't
+                // a valid location for this encounter) we need to show the form, otherwise just submit
+                if (!getValue("encounterLocation.value")) {
+                    jq('#next').hide();
+                    jq('.htmlform').show();
+                } else {
+                    submitHtmlForm();
+                }
+            });
+        </script>
+    </ifMode>
+
+    <ifMode mode="EDIT" include="true">
+        <script type="text/javascript">
+            jq(function() {
+                jq('.htmlform').show();
+
+                // handlers for next and submit buttons, see nextAndSubmitButtons.js
+                setUpNextAndSubmitButtons();
+            });
+        </script>
+    </ifMode>
 
     <div class="htmlform" style="display:none">
         <ifMode mode="VIEW" include="false">
