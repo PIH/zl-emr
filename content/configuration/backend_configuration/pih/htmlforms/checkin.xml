@@ -15,72 +15,6 @@
 <htmlform id="check-in-form" formUuid="e0df9aaf-58ae-447b-b8a9-27a7407eb9c2" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.0">
 
-    <ifMode mode="VIEW" include="true">
-        <!-- a template to display the "view" version of an html form provided by the htmlfromentryui getAsHtml method
-      specifically designed to reformat our "one-question-per-screen" forms to should line-by-line obs -->
-
-        <style>
-
-            #check-in-form legend {
-                display: none;
-            }
-
-            #check-in-form fieldset {
-                margin: 0px;
-                border: 0px;
-                padding: 0px;
-            }
-
-            #check-in-form fieldset h3 {
-                width: 200px;
-                display: inline-block;
-                margin: 0px;
-                margin-right: 10px;
-                color: #3E3E3E;
-                vertical-align: top;
-                font-size:0.9em;
-            }
-
-            #check-in-form fieldset p {
-                vertical-align: top;
-                display: inline-block;
-                float: none;
-            }
-
-            #check-in-form fieldset .left {
-                vertical-align: top;
-                display: inline-block;
-                float: none;
-            }
-
-            #check-in-form .title {
-                display: none;
-            }
-
-            #check-in-form .encounter-date {
-                display: none;
-            }
-
-            #check-in-form .encounter-provider {
-                display: none;
-            }
-
-            #check-in-form .encounter-location {
-                display: none;
-            }
-
-            #check-in-form input[type="checkbox"], #check-in-form .form input[type="checkbox"] {
-                float: none;
-                display: inline-block;
-            }
-
-            #check-in-form label, #check-in-form .form label {
-                display: inline-block;
-            }
-        </style>
-
-    </ifMode>
-
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
 
@@ -100,48 +34,30 @@
 
         <section id="checkin" sectionTag="section" headerStyle="title" headerCode="mirebalais.retrospectiveCheckin.label">
 
-            <fieldset class="required">
-                <legend>
-                   <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterDate id="encounterDate" showTime="false" default="now"/>
-                </p>
+            <fieldset field-separator=", ">
+                <legend><uimessage code="pihcore.details"/></legend>
+                <h3><uimessage code="pihcore.details"/></h3>
+                <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
+                    <label subform-parameter="encounter-provider-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                    </label>
+                    <span subform-parameter="encounter-provider-widget">
+                        <encounterProviderAndRole default="currentUser"
+                                                  encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
+                                                  required="true"/>
+                    </span>
+                    <label subform-parameter="encounter-location-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.location.label"/>
+                    </label>
+                    <span subform-parameter="encounter-location-widget">
+                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                           tags="Check-In Location"/>
+                    </span>
+                    <label subform-parameter="encounter-date-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
+                    </label>
+                </subform>
             </fieldset>
-
-
-            <fieldset class="required">
-                <legend>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
-                                              required="true"/>
-                </p>
-            </fieldset>
-
-            <fieldset class="required">
-                <legend>
-                    <uimessage code="mirebalais.retrospectiveCheckin.location.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.location.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterLocation required="true" tags="Check-In Location"
-                                       default="SessionAttribute:emrContext.sessionLocationId"/>
-                </p>
-            </fieldset>
-
 
             <fieldset id="type-of-visit-question" >
                 <legend>
@@ -389,20 +305,6 @@
                     </p>
                 </fieldset>
             </obsgroup>
-
-            <fieldset class="provider-question">
-                <legend>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
-                                              required="true"/>
-                </p>
-            </fieldset>
 
         </section>
     </ifMode>
