@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.pih.openmrs</groupId>
         <artifactId>zl-emr</artifactId>
-        <version>1.78.0-SNAPSHOT</version>
+        <version>1.79.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>zl-distro</artifactId>
@@ -26,11 +26,11 @@
         <frontendType>zip</frontendType>
         <parentGroup>org.pih.openmrs</parentGroup>
         <parentArtifact>pihemr-distro</parentArtifact>
-        <parentVersion>3.0.0-SNAPSHOT</parentVersion>
+        <parentVersion>3.1.0-SNAPSHOT</parentVersion>
         <parentType>jar</parentType>
         <parentContentGroupId>org.pih.openmrs</parentContentGroupId>
         <parentContentArtifactId>pihemr-content</parentContentArtifactId>
-        <parentContentVersion>3.0.0-SNAPSHOT</parentContentVersion>
+        <parentContentVersion>3.1.0-SNAPSHOT</parentContentVersion>
         <parentContentType>zip</parentContentType>
     </properties>
 

@@ -6,7 +6,7 @@
     <name>Zanmi Lasante EMR</name>
     <description>Zanmi Lasante EMR</description>
     <url>https://github.com/PIH/openmrs-config-zl</url>
-    <version>1.78.0-SNAPSHOT</version>
+    <version>1.79.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <organization>
