@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  hum-ci:
+  zl-ci:
     if: github.repository_owner == 'PIH'
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/execute-pihemr-smoke-tests.yml@main
     with:
       image_name: partnersinhealth/zl-emr
       instance_name: hum-ci
-      pih_config: mirebalais,mirebalais-humci
-      seed_image_name: partnersinhealth/zl-emr-seed-mirebalais
+      pih_config: haiti,haiti-central,haiti-local-idgen
+      seed_image_name: partnersinhealth/zl-emr-seed-haiti
       suite: zlCentral
     secrets: inherit
