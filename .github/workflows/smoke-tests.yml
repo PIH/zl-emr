@@ -6,7 +6,7 @@ on:
 jobs:
   haiti:
     if: github.repository_owner == 'PIH'
-    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/smoke-test.yml@main
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/execute-pihemr-smoke-tests.yml@main
     with:
       image_name: partnersinhealth/zl-emr
       pih_config: haiti
