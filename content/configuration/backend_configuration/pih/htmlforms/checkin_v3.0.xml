@@ -12,8 +12,8 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<htmlform id="check-in-form" formUuid="660f4e34-b4c2-4666-bd9e-f7c07bac8190" formName="Checkin"
-          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="4.0">
+<htmlform id="check-in-form" formUuid="e0df9aaf-58ae-447b-b8a9-27a7407eb9c2" formName="Checkin"
+          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.0">
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
@@ -208,12 +208,17 @@
                     <p class="left" style="color:grey">
                         <obs conceptId="PIH:Payment amount" id="paymentAmount"
                              showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
+
+                        <!-- Old version:  Payment amount with defined values and dropdown
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" size="999" answerLabels="$paymentAmtLabels"
+                             answers="$paymentAmts" defaultValue="$paymentAmtDefault"/> -->
                     </p>
 
                 </fieldset>
 
              
-                <fieldset id="receipt-number-question">
+                <fieldset id="receipt-number-question" class="required">
                     <legend>
                         <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
                     </legend>
@@ -229,36 +234,13 @@
                     </p>
 
                 </fieldset>
+
             </obsgroup>
-
-
-            <ifMode mode="ENTER" include="true">
-
-                <!-- ask about printing a wristband if there is a wristband configured at this location -->
-                <includeIf velocityTest="$printer.fn.isDefaultPrinterConfigured($sessionContext.sessionLocation, $printer.type.WRISTBAND)">
-
-                    <fieldset id="print-wristband-question" class="required">
-                        <legend>
-                            <uimessage code="mirebalais.checkin.printWristband"/>
-                        </legend>
-                        <h3>
-                            <uimessage code="mirebalais.checkin.printWristband"/>
-                        </h3>
-                        <span class="error field-error" style="display: none" id="print-wristband-error"></span>
-                        <p class="left">
-                            <select id="print-wristband" size="2">
-                                <option value="true" selected="selected"><uimessage code="emr.yes"/></option>
-                                <option value="false"><uimessage code="emr.no"/></option>
-                            </select>
-                        </p>
-                    </fieldset>
-
-                </includeIf>
-            </ifMode>
 
             </section>
 
         <submit/>
+
     </ifMode>
     <!-- END ENTER/EDIT VERSION OF THE FORM -->
 
