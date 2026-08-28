@@ -15,12 +15,6 @@
                 top:0px;
             }
 
-            p.radio > * {
-                display: inline;
-                float: none !important;
-                min-width: initial;
-            }
-
             label {
                 padding: 0px 3px 0px 0px;
             }
@@ -59,25 +53,48 @@
 
     <section id="pcr-results" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.result">
-        <div class="section-container-color">
+        <div class="section-container">
             <div class="two-columns">
                 <div>
-                    <obsgroup id="hiv-pcr" groupingConceptId="PIH:11522">
-                        <p class="radio">
-                            <obs conceptId="CIEL:1030" labelCode="PCR:" style="radio"
-                                 answerConceptIds="CIEL:703,CIEL:664,CIEL:1138"/>
+                    <obsgroup id="hiv-pcr" groupingConceptId="PIH:11522" >
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="PCR:" />
+                            </label>
+                            <obs id="pcr-lab-result" conceptId="CIEL:1030" style="radio"
+                                 answerConceptIds="CIEL:703,CIEL:664,CIEL:1138">
+                                <controls>
+                                    <when value="CIEL:703" thenDisplay="#notify-parent"/>
+                                </controls>
+                            </obs>
                         </p>
                         <p class="narrow">
                             <obs conceptId="CIEL:164400" labelCode="Date:"/>
                         </p>
                     </obsgroup>
+                    <div id="notify-parent" >
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.notifyParentGuardian" />
+                            </label>
+                            <obs conceptId="CIEL:163525" style="radio"
+                                 answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerCodes="pihcore.yes,pihcore.no"/>
+                        </p>
+                    </div>
                 </div>
                 <div>
-                    <label>
-                        <uimessage code="pihcore.lab.lastPCR" />:
-                    </label>
-                    <lookup expression="fn.latestObs('CIEL:1030').valueCoded.name" />
-                    (<lookup expression="fn.latestObs('CIEL:1030').obsDatetime" />)
+                    <div>
+                        <p class="side-by-side">
+                            <label>
+                                <uimessage code="pihcore.lab.lastPCR" />:
+                            </label>
+                            <i>
+                                <lookup expression="fn.latestObs('CIEL:1030').valueCoded.name" />
+                                (<lookup expression="fn.latestObs('CIEL:1030').obsDatetime" />)
+                            </i>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,7 +205,7 @@
                 </label>
                 <p class="radio cb-align">
                     <obs conceptId="PIH:HUM Disposition categories"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
+                         answerConceptId="CIEL:160036" answerCode="pihcore.yes"
                          style="checkbox" toggle="transfer-out-details"/>
                 </p>
 
