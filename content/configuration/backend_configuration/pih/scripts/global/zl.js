@@ -171,19 +171,12 @@ function phoneNumberPattern() {
  * @param widgetId
  */
 function setUpObsWithObsDateTime(widgetId) {
+  // The show/hide/clear of the obs date field for a checkbox obs is now handled natively by the
+  // htmlformentry module (setupCheckboxDateToggle, HTML-893). This helper only needs to restrict the
+  // date picker to non-future dates; doing the hide/show here as well conflicts with the module and
+  // leaves the date input hidden on edit-load when the checkbox is already checked.
   if (getField(widgetId + '.date') && getField(widgetId + '.value')) {
-    getField(widgetId + '.date').hide();
     getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
-
-    getField(widgetId + '.value').change(function () {
-      const isChecked = getValue(widgetId + '.value');
-      if (isChecked) {
-        getField(widgetId + '.date').show();
-      } else {
-        setValue(widgetId + '.date', '')
-        getField(widgetId + '.date').hide();
-      }
-    })
   }
 }
 
