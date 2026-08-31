@@ -18,6 +18,15 @@ jobs:
       maven_profiles: distro-zip
     secrets: inherit
 
+  smoke-tests:
+    if: github.repository_owner == 'PIH'
+    needs: build-and-publish
+    concurrency:
+      group: smoke-tests-${{ github.ref }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/smoke-tests.yml
+    secrets: inherit
+
   deploy-to-hum-ci:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
