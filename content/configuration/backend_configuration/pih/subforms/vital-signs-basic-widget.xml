@@ -1,0 +1,80 @@
+<div>
+    <subform path="configuration/pih/subforms/vital-signs-widget.css"/>
+    <subform path="configuration/pih/subforms/vital-signs-widget.js"/>
+
+<div class="vitals five-columns">
+    <div class="vitals-cell">
+        <div class="colorCodingValue">
+            <label>
+                <uimessage code="mirebalais.vitals.bloodPressure.short.title"/>
+            </label>
+            <span class="small">
+                <span class="append-to-value left">
+                    <obs conceptId="CIEL:5085" id="bp_systolic" class="vitals-values"/>
+                </span>
+                <span class="append-to-value left">/</span>
+                <span class="append-to-value left">
+                    <obs conceptId="CIEL:5086" id="bp_diastolic" class="vitals-values"/>
+                </span>
+                <ifMode mode="VIEW" include="false">
+                <br></br>
+                </ifMode>
+                <span class="append-to-value">mm/Hg</span>
+            </span>
+        </div>
+    </div>
+
+    <div>
+        <div class="colorCodingValue">
+            <label>
+                <uimessage code="mirebalais.vitals.short.heartRate.title"/>
+            </label>
+            <span class="small">
+                <obs conceptId="CIEL:5087" id="heart_rate" class="vitals-values"
+                     showUnits="emr.units.perMinute" unitsCssClass="append-to-value"/>
+            </span>
+        </div>
+    </div>
+
+    <div>
+        <div class="colorCodingValue">
+        <label>
+            <uimessage code="mirebalais.vitals.respiratoryRate.short.title"/>
+        </label>
+        <span class="small">
+            <obs conceptId="CIEL:5242" id="respiratory_rate" class="vitals-values"
+                 showUnits="emr.units.perMinute" unitsCssClass="append-to-value"/>
+        </span>
+        </div>
+    </div>
+
+    <div>
+        <div class="colorCodingValue">
+        <label>
+            <uimessage code="Temp"/>
+        </label>
+        <span class="small">
+            <obs conceptId="CIEL:5088" id="temperature_c" class="vitals-values"
+                 showUnits="emr.units.degreesCelsius" unitsCssClass="append-to-value"/>
+        </span>
+        </div>
+    </div>
+
+    <div>
+        <div class="colorCodingValue">
+        <label>
+            <uimessage code="o2Sat"/>
+        </label>
+        <span class="small">
+            <obs conceptId="CIEL:5092" id="o2_sat" class="vitals-values"
+                 showUnits="emr.units.percent" unitsCssClass="append-to-value"/>
+        </span>
+        </div>
+    </div>
+</div>
+<div id="confirmMsg">
+    <span>Contact doctor for early intervention if patient triggers one red or two yellow scores at any one time.</span>
+    <br/>
+    <obs id="contactDr" style="checkbox" conceptId="PIH:20925" answerConceptId="CIEL:1065" answerLabel="" labelText="Confirmed doctor contacted"></obs>
+</div>
+</div>
