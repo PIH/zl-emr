@@ -24,6 +24,29 @@
         </code>
     </translations>
 
+    <style type="text/css">
+        <ifMode mode="VIEW" include="true">
+
+            .toggle-div {
+                background-color: #F2F2F2;
+                color: #003F5E;
+                font-weight: bold;
+                font-size: large;
+                padding: 5px 0px 0px 0px;
+            }
+
+            .collapsible-content {
+                overflow: visible;
+                transition: max-height 0.5s ease-out;
+                max-height: none;
+            }
+
+            .collapsible-content.open {
+                max-height: none; /* Allows the height to adjust automatically */
+            }
+        </ifMode>
+    </style>
+
     <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 
@@ -242,6 +265,7 @@
 
 
             <!-- only show MUAC if patient is less than 13 years old (on the encounterDate) OR female -->
+            <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
                 <label>
                     <uimessage code="mirebalais.vitals.muac.navigation.title" />
                 </label>
@@ -275,6 +299,7 @@
                 <p class="mm">
                     <obs conceptId="CIEL:163187" id="muac_mm" showUnits="emr.units.millimeters" unitsCssClass="append-to-value" />
                 </p>
+            </includeIf>
 
             <!-- only show Head circumference if patient is less than 3 years old (on the encounterDate) -->
             <includeIf velocityTest="3 > $patient.getAge($encounter.getEncounterDatetime())">
@@ -312,10 +337,11 @@
 
     </section>
 
-    <section id="clinical-para" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.clinicalParameters">
-        <div class="two-columns section-container">
-            <div>
+        <div class="xx-section-container">
+            <div id="clinical-para" class="toggle-div">
+                <uimessage code="pihcore.clinicalParameters"/>
+            </div>
+            <div class="collapsible-content two-columns-without-divs">
                 <p>
                     <label>
                         <uimessage code="mirebalais.vitals.map"/>
@@ -368,14 +394,6 @@
                     <obs conceptId="PIH:20664"/>
                 </p>
 
-                <p class="in-line">
-                    <label>
-                        <uimessage code="mirebalais.vitals.pain.scale"/>
-                    </label>
-                    <obs id="pain" conceptId="PIH:20668" style="radio"
-                         answers="0,2,4,6,8,10" answerLabels="0,2,4,6,8,10"/>
-                </p>
-
                 <p>
                     <label>
                         <uimessage code="pihcore.lab.urineOutput"/>
@@ -383,45 +401,80 @@
                     <obs conceptId="CIEL:161929" showUnits="true"/>
                 </p>
             </div>
+            <br/>
 
-            <div>
-                <div>
-                    <h2>
-                        <uimessage code="pihcore.prenatal"/>
-                    </h2>
-
-                    <p>
-                        <label>
-                            <uimessage code="mirebalais.vitals.fetal.heart.rate"/>
-                        </label>
-                        <obs conceptId="CIEL:1440" showUnits="bpm"/>
-                    </p>
-                </div>
-                <br/><br/><br/><br/>
-
-                <div>
-                    <h2>
-                        <uimessage code="pihcore.visitNote.consultInfo.label"/>
-                    </h2>
-
-                    <p>
-                        <label>
-                            <uimessage code="mirebalais.vitals.complaint.title"/>
-                        </label>
-                        <obs conceptId="CIEL:160531" id="chief_complaint"/>
-                    </p>
-
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.comment"/>
-                        </label>
-                        <obs conceptId="CIEL:161011" id="vital_comment"/>
-                    </p>
-
-                </div>
+            <div id="pain" class="toggle-div">
+                <uimessage code="pihcore.pain"/>
             </div>
+            <div class="collapsible-content two-columns-without-divs">
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.pain.scale" />
+                    </label>
+                    <obs id="pain" conceptId="PIH:20668" style="radio"
+                         answers="0,2,4,6,8,10" answerLabels="0,2,4,6,8,10" />
+                </p>
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.svs" />
+                    </label>
+                    <obs conceptId="PIH:20665" style="radio"
+                         answerConceptIds="PIH:1107,PIH:1901,PIH:1900,PIH:1903,PIH:20666" answerSeparator="" />
+                </p>
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.nrs" />
+                    </label>
+                    <obs conceptId="PIH:20667" />
+                </p>
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.bps" />
+                    </label>
+                    <obs conceptId="PIH:20668" />
+                </p>
+            </div>
+            <br/>
+
+        <div id="anc" class="toggle-div">
+            <uimessage code="pihcore.prenatal"/>
         </div>
-    </section>
+        <div class="collapsible-content">
+            <p>
+                <label>
+                    <uimessage code="mirebalais.vitals.fetal.heart.rate"/>
+                </label>
+                <obs conceptId="CIEL:1440" showUnits="bpm"/>
+            </p>
+        </div>
+        <br/>
+
+        <div id="con-comment" class="toggle-div">
+            <uimessage code="pihcore.visitNote.consultInfo.label"/>
+        </div>
+
+        <div class="collapsible-content">
+            <p>
+                <label>
+                    <uimessage code="mirebalais.vitals.complaint.title"/>
+                </label>
+                <obs conceptId="CIEL:160531" id="chief_complaint"/>
+            </p>
+
+            <p>
+                <label>
+                    <uimessage code="pihcore.comment"/>
+                </label>
+                <obs conceptId="CIEL:161011" id="vital_comment"/>
+            </p>
+
+        </div>
+    </div>
+    <br/>
 
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
