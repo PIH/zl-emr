@@ -14,4 +14,5 @@ jobs:
       pih_config: haiti,haiti-central,haiti-local-idgen
       seed_image_name: partnersinhealth/zl-emr-seed-haiti
       suite: zlCentral
+      notify_ci_dashboard: true
     secrets: inherit
