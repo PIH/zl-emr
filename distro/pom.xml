@@ -45,7 +45,7 @@
         <dependency>
             <groupId>${contentGroup}</groupId>
             <artifactId>${contentArtifact}</artifactId>
-            <version>${contentVersion}</version>
+            <version>${project.version}</version>
             <type>${contentType}</type>
             <scope>provided</scope>
         </dependency>
