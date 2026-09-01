@@ -31,75 +31,47 @@ jobs:
   deploy-to-hum-ci:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    runs-on: ubuntu-latest
     concurrency:
       group: deploy-to-hum-ci-${{ github.ref }}
       cancel-in-progress: true
-    steps:
-      - name: Deploy to hum-ci
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYHUMCI'
-          method: 'POST'
-          bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
-          customHeaders: '{"Accept": "application/json"}'
-          retry: 60
-          retryWait: 60000
-          ignoreStatusCodes: 400
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
+    with:
+      runner-label: humci
+      notify_ci_dashboard: true
+    secrets: inherit
 
   deploy-to-ci:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    runs-on: ubuntu-latest
     concurrency:
       group: deploy-to-ci-${{ github.ref }}
       cancel-in-progress: true
-    steps:
-      - name: Deploy to ci
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYCI'
-          method: 'POST'
-          bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
-          customHeaders: '{"Accept": "application/json"}'
-          retry: 60
-          retryWait: 60000
-          ignoreStatusCodes: 400
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
+    with:
+      runner-label: ci
+      notify_ci_dashboard: true
+    secrets: inherit
 
   deploy-to-haitihivtest:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    runs-on: ubuntu-latest
     concurrency:
       group: deploy-to-haitihivtest-${{ github.ref }}
       cancel-in-progress: true
-    steps:
-      - name: Deploy to haitihivtest
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYHAITIHIVTEST'
-          method: 'POST'
-          bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
-          customHeaders: '{"Accept": "application/json"}'
-          retry: 60
-          retryWait: 60000
-          ignoreStatusCodes: 400
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
+    with:
+      runner-label: haitihivtest
+      notify_ci_dashboard: true
+    secrets: inherit
 
   deploy-to-zl-ci:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    runs-on: ubuntu-latest
     concurrency:
       group: deploy-to-zl-ci-${{ github.ref }}
       cancel-in-progress: true
-    steps:
-      - name: Deploy to zl-ci
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYZLCI'
-          method: 'POST'
-          bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
-          customHeaders: '{"Accept": "application/json"}'
-          retry: 60
-          retryWait: 60000
-          ignoreStatusCodes: 400
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
+    with:
+      runner-label: zl-ci
+      notify_ci_dashboard: true
+    secrets: inherit
