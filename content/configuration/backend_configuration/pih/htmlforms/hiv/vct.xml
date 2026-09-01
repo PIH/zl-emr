@@ -68,7 +68,6 @@
     <section id="vct-screening" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.screening">
 
-
         <div class="section-container">
                 <p>
                     <obs conceptId="CIEL:164082" toggle="wantstoknow"
