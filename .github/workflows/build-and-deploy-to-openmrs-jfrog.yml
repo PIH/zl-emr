@@ -16,6 +16,7 @@ jobs:
     with:
       image_name: partnersinhealth/zl-emr
       maven_profiles: distro-zip
+      notify_ci_dashboard: true
     secrets: inherit
 
   smoke-tests:
