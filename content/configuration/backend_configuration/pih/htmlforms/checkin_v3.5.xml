@@ -12,8 +12,12 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<htmlform id="check-in-form" formUuid="660f4e34-b4c2-4666-bd9e-f7c07bac8190" formName="Checkin"
-          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="4.0">
+<htmlform id="check-in-form" formUuid="2bbd0788-fc4f-4253-93fc-1f16033f8f78" formName="Checkin"
+          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.5">
+
+    <macros>
+        <macro key="reasonsForVisit" expression="fn.globalProperty('haiti.checkIn.reasonsForVisit')"/>
+    </macros>
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
@@ -59,7 +63,7 @@
                 </subform>
             </fieldset>
 
-            <fieldset id="type-of-visit-question" >
+            <fieldset class="type-of-visit-question">
                 <legend>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </legend>
@@ -67,134 +71,12 @@
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </h3>
 
-                <div class="two-columns">
-                    <div>
-                        <includeIf velocityTest="$patient.gender == 'F' || $patient.age &lt; 10 ">
-                            <div>
-                                <field>
-                                    <label for="gyneco-visit">
-                                        <uimessage code="pihcore.gynIntervent"/>
-                                    </label>
-                                </field>
-                                <repeat>
-                                    <template>
-                                        <field>
-                                            <div>
-                                                <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                                     answerConceptId="{acId}" answerCodeXX=""/>
-                                            </div>
-                                        </field>
-                                    </template>
-                                    <render acId="CIEL:1637" aLabel="curetage"/>
-                                    <render acId="PIH:21174" aLabel="bartholin"/>
-                                    <!-- kystectomie? -->
-                                    <render acId="PIH:20149" aLabel="myomectomy"/>
-                                    <render acId="CIEL:159837" aLabel="hysterectomy"/>
-                                    <render acId="CIEL:1171" aLabel="c-section"/>
-                                </repeat>
-                            </div>
-                        </includeIf>
-
-                        <div>
-                            <field>
-                                <label for="cert-visit">
-                                    <uimessage code="pihcore.certs"/>
-                                </label>
-                            </field>
-                            <repeat>
-                                <template>
-                                    <field>
-                                        <div>
-                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
-                                        </div>
-                                    </field>
-                                </template>
-                                <render acId="PIH:7702" aLabel="healthCert"/>
-                                <render acId="PIH:7694" aLabel="prenupCert"/>
-                                <render acId="PIH:21166" aLabel="injuryCert"/>
-                                <render acId="PIH:21167" aLabel="birthCert"/>
-                            </repeat>
-                        </div>
-
-                        <div>
-                            <field>
-                                <label for="other-proc-visit">
-                                    <uimessage code="pihcore.visitNote.plan.other"/>
-                                </label>
-                            </field>
-                            <repeat>
-                                <template>
-                                    <field>
-                                        <div>
-                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
-                                        </div>
-                                    </field>
-                                </template>
-                                <render acId="PIH:7705" aLabel="generalConsult"/>
-                                <render acId="CIEL:165013" aLabel="obGynConsult.title"/>
-                                <render acId="CIEL:165019" aLabel="intMedConsult"/>
-                                <render acId="CIEL:165048" aLabel="pedConsult"/>
-                                <render acId="PIH:7706" aLabel="location.dental"/>
-                                <render acId="PIH:9355" aLabel="radiology"/> <!-- ?? -->
-                                <!-- ToDo:
-                                xray
-                                        <render acId="PIH:x" aLabel="y" />  -->
-                            </repeat>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <field>
-                                <label for="minor-proc-visit">
-                                    <uimessage code="pihcore.minorSurgery"/>
-                                </label>
-                            </field>
-                            <repeat>
-                                <template>
-                                    <field>
-                                        <div>
-                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                                 answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}"/>
-                                        </div>
-                                    </field>
-                                </template>
-                                <render acId="PIH:21175" aLabel="ankyloglossy"/>
-                                <render acId="PIH:21176" aLabel="polydactyly"/>
-                                <render acId="CIEL:161803" aLabel="circumcision"/>
-                                <render acId="PIH:21177" aLabel="adenofibrome"/>
-                                <render acId="CIEL:165166" aLabel="lipomeCare"/>
-                                <render acId="PIH:21170" aLabel="projectile"/>
-                                <render acId="PIH:21178" aLabel="ingrownNail"/>
-                                <render acId="PIH:21171" aLabel="keloid"/>
-                                <render acId="PIH:21179" aLabel="exciseCyst"/>
-                            </repeat>
-                        </div>
-
-                        <div>
-                            <field>
-                                <label for="major-proc-visit">
-                                    <uimessage code="pihcore.majorSurgery"/>
-                                </label>
-                            </field>
-                            <repeat>
-                                <template>
-                                    <field>
-                                        <div>
-                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
-                                        </div>
-                                    </field>
-                                </template>
-                                <render acId="PIH:21172" aLabel="hernia"/>
-                                <render acId="CIEL:161795" aLabel="umbilHernia"/>
-                                <render acId="CIEL:161808" aLabel="hydrocele"/>
-                            </repeat>
-                        </div>
-                    </div>
-                </div>
+                <p class="left">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit"
+                         answerConceptIds="$reasonsForVisit"
+                         showUnits="false" unitsCssClass="append-to-value" style="dropdown" size="999">
+                    </obs>
+                </p>
             </fieldset>
 
             <obsgroup groupingConceptId="PIH:Payment construct">
@@ -225,7 +107,6 @@
                         <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
                              unitsCssClass="append-to-value"  />
                         <br/>
-                        
                     </p>
 
                 </fieldset>
