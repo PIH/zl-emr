@@ -1,0 +1,213 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<htmlform id="check-in-form" formUuid="2bbd0788-fc4f-4253-93fc-1f16033f8f78" formName="Checkin"
+          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.5">
+
+    <macros>
+        <macro key="reasonsForVisit" expression="fn.globalProperty('haiti.checkIn.reasonsForVisit')"/>
+    </macros>
+
+    <!-- START ENTER/EDIT VERSION OF THE FORM -->
+    <ifMode mode="VIEW" include="false">
+
+        <script type="text/javascript">
+
+            jq(function() {
+
+                // hack to make the datepicker show when the form is opened
+                getField('encounterDate.value').datepicker('show');
+
+                //Calling the function to restrict only number in a input which takes the input id in parameter
+               restrictInputOnlyNumber("receiptNumber")
+
+            });
+
+        </script>
+
+        <section id="checkin" sectionTag="section" headerStyle="title" headerCode="mirebalais.retrospectiveCheckin.label">
+
+            <fieldset field-separator=", ">
+                <legend><uimessage code="pihcore.details"/></legend>
+                <h3><uimessage code="pihcore.details"/></h3>
+                <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
+                    <label subform-parameter="encounter-provider-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                    </label>
+                    <span subform-parameter="encounter-provider-widget">
+                        <encounterProviderAndRole default="currentUser"
+                                                  encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
+                                                  required="true"/>
+                    </span>
+                    <label subform-parameter="encounter-location-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.location.label"/>
+                    </label>
+                    <span subform-parameter="encounter-location-widget">
+                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                           tags="Check-In Location"/>
+                    </span>
+                    <label subform-parameter="encounter-date-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
+                    </label>
+                </subform>
+            </fieldset>
+
+            <fieldset class="type-of-visit-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </h3>
+
+                <p class="left">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit"
+                         answerConceptIds="$reasonsForVisit"
+                         showUnits="false" unitsCssClass="append-to-value" style="dropdown" size="999">
+                    </obs>
+                </p>
+            </fieldset>
+
+            <obsgroup groupingConceptId="PIH:Payment construct">
+                <fieldset id="payment-amount-question" class="required">
+                    <legend>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
+                    </legend>
+                    <h3>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
+                    </h3>
+                    <p class="left" style="color:grey">
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                             showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
+                    </p>
+
+                </fieldset>
+
+             
+                <fieldset id="receipt-number-question">
+                    <legend>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
+                    </legend>
+                    <h3>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
+                    </h3>
+
+                    <p class="left">
+                        <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
+                             unitsCssClass="append-to-value"  />
+                        <br/>
+                    </p>
+
+                </fieldset>
+            </obsgroup>
+
+
+            <ifMode mode="ENTER" include="true">
+
+                <!-- ask about printing a wristband if there is a wristband configured at this location -->
+                <includeIf velocityTest="$printer.fn.isDefaultPrinterConfigured($sessionContext.sessionLocation, $printer.type.WRISTBAND)">
+
+                    <fieldset id="print-wristband-question" class="required">
+                        <legend>
+                            <uimessage code="mirebalais.checkin.printWristband"/>
+                        </legend>
+                        <h3>
+                            <uimessage code="mirebalais.checkin.printWristband"/>
+                        </h3>
+                        <span class="error field-error" style="display: none" id="print-wristband-error"></span>
+                        <p class="left">
+                            <select id="print-wristband" size="2">
+                                <option value="true" selected="selected"><uimessage code="emr.yes"/></option>
+                                <option value="false"><uimessage code="emr.no"/></option>
+                            </select>
+                        </p>
+                    </fieldset>
+
+                </includeIf>
+            </ifMode>
+
+            </section>
+
+        <submit/>
+    </ifMode>
+    <!-- END ENTER/EDIT VERSION OF THE FORM -->
+
+    <!-- START VIEW VERSION OF THE FORM (just display answers to obs, not section title or provider, date, location) -->
+    <ifMode mode="VIEW">
+
+        <section id="checkin" sectionTag="section" headerStyle="title" headerLabel="">
+
+            <span id="most-recent-encounter-title" style="display:none"><!--The Most Recent Encounter app in Core Apps replaces this with the "most recent" label--></span>
+
+            <fieldset id="type-of-visit-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </h3>
+
+                <!-- support displaying up to 12 type of visit obs -->
+                <p class="multilines-display">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                </p>
+            </fieldset>
+
+            <obsgroup groupingConceptId="PIH:Payment construct">
+                <fieldset id="payment-amount-question" class="required">
+                    <legend>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
+                    </legend>
+                    <h3>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
+                    </h3>
+
+                    <p class="left" style="color:grey">
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                             showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
+                    </p>
+                </fieldset>
+
+                <fieldset id="receipt-number-question">
+                    <legend>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
+                    </legend>
+                    <h3>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
+                    </h3>
+
+                    <p class="left">
+                        <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" />
+                    </p>
+                </fieldset>
+            </obsgroup>
+
+        </section>
+    </ifMode>
+    <!-- END VIEW VERSION OF THE FORM -->
+
+
+</htmlform>
