@@ -211,7 +211,7 @@
                                 <render acId="PIH:21167" aLabel="birthCert"/>
                                 <render acId="PIH:21166" aLabel="injuryCert"/>
                                 <render acId="PIH:7694"  aLabel="prenupCert"/>
-                                <render acId="PIH:7702"  aLabel="healthCert"/>
+                                <!-- render acId="PIH:7702"  aLabel="healthCert"/ -->
                             </repeat>
                         </div>
                     </div>
