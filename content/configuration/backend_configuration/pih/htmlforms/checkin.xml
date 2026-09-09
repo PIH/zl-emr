@@ -112,7 +112,7 @@
                             </repeat>
                         </div>
 
-                        <includeIf velocityTest="$patient.gender == 'F' || $patient.age &lt; 10 ">
+                        <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 10) &amp;&amp; $patient.gender == 'F'">
                             <div>
                                 <field>
                                     <label for="womensHealth-visit">
