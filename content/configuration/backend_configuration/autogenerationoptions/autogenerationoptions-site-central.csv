@@ -1,0 +1,4 @@
+Uuid,Identifier type,Location,Identifier source,Manual entry enabled,Auto generation enabled
+78412aa5-d654-4db3-9bc4-a047348c9737,${patientIdentifierType.dossierNumber.uuid},${location.uhm.uuid},${identifierSource.uhmDossierGenerator.uuid},true,true
+1dde3c45-1114-45f5-9ea0-dc3cbc74adec,${patientIdentifierType.dossierNumber.uuid},${location.cdi.uuid},${identifierSource.cdiDossierGenerator.uuid},true,true
+3285e100-f222-4552-8957-228a97aa4b6b,${patientIdentifierType.dossierNumber.uuid},${location.cange.uuid},${identifierSource.cangeDossierGenerator.uuid},true,true

@@ -22,7 +22,7 @@
   ],
 
   "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "6c1c2579-7d16-4d39-bca2-e77141ff435f"
+    "coreapps.defaultPatientIdentifierLocation": "${location.verrettes.uuid}"
   },
 
   "extraIdentifierTypes": [

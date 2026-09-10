@@ -53,6 +53,6 @@
 
   "globalProperties": {
     "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
-    "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
+    "coreapps.defaultPatientIdentifierLocation": "${location.saintMarcHsn.uuid}"
   }
 }

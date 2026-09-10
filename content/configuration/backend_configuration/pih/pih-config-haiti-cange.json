@@ -43,6 +43,6 @@
 
   "globalProperties": {
     "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
-    "coreapps.defaultPatientIdentifierLocation": "328f68e4-0370-102d-b0e3-001ec94a0cc1"
+    "coreapps.defaultPatientIdentifierLocation": "${location.cange.uuid}"
   }
 }

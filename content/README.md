@@ -19,8 +19,10 @@ Configuration files live under `configuration/`, split into two subdirectories:
 |---|---|
 | `addresshierarchy/` | Address hierarchy entries for Haiti |
 | `appframework/` | App framework extension/dashboard definitions for the OpenMRS frontend (`mch_dashboard_app.json`, `overview_reports_extension.json`) |
+| `autogenerationoptions/` | Identifier auto-generation option bindings (identifier type + location → identifier source), for Initializer-managed identifier generators |
 | `drugs/` | Drug definitions |
 | `globalproperties/` | OpenMRS global property overrides |
+| `idgen/` | Identifier source (idgen module) definitions |
 | `locations/` | Facility and location definitions |
 | `locationtagmaps/` | Maps locations to location tags |
 | `messageproperties/` | Localized (French) message overrides |
@@ -32,6 +34,16 @@ Configuration files live under `configuration/`, split into two subdirectories:
 | `reports/` | Report descriptors |
 | `roles/` | Role definitions |
 
+## Site-specific configuration files
+
+Within any `backend_configuration/` domain folder, a file whose name contains `-site-<site-name>`
+(e.g. `locations-site-mirebalais.csv`, `idgen-site-central.csv`) is only loaded on servers whose
+configured site (`pihcore.site`, resolved from the `PIH_CONFIG` JSON profile — see the root
+`README.md`) matches `<site-name>`, case-insensitively. This is handled by
+`InitializerSetup.getExclusionsForLoader()` in `openmrs-module-pihcore`, which excludes any
+`*-site-*.csv` file from being loaded unless it ends with `-site-<current site>.csv` — files
+without `-site-` in their name are unaffected and always load everywhere.
+
 ## content.properties
 
 `content.properties` provides the content package name and version (interpolated from the Maven project at build time), and defines key UUID/name constants used across the configuration:
@@ -39,6 +51,7 @@ Configuration files live under `configuration/`, split into two subdirectories:
 | Property | Description |
 |---|---|
 | `var.patientIdentifierType.*` | UUIDs of Zanmi Lasante patient identifier types (national ID, CIN, dossier numbers, HIV-EMR legacy IDs, REDCap IDs) |
+| `var.identifierSource.*` | UUIDs of Zanmi Lasante identifier sources (idgen module) referenced from both `idgen/` and `autogenerationoptions/` |
 | `var.encounterType.*` | UUIDs of Zanmi Lasante-specific and shared encounter types (French name overrides for parent-owned encounter types live in `distro/openmrs-distro.properties` instead — see that module's README) |
 | `var.concept.*` | UUIDs of concepts referenced by Zanmi Lasante's MCH/vitals forms — most are defined in the parent `pihemr-content` and duplicated here because constants aren't shared across content packages |
 | `var.expression.*` | Spring-EL boolean expressions (patient-age checks) used by `appframework/mch_dashboard_app.json` extension visibility rules |
