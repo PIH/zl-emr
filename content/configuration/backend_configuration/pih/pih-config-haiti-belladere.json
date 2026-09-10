@@ -53,7 +53,7 @@
   ],
 
   "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "d6dafa1a-9a2f-4f61-a33e-410acb64b0e9"
+    "coreapps.defaultPatientIdentifierLocation": "${location.belladere.uuid}"
   },
 
   "biometricsConfig": {

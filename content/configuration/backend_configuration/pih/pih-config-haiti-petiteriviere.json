@@ -22,7 +22,7 @@
   ],
 
   "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "a7af173a-f623-445a-bf01-e6a64c0b2c98"
+    "coreapps.defaultPatientIdentifierLocation": "${location.petiteRiviere.uuid}"
   },
 
   "extraIdentifierTypes": [

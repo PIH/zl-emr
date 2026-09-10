@@ -42,4 +42,41 @@
         </sql>
     </changeSet>
 
+    <changeSet id="20260909-repoint-central-dossier-autogen-uuids" author="mgoodrich">
+        <comment>
+            HAI-1235: Central's Dossier Number auto-generation options for UHM, CDI, and Cange are
+            moving from being created ad hoc by ConfigureHaitiIdGenerators.java (with a randomly
+            assigned uuid) to being managed by Initializer's autogenerationoptions domain (see
+            configuration/backend_configuration/autogenerationoptions/autogenerationoptions-site-central.csv).
+            This repoints each existing row's uuid to the uuid that CSV expects, so Initializer
+            updates the existing row in place instead of creating a duplicate for the same
+            identifier type/location pair. This runs before Initializer loads (see
+            ConfigurationSetup.configureDependencies() in pihcore). It is a safe no-op on any
+            server that does not have these locations, since the location/identifier type
+            subqueries simply match zero rows there.
+        </comment>
+        <sql>
+            update idgen_auto_generation_option
+            set uuid = '78412aa5-d654-4db3-9bc4-a047348c9737'
+            where identifier_type = (select patient_identifier_type_id from patient_identifier_type where uuid = '${patientIdentifierType.dossierNumber.uuid}')
+            and location = (select location_id from location where uuid = '${location.uhm.uuid}')
+            and uuid != '78412aa5-d654-4db3-9bc4-a047348c9737'
+            limit 1;
+
+            update idgen_auto_generation_option
+            set uuid = '1dde3c45-1114-45f5-9ea0-dc3cbc74adec'
+            where identifier_type = (select patient_identifier_type_id from patient_identifier_type where uuid = '${patientIdentifierType.dossierNumber.uuid}')
+            and location = (select location_id from location where uuid = '${location.cdi.uuid}')
+            and uuid != '1dde3c45-1114-45f5-9ea0-dc3cbc74adec'
+            limit 1;
+
+            update idgen_auto_generation_option
+            set uuid = '3285e100-f222-4552-8957-228a97aa4b6b'
+            where identifier_type = (select patient_identifier_type_id from patient_identifier_type where uuid = '${patientIdentifierType.dossierNumber.uuid}')
+            and location = (select location_id from location where uuid = '${location.cange.uuid}')
+            and uuid != '3285e100-f222-4552-8957-228a97aa4b6b'
+            limit 1;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

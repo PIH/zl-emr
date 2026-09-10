@@ -7,7 +7,7 @@
 
   "globalProperties": {
     "haiti.checkIn.reasonsForVisit": "PIH:CLINICAL,PIH:ID card only,PIH:Lab only,PIH:Pharmacy only,PIH:Procedure only,PIH:Request scheduled appointment,PIH:Social assistance and psychosocial support,PIH:OTHER",
-    "coreapps.defaultPatientIdentifierLocation": "a084f714-a536-473b-94e6-ec317b152b43",
+    "coreapps.defaultPatientIdentifierLocation": "${location.mirebalais.uuid}",
     "registrationapp.paperRecordIdentifierDefinition": "paperrecord.patientDataDefinition.paperRecordIdentifier"
   },
 

@@ -1,0 +1,4 @@
+Uuid,Name,Description,Identifier type,Base character set,First identifier base,Prefix,Min length,Max length
+${identifierSource.uhmDossierGenerator.uuid},Sequential Generator for Dossier - UHM,Dossier Number generator for Hôpital Universitaire de Mirebalais - Prensipal,${patientIdentifierType.dossierNumber.uuid},0123456789,000001,A,7,7
+${identifierSource.cdiDossierGenerator.uuid},Sequential Generator for Dossier - CDI,Dossier Number generator for CDI Klinik Ekstèn Jeneral,${patientIdentifierType.dossierNumber.uuid},0123456789,000001,CDI,9,9
+${identifierSource.cangeDossierGenerator.uuid},Sequential Generator for Dossier - Cange,Dossier Number generator for Cange,${patientIdentifierType.dossierNumber.uuid},0123456789,000001,CNG,9,9

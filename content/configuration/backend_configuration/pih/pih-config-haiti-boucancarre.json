@@ -38,7 +38,7 @@
   ],
 
   "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "9bc65df6-99a2-4d43-b56b-f42bde3f5d6d"
+    "coreapps.defaultPatientIdentifierLocation": "${location.boucanCarre.uuid}"
   },
 
   "biometricsConfig": {

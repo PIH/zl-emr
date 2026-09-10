@@ -51,7 +51,7 @@
   ],
 
   "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "c741e25d-eb07-4efc-89e4-38ac73948ae1"
+    "coreapps.defaultPatientIdentifierLocation": "${location.cercaLaSource.uuid}"
   },
 
   "biometricsConfig": {
