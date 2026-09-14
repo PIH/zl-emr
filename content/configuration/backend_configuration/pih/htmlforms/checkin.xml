@@ -98,9 +98,11 @@
 
                         <div>
                             <field>
-                                <label for="surgery-consult-visit">
-                                    <uimessage code="pihcore.surgeryConsult"/>
-                                </label>
+                                <b>
+                                    <label for="surgery-consult-visit">
+                                        <uimessage code="pihcore.surgeryConsult"/>
+                                    </label>
+                                </b>
                             </field>
                             <repeat>
                                 <template>
@@ -121,9 +123,11 @@
                         <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 10) &amp;&amp; $patient.gender == 'F'">
                             <div>
                                 <field>
-                                    <label for="womensHealth-visit">
-                                        <uimessage code="pihcore.womensHealth"/>
-                                    </label>
+                                    <b>
+                                        <label for="womensHealth-visit">
+                                            <uimessage code="pihcore.womensHealth"/>
+                                        </label>
+                                    </b>
                                 </field>
                                 <repeat>
                                     <template>
@@ -150,9 +154,11 @@
                     <div>
                         <div>
                             <field>
-                                <label for="surgery-visit">
-                                    <uimessage code="pihcore.surgeryIntervent"/>
-                                </label>
+                                <b>
+                                    <label for="surgery-visit">
+                                        <uimessage code="pihcore.surgeryIntervent"/>
+                                    </label>
+                                </b>
                             </field>
                             <field>
                                 <label>
@@ -189,9 +195,12 @@
 
                         <div>
                             <field>
-                                <label for="hospital-visit">
-                                    <uimessage code="pihcore.hospitalized"/>
-                                </label>
+                                <b>
+                                    <label for="hospital-visit">
+                                        <uimessage code="pihcore.hospitalized"/>
+                                    </label>
+                                </b>
+
                             </field>
                             <repeat>
                                 <template>
@@ -213,9 +222,11 @@
 
                         <div>
                             <field>
-                                <label for="cert-visit">
-                                    <uimessage code="pihcore.otherNonMedServices"/>
-                                </label>
+                                <b>
+                                    <label for="cert-visit">
+                                        <uimessage code="pihcore.otherNonMedServices"/>
+                                    </label>
+                                </b>
                             </field>
                             <repeat>
                                 <template>
