@@ -17,6 +17,11 @@
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
+        <style>
+            span.bside {
+                display: inline-block;
+            }
+        </style>
 
         <script type="text/javascript">
 
@@ -82,6 +87,7 @@
                                 <render acId="PIH:7705" aLabel="pihcore.generalConsult"/>
                                 <render acId="CIEL:165048" aLabel="pihcore.pedConsult"/>
                                 <render acId="CIEL:165019" aLabel="pihcore.intMedConsult"/>
+                                <render acId="PIH:6192" aLabel="pihcore.emergency" />
                                 <render acId="PIH:7706" aLabel="pihcore.location.dental"/>
                                 <render acId="CIEL:168363" aLabel="pih.ncdConsult"/>
                                 <render acId="PIH:Oncology" aLabel="pih.task.oncologyConsultNote.label"/>
@@ -148,6 +154,23 @@
                                     <uimessage code="pihcore.surgeryIntervent"/>
                                 </label>
                             </field>
+                            <field>
+                                <label>
+                                    <uimessage code="pihcore.genSurgery"/>:
+                                </label>
+                            </field>
+                            <field>
+                                <div class="indented">
+                                    <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                         answerConceptId="PIH:20330" answerCode="pihcore.minorSurgery"/>
+                                </div>
+                            </field>
+                            <field>
+                                <div class="indented">
+                                    <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                         answerConceptId="PIH:21723" answerCode="pihcore.majorSurgery"/>
+                                </div>
+                            </field>
                             <repeat>
                                 <template>
                                     <field>
@@ -157,9 +180,6 @@
                                         </div>
                                     </field>
                                 </template>
-                                <render acId="CIEL:160449" aLabel="genSurgery"/>
-                                <render acId="PIH:20330" aLabel="minorSurgery"/>
-                                <render acId="PIH:21723" aLabel="majorSurgery"/>
                                 <render acId="PIH:21724" aLabel="orthoSurgery"/>
                                 <render acId="PIH:21725" aLabel="eyeSurgery"/>
                                 <render acId="PIH:21726" aLabel="uroSurgery"/>
