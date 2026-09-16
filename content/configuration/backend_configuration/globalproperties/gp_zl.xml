@@ -41,6 +41,17 @@
             <!-- maps viral load panel to the reason for test -->
             <value>d760dcec-f2b3-46c5-a6af-7e83c2165fd1=164126AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</value>
         </globalProperty>
+        <globalProperty>
+            <property>pihapps.labs.testFieldDependencies</property>
+            <!--
+                HIV VL Panel: HIV VL (quantitative) is only shown/enterable when HIV VL (qualitative) = Detected;
+                Detected lower limit is only shown/enterable when HIV VL (qualitative) = Not detected, defaulting to 839.
+                Trigger concept: HIV VL (qualitative) = 1305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                Answers: Detected = 1301AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, Not detected = 1302AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                Controlled concepts: HIV VL (quantitative) = 3cd4a882-26fe-102b-80cb-0017a47871b2, Detected lower limit = 53cb83ed-5d55-4b63-922f-d6b8fc67a5f8
+            -->
+            <value>[{"triggerConcept":"1305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","answers":{"1301AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA":{"show":["3cd4a882-26fe-102b-80cb-0017a47871b2"]},"1302AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA":{"show":["53cb83ed-5d55-4b63-922f-d6b8fc67a5f8"],"defaults":{"53cb83ed-5d55-4b63-922f-d6b8fc67a5f8":839}}}}]</value>
+        </globalProperty>
 
         <!-- Lab Workflow OWA -->
         <globalProperty>
