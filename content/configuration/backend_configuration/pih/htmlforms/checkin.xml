@@ -15,10 +15,10 @@
 <htmlform id="check-in-form" formUuid="660f4e34-b4c2-4666-bd9e-f7c07bac8190" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="4.0">
 
-    <!-- if archives room is enabled we prompt for pulling dossier first -->
+    <!-- redirect to the check-in app upon save if we are in that context -->
     <includeIf velocityTest="$sessionContext.session.getAttribute('currentAppId') == 'mirebalais.liveCheckin'">
+        <!-- if archives room is enabled we prompt for pulling dossier first -->
         <includeIf velocityTest="$config.isComponentEnabled('archives')">
-            <!-- in Mirebalais we prompt for pulling dossier -->
             <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/activeAppRouter"/>
         </includeIf>
 
