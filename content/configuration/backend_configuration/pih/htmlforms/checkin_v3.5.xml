@@ -15,6 +15,16 @@
 <htmlform id="check-in-form" formUuid="2bbd0788-fc4f-4253-93fc-1f16033f8f78" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.5">
 
+    <includeIf velocityTest="$config.isComponentEnabled('archives')">
+        <!-- in Mirebalais we prompt for pulling dossier -->
+        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/appEndRouter"/>
+    </includeIf>
+
+    <includeIf velocityTest="!$config.isComponentEnabled('archives')">
+        <!-- otherwise redirect back directly to the router -->
+        <redirectOnSave url="/pihcore/router/appEndRouter.page?patientId={{patient.id}}"/>
+    </includeIf>
+
     <macros>
         <macro key="reasonsForVisit" expression="fn.globalProperty('haiti.checkIn.reasonsForVisit')"/>
     </macros>

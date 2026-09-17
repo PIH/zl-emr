@@ -15,6 +15,16 @@
 <htmlform id="check-in-form" formUuid="660f4e34-b4c2-4666-bd9e-f7c07bac8190" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="4.0">
 
+    <includeIf velocityTest="$config.isComponentEnabled('archives')">
+        <!-- in Mirebalais we prompt for pulling dossier -->
+        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/appEndRouter"/>
+    </includeIf>
+
+    <includeIf velocityTest="!$config.isComponentEnabled('archives')">
+        <!-- otherwise redirect back directly to the router -->
+        <redirectOnSave url="/pihcore/router/appEndRouter.page?patientId={{patient.id}}"/>
+    </includeIf>
+
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
         <style>
