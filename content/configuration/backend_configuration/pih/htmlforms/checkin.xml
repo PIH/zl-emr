@@ -15,14 +15,17 @@
 <htmlform id="check-in-form" formUuid="660f4e34-b4c2-4666-bd9e-f7c07bac8190" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="4.0">
 
-    <includeIf velocityTest="$config.isComponentEnabled('archives')">
-        <!-- in Mirebalais we prompt for pulling dossier -->
-        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/appEndRouter"/>
-    </includeIf>
+    <!-- if archives room is enabled we prompt for pulling dossier first -->
+    <includeIf velocityTest="$sessionContext.session.getAttribute('currentAppId') == 'mirebalais.liveCheckin'">
+        <includeIf velocityTest="$config.isComponentEnabled('archives')">
+            <!-- in Mirebalais we prompt for pulling dossier -->
+            <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/activeAppRouter"/>
+        </includeIf>
 
-    <includeIf velocityTest="!$config.isComponentEnabled('archives')">
-        <!-- otherwise redirect back directly to the router -->
-        <redirectOnSave url="/pihcore/router/appEndRouter.page?patientId={{patient.id}}"/>
+        <includeIf velocityTest="!$config.isComponentEnabled('archives')">
+            <!-- otherwise redirect directly back to the check-in app -->
+            <redirectOnSave url="/coreapps/findpatient/findPatient.page?app=mirebalais.liveCheckin"/>
+        </includeIf>
     </includeIf>
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->

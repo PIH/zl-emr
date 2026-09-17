@@ -15,14 +15,17 @@
 <htmlform id="check-in-form" formUuid="2bbd0788-fc4f-4253-93fc-1f16033f8f78" formName="Checkin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.5">
 
-    <includeIf velocityTest="$config.isComponentEnabled('archives')">
-        <!-- in Mirebalais we prompt for pulling dossier -->
-        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/appEndRouter"/>
-    </includeIf>
+    <!-- redirect to the check-in app upon save if we are in that context -->
+    <includeIf velocityTest="$sessionContext.session.getAttribute('currentAppId') == 'mirebalais.liveCheckin'">
+        <includeIf velocityTest="$config.isComponentEnabled('archives')">
+            <
+            <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/activeAppRouter"/>
+        </includeIf>
 
-    <includeIf velocityTest="!$config.isComponentEnabled('archives')">
-        <!-- otherwise redirect back directly to the router -->
-        <redirectOnSave url="/pihcore/router/appEndRouter.page?patientId={{patient.id}}"/>
+        <includeIf velocityTest="!$config.isComponentEnabled('archives')">
+            <!-- otherwise redirect directly back to the check-in app -->
+            <redirectOnSave url="/coreapps/findpatient/findPatient.page?app=mirebalais.liveCheckin"/>
+        </includeIf>
     </includeIf>
 
     <macros>
