@@ -17,12 +17,12 @@
 
     <includeIf velocityTest="$config.isComponentEnabled('archives')">
         <!-- in Mirebalais we prompt for pulling dossier -->
-        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/activeAppRouter"/>
+        <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/currentAppRouter"/>
     </includeIf>
 
     <includeIf velocityTest="!$config.isComponentEnabled('archives')">
         <!-- otherwise redirect back directly to the router -->
-        <redirectOnSave url="/pihcore/router/activeAppRouter.page?patientId={{patient.id}}"/>
+        <redirectOnSave url="/pihcore/router/currentAppRouter.page?patientId={{patient.id}}"/>
     </includeIf>
 
     <ifMode mode="VIEW" include="true">

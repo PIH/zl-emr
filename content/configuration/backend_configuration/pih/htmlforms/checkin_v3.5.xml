@@ -19,7 +19,7 @@
     <includeIf velocityTest="$sessionContext.session.getAttribute('currentAppId') == 'mirebalais.liveCheckin'">
         <!-- if archives room is enabled we prompt for pulling dossier first -->
         <includeIf velocityTest="$config.isComponentEnabled('archives')">
-            <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/activeAppRouter"/>
+            <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/currentAppRouter"/>
         </includeIf>
 
         <includeIf velocityTest="!$config.isComponentEnabled('archives')">
