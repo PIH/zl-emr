@@ -52,14 +52,5 @@
 
   "globalProperties": {
     "coreapps.defaultPatientIdentifierLocation": "${location.thomonde.uuid}"
-  },
-
-  "biometricsConfig": {
-    "biometricEngine": "restBiometricEngine",
-    "templateFormat": "PROPRIETARY",
-    "subjectUrl": "http://192.168.1.111:9000/subject",
-    "matchUrl": "http://192.168.1.111:9000/match",
-    "scanUrl": "https://localhost:9443/fingerprint/scan",
-    "devicesUrl": "https://localhost:9443/fingerprint/devices"
   }
 }
