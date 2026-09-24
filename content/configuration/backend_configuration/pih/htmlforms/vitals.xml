@@ -114,27 +114,26 @@
              headerCode="mirebalais.vitals.title">
 
         <div class="section-container">
-            <div class="three-columns">
+            <div class="five-columns">
                 <div>
                     <label>
                         <uimessage code="mirebalais.vitals.height.title"/>
                     </label>
 
-                    <p class="left">
+                    <span class="small">
                         <obs conceptId="PIH:HEIGHT (CM)" id="height_cm" showUnits="emr.units.centimeters"
                              unitsCssClass="append-to-value"/>
-                    </p>
+                    </span>
                 </div>
                 <div>
-
                     <label>
                         <uimessage code="mirebalais.vitals.weight.title"/>
                     </label>
 
-                    <p class="left">
+                    <span class="small">
                         <obs conceptId="PIH:WEIGHT (KG)" id="weight_kg"
                              showUnits="emr.units.kilograms" unitsCssClass="append-to-value"/>
-                    </p>
+                    </span>
                 </div>
 
                 <div>
@@ -157,60 +156,67 @@
 
                     </includeIf>
                 </div>
+                <div>
+                    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate) OR female -->
+                    <includeIf
+                            velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
+                        <label>
+                            <uimessage code="mirebalais.vitals.muac.navigation.title"/>
+                        </label>
+                        <!-- add cm for view if in view mode -->
+                        <ifMode mode="VIEW">
+                            <p>
+                                <span class="obs-field">
+                                    <span id="muac_cm_display" class="value"/>
+                                    <span class="append-to-value">
+                                        <uimessage code="emr.units.centimeters"/>
+                                    </span>
+                                </span>
+                            </p>
+                        </ifMode>
+                        <!-- add cm field for conversion if in edit mode -->
+                        <ifMode mode="VIEW" include="false">
+                            <p class="left">
+                                <span class="obs-field">
+                                    <input type="text" id="muac_cm" size="5" min="5" max="50" class="number numeric-range cm"/>
+                                    <span class="append-to-value small">
+                                        <uimessage code="emr.units.centimeters"/>
+                                    </span>
+                                    <span class="error field-error" style="display: none"/>
+                                </span>
+                            </p>
+                            <p class="left small">
+                                <uimessage code="mirebalais.vitals.or"/>
+                            </p>
+                        </ifMode>
+                        <!-- this will be manually hidden in view mode (we need it to be rendered because we need to pluck the mm measurement from it -->
+                        <p class="mm small">
+                            <obs conceptId="CIEL:163187" id="muac_mm" showUnits="emr.units.millimeters"
+                                 unitsCssClass="append-to-value"/>
+                        </p>
+                    </includeIf>
+                </div>
+
+                <div>
+                    <!-- only show Head circumference if patient is less than 3 years old (on the encounterDate) -->
+                    <includeIf velocityTest="3 > $patient.getAge($encounter.getEncounterDatetime())">
+                        <label>
+                            <uimessage code="mirebalais.vitals.head.title"/>
+                        </label>
+                        <span class="small">
+                            <obs conceptId="PIH:HEAD CIRCUMFERENCE" id="head_cm" showUnits="emr.units.centimeters"
+                                 unitsCssClass="append-to-value"/>
+                        </span>
+                    </includeIf>
+                </div>
+
             </div>
 
+            <ifMode mode="VIEW" include="false">
+                <br></br>
+            </ifMode>
+
             <subform path="configuration/pih/subforms/vital-signs-basic-widget.xml"/>
-
-            <!-- only show MUAC if patient is less than 13 years old (on the encounterDate) OR female -->
-            <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
-                <label>
-                    <uimessage code="mirebalais.vitals.muac.navigation.title" />
-                </label>
-                <!-- add cm for view if in view mode -->
-                <ifMode mode="VIEW">
-                    <p>
-                        <span class="obs-field">
-                            <span id="muac_cm_display" class="value" />
-                            <span class="append-to-value">
-                                <uimessage code="emr.units.centimeters" />
-                            </span>
-                        </span>
-                    </p>
-                </ifMode>
-                <!-- add cm field for conversion if in edit mode -->
-                <ifMode mode="VIEW" include="false">
-                    <p class="left">
-                        <span class="obs-field">
-                            <input type="text" id="muac_cm" size="5" min="5" max="50" class="number numeric-range cm" />
-                            <span class="append-to-value">
-                                <uimessage code="emr.units.centimeters" />
-                            </span>
-                            <span class="error field-error" style="display: none" />
-                        </span>
-                    </p>
-                    <p class="left">
-                        <uimessage code="mirebalais.vitals.or" />
-                    </p>
-                </ifMode>
-                <!-- this will be manually hidden in view mode (we need it to be rendered because we need to pluck the mm measurement from it -->
-                <p class="mm">
-                    <obs conceptId="CIEL:163187" id="muac_mm" showUnits="emr.units.millimeters" unitsCssClass="append-to-value" />
-                </p>
-            </includeIf>
-
-            <!-- only show Head circumference if patient is less than 3 years old (on the encounterDate) -->
-            <includeIf velocityTest="3 > $patient.getAge($encounter.getEncounterDatetime())">
-
-                <label>
-                    <uimessage code="mirebalais.vitals.head.title"/>
-                </label>
-
-                <p>
-                    <obs conceptId="PIH:HEAD CIRCUMFERENCE" id="head_cm" showUnits="emr.units.centimeters"
-                         unitsCssClass="append-to-value"/>
-                </p>
-
-            </includeIf>
 
         </div>
 
@@ -223,8 +229,10 @@
                 <label>
                     <uimessage code="mirebalais.vitals.map"/>
                 </label>
-                <obs conceptId="CIEL:163187" id="map_mmhg"
-                     showUnits="mmHg" unitsCssClass="append-to-value"/>
+                <span class="small">
+                    <obs conceptId="CIEL:163187" id="map_mmhg"
+                         showUnits="mmHg" unitsCssClass="append-to-value"/>
+                </span>
             </div>
 
             <div>
@@ -235,15 +243,17 @@
                     <p class="left">
                         <span class="obs-field">
                             <input type="text" id="milligramme" class="number numeric-range milligramme "/>
-                            <span class="append-to-value">
+                            <span class="append-to-value small">
                                 <uimessage code="mg/dL"/>
                             </span>
                             <span class="error field-error" style="display: none"/>
                         </span>
                     </p>
                 </ifMode>
-                <obs conceptId="CIEL:887" id="milimole"
-                     showUnits="mmol/L" unitsCssClass="append-to-value"/>
+                <span class="small">
+                    <obs conceptId="CIEL:887" id="milimole"
+                         showUnits="mmol/L" unitsCssClass="append-to-value"/>
+                </span>
             </div>
             <br/>
 
@@ -251,7 +261,9 @@
                 <label>
                     <uimessage code="mirebalais.vitals.oxygen.flow.rate"/>
                 </label>
-                <obs conceptId="CIEL:165986" showUnits="L/min"/>
+                <span class="small">
+                    <obs conceptId="CIEL:165986" showUnits="L/min"/>
+                </span>
             </div>
 
             <div>
@@ -272,7 +284,9 @@
                 <label>
                     <uimessage code="pihcore.lab.urineOutput"/>
                 </label>
-                <obs conceptId="CIEL:161929" showUnits="true"/>
+                <span class="small">
+                    <obs conceptId="CIEL:161929" showUnits="true"/>
+                </span>
             </div>
         </div>
     </section>
@@ -280,59 +294,61 @@
     <section id="pain" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.pain">
 
-            <div class="section-container two-columns">
+        <div class="section-container two-columns">
 
+            <div>
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.pain.scale"/>
+                    </label>
+                    <obs id="pain" conceptId="PIH:20668" style="radio"
+                         answers="0,2,4,6,8,10" answerLabels="0,2,4,6,8,10"/>
+                </p>
+            </div>
+            <div>
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.svs"/>
+                    </label>
+                    <obs conceptId="PIH:20665" style="radio"
+                         answerConceptIds="PIH:1107,PIH:1901,PIH:1900,PIH:1903,PIH:20666" answerSeparator=""/>
+                </p>
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.nrs"/>
+                    </label>
+                    <obs conceptId="PIH:20667"/>
+                </p>
+
+                <p class="in-line">
+                    <label>
+                        <uimessage code="mirebalais.vitals.bps"/>
+                    </label>
+                    <obs conceptId="PIH:20668"/>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <includeIf velocityTest="$patient.gender == 'F' &amp;&amp; $patient.age &gt; 10  ">
+        <section id="prenatal" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.prenatal">
+
+            <div class="section-container">
                 <div>
-                    <p class="in-line">
+                    <p>
                         <label>
-                            <uimessage code="mirebalais.vitals.pain.scale" />
+                            <uimessage code="mirebalais.vitals.fetal.heart.rate"/>
                         </label>
-                        <obs id="pain" conceptId="PIH:20668" style="radio"
-                             answers="0,2,4,6,8,10" answerLabels="0,2,4,6,8,10" />
-                    </p>
-                </div>
-                <div>
-                    <p class="in-line">
-                        <label>
-                            <uimessage code="mirebalais.vitals.svs" />
-                        </label>
-                        <obs conceptId="PIH:20665" style="radio"
-                             answerConceptIds="PIH:1107,PIH:1901,PIH:1900,PIH:1903,PIH:20666" answerSeparator="" />
-                    </p>
-
-                    <p class="in-line">
-                        <label>
-                            <uimessage code="mirebalais.vitals.nrs" />
-                        </label>
-                        <obs conceptId="PIH:20667" />
-                    </p>
-
-                    <p class="in-line">
-                        <label>
-                            <uimessage code="mirebalais.vitals.bps" />
-                        </label>
-                        <obs conceptId="PIH:20668" />
+                        <span class="small">
+                            <obs conceptId="CIEL:1440" showUnits="bpm"/>
+                        </span>
                     </p>
                 </div>
             </div>
-    </section>
-
-            <includeIf velocityTest="$patient.gender == 'F' ">
-                <section id="prenatal" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                         headerCode="pihcore.prenatal">
-
-                    <div class="section-container">
-                        <div>
-                            <p>
-                                <label>
-                                    <uimessage code="mirebalais.vitals.fetal.heart.rate"/>
-                                </label>
-                                <obs conceptId="CIEL:1440" showUnits="bpm"/>
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            </includeIf>
+        </section>
+    </includeIf>
 
     <section id="con-comment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.consultInfo.label">
@@ -342,7 +358,7 @@
                 <label>
                     <uimessage code="mirebalais.vitals.complaint.title"/>
                 </label>
-                <obs conceptId="CIEL:160531" id="chief_complaint"/>
+                <obs conceptId="CIEL:160531" id="chief_complaint" style="textarea"/>
             </div>
 
             <div>
