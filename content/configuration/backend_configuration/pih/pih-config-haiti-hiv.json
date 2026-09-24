@@ -38,15 +38,6 @@
     "vitals"
   ],
 
-  "biometricsConfig": {
-    "biometricEngine": "restBiometricEngine",
-    "templateFormat": "PROPRIETARY",
-    "subjectUrl": "http://localhost:9000/subject",
-    "matchUrl": "http://localhost:9000/match",
-    "scanUrl": "https://localhost:9443/fingerprint/scan",
-    "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  },
-
   "globalProperties": {
     "concept.causeOfDeath": "3ce8a170-26fe-102b-80cb-0017a47871b2"
   },
