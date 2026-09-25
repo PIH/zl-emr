@@ -24,6 +24,30 @@
         </code>
     </translations>
 
+    <!-- only show/handle the English conversion fields if we are in 'ENTER' or 'EDIT' mode -->
+    <ifMode mode="VIEW" include="false">
+        <script type="text/javascript">
+            // mg/dL to mmol/L converter
+
+            var milligramExitHandler = {
+                handleExit: function (fieldValue) {
+                    if (fieldValue &amp;&amp; fieldValue.value()) {
+                        setValue('milimole.value', convertMilligramToMonoliter(fieldValue.value()));
+                        jq('#milligramme').val('');
+                    }
+                    return true;
+                }
+            }
+
+            ExitHandlers['milligramme'] = milligramExitHandler;
+
+            var convertMilligramToMonoliter = function(mg) {
+                return (mg / 18 ).toFixed(1);
+            }
+
+        </script>
+    </ifMode>
+
     <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 
@@ -101,6 +125,81 @@
 
     </includeIf>
 
+    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate) -->
+    <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
+        <script type="text/javascript">
+            var convertCmToMm = function(muacCm) {
+                return (muacCm * 10);
+            }
+
+            var convertMmToCm = function(muacMm) {
+                return (muacMm / 10);
+            }
+        </script>
+        <ifMode mode="VIEW" include="false">
+            <script type="text/javascript">
+                // cm to mm ExitHandler when in edit mode
+
+                var cmExitHandler = {
+                    handleExit: function (fieldValue) {
+                        if (fieldValue &amp;&amp; fieldValue.value()) {
+                            setValue('muac_mm.value', convertCmToMm(fieldValue.value()));
+                            getField('muac_mm.value').change() // trigger change event so ratio is updated
+                        }
+                        return true;
+                    }
+                }
+
+                var mmExitHandler = {
+                    handleExit: function (fieldValue) {
+                        if (fieldValue &amp;&amp; fieldValue.value()) {
+                            jq('#muac_cm').val(convertMmToCm(fieldValue.value()));
+                        }
+                        return true;
+                    }
+                }
+
+                ExitHandlers['mm'] = mmExitHandler;
+                ExitHandlers['cm'] = cmExitHandler;
+
+                // set cm field when reloading
+                jq(function() {
+                    var muac_mm = getValue('muac_mm.value');
+                    if (muac_mm) {
+                        jq('#muac_cm').val(convertMmToCm(muac_mm));
+                    }
+                });
+            </script>
+        </ifMode>
+        <!-- Convert muac to cm units on the view/dashboard -->
+        <ifMode mode="VIEW">
+            <script type="text/javascript">
+                // handle displaying the muac when in VIEW mode
+                jq(function() {
+
+                    // we have to iterate through in case there are multiple vitals forms
+                    // displayed on a single page
+
+                    jq('htmlform').each(function(index, form) {
+
+                        // display muac in cm, not mm
+                        jq(form).find('#muac_mm').hide();
+                        var muacMm = jq(form).find('#muac_mm').find('.value').text();
+                        if (muacMm != null &amp;&amp; !isNaN(muacMm) &amp;&amp; muacMm.length &gt; 0) {
+                            var muac = convertMmToCm(muacMm);
+                            if (muac != null &amp;&amp; !isNaN(muac)) {
+                                jq(form).find('#muac_cm_display').text(muac);
+                            }
+                        } else {
+                            jq(form).find('#muac_cm_display').text("____");
+                        }
+                    });
+
+                });
+            </script>
+        </ifMode>
+    </includeIf>
+
     <span id="most-recent-encounter-title" style="display:none"><!--The Most Recent Encounter app in Core Apps replaces this with the "most recent" label--></span>
 
     <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
@@ -160,6 +259,9 @@
                     <!-- only show MUAC if patient is less than 13 years old (on the encounterDate) OR female -->
                     <includeIf
                             velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
+
+                        <!-- subform path="configuration/pih/subforms/muac-convert-widget.js"/ -->
+
                         <label>
                             <uimessage code="mirebalais.vitals.muac.navigation.title"/>
                         </label>
@@ -177,7 +279,7 @@
                         <!-- add cm field for conversion if in edit mode -->
                         <ifMode mode="VIEW" include="false">
                             <p class="left">
-                                <span class="obs-field">
+                                <span class="obs-field small">
                                     <input type="text" id="muac_cm" size="5" min="5" max="50" class="number numeric-range cm"/>
                                     <span class="append-to-value small">
                                         <uimessage code="emr.units.centimeters"/>
@@ -191,7 +293,7 @@
                         </ifMode>
                         <!-- this will be manually hidden in view mode (we need it to be rendered because we need to pluck the mm measurement from it -->
                         <p class="mm small">
-                            <obs conceptId="CIEL:163187" id="muac_mm" showUnits="emr.units.millimeters"
+                            <obs conceptId="PIH:7956" id="muac_mm" showUnits="emr.units.millimeters"
                                  unitsCssClass="append-to-value"/>
                         </p>
                     </includeIf>
@@ -227,7 +329,7 @@
         <div class="section-container six-columns">
             <div>
                 <label>
-                    <uimessage code="mirebalais.vitals.map"/>
+                    <uimessage code="mirebalais.vitals.map.short"/>
                 </label>
                 <span class="small">
                     <obs conceptId="CIEL:163187" id="map_mmhg"
@@ -240,8 +342,9 @@
                     <uimessage code="mirebalais.vitals.blood.glucose"/>
                 </label>
                 <ifMode mode="VIEW" include="false">
+                    <!-- subform path="configuration/pih/subforms/glucose-convert-widget.js"/ -->
                     <p class="left">
-                        <span class="obs-field">
+                        <span class="obs-field small">
                             <input type="text" id="milligramme" class="number numeric-range milligramme "/>
                             <span class="append-to-value small">
                                 <uimessage code="mg/dL"/>
@@ -268,16 +371,20 @@
 
             <div>
                 <label>
-                    <uimessage code="mirebalais.vitals.gcs"/>
+                    <uimessage code="mirebalais.vitals.gcs.short"/>
                 </label>
-                <obs conceptId="CIEL:160347"/>
+                <span class="small">
+                    <obs conceptId="CIEL:160347"/>
+                </span>
             </div>
 
             <div>
                 <label>
-                    <uimessage code="mirebalais.vitals.rass"/>
+                    <uimessage code="mirebalais.vitals.rass.short"/>
                 </label>
-                <obs conceptId="PIH:20664"/>
+                <span class="small">
+                    <obs conceptId="PIH:20664"/>
+                </span>
             </div>
 
             <div>
@@ -365,7 +472,7 @@
                 <label>
                     <uimessage code="pihcore.comment"/>
                 </label>
-                <obs conceptId="CIEL:161011" id="vital_comment"/>
+                <obs conceptId="CIEL:161011" id="vital_comment" style="textarea"/>
             </div>
 
         </div>
