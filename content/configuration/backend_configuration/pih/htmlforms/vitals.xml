@@ -138,32 +138,27 @@
         </script>
         <ifMode mode="VIEW" include="false">
             <script type="text/javascript">
-                // cm to mm ExitHandler when in edit mode
-
-                var cmExitHandler = {
-                    handleExit: function (fieldValue) {
-                        if (fieldValue &amp;&amp; fieldValue.value()) {
-                            setValue('muac_mm.value', convertCmToMm(fieldValue.value()));
-                            getField('muac_mm.value').change() // trigger change event so ratio is updated
-                        }
-                        return true;
-                    }
-                }
-
-                var mmExitHandler = {
-                    handleExit: function (fieldValue) {
-                        if (fieldValue &amp;&amp; fieldValue.value()) {
-                            jq('#muac_cm').val(convertMmToCm(fieldValue.value()));
-                        }
-                        return true;
-                    }
-                }
-
-                ExitHandlers['mm'] = mmExitHandler;
-                ExitHandlers['cm'] = cmExitHandler;
-
-                // set cm field when reloading
                 jq(function() {
+                    jq('#muac_cm').change(function() {
+                        var cm = jq(this).val();
+                        if (cm) {
+                            setValue('muac_mm.value', convertCmToMm(cm));
+                            getField('muac_mm.value').change(); // keeps MUAC/HC ratio in sync
+                        }
+                    });
+                    getField('muac_mm.value').change(function() {
+                        var mm = jq(this).val();
+                        if (mm) {
+                            jq('#muac_cm').val(convertMmToCm(mm)); // .val() doesn't fire change, so no loop
+                        }
+                    });
+
+                    var muac_mm = getValue('muac_mm.value');
+                    if (muac_mm) {
+                        jq('#muac_cm').val(convertMmToCm(muac_mm));
+                    }
+
+                    // set cm field when reloading
                     var muac_mm = getValue('muac_mm.value');
                     if (muac_mm) {
                         jq('#muac_cm').val(convertMmToCm(muac_mm));
