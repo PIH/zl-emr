@@ -11,5 +11,7 @@ jobs:
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/release-to-openmrs-jfrog.yml@main
     with:
       image_name: partnersinhealth/zl-emr
+      image_variants: |
+        partnersinhealth/zl-emr-java8=amazoncorretto-8
       maven_profiles: distro-zip
     secrets: inherit
