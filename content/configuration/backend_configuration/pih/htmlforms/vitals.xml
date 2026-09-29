@@ -24,26 +24,38 @@
         </code>
     </translations>
 
-    <!-- only show/handle the English conversion fields if we are in 'ENTER' or 'EDIT' mode -->
+    <!-- Glucose conversion from mg/dL to mmol/L
+         only show/handle the English conversion fields if we are in 'ENTER' or 'EDIT' mode -->
+    <script type="text/javascript">
+        // mg/dL to mmol/L converter
+        var convertMilligramToMmolLiter = function(glucoseMg) {
+            return (glucoseMg / 18 ).toFixed(1);
+        }
+
+        var convertMmolToMgLiter = function(glucoseMmol) {
+            return (glucoseMmol * 18 ).toFixed(1);
+        }
+
+    </script>
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
-            // mg/dL to mmol/L converter
 
-            var milligramExitHandler = {
-                handleExit: function (fieldValue) {
-                    if (fieldValue &amp;&amp; fieldValue.value()) {
-                        setValue('milimole.value', convertMilligramToMonoliter(fieldValue.value()));
-                        jq('#milligramme').val('');
+            jq(function() {
+
+                jq('#milligram').change(function() {
+                    var mg = jq(this).val();
+                    if (mg) {
+                        setValue('millimole.value', convertMilligramToMmolLiter(mg));
                     }
-                    return true;
-                }
-            }
+                });
+                getField('millimole.value').change(function() {
+                    var mmol = jq(this).val();
+                    if (mmol) {
+                        jq('#milligram').val(convertMmolToMgLiter(mmol)); // .val() doesn't fire change, so no loop
+                    }
+                });
 
-            ExitHandlers['milligramme'] = milligramExitHandler;
-
-            var convertMilligramToMonoliter = function(mg) {
-                return (mg / 18 ).toFixed(1);
-            }
+            });
 
         </script>
     </ifMode>
@@ -143,7 +155,6 @@
                         var cm = jq(this).val();
                         if (cm) {
                             setValue('muac_mm.value', convertCmToMm(cm));
-                            getField('muac_mm.value').change(); // keeps MUAC/HC ratio in sync
                         }
                     });
                     getField('muac_mm.value').change(function() {
@@ -153,16 +164,12 @@
                         }
                     });
 
-                    var muac_mm = getValue('muac_mm.value');
-                    if (muac_mm) {
-                        jq('#muac_cm').val(convertMmToCm(muac_mm));
-                    }
-
                     // set cm field when reloading
                     var muac_mm = getValue('muac_mm.value');
                     if (muac_mm) {
                         jq('#muac_cm').val(convertMmToCm(muac_mm));
                     }
+
                 });
             </script>
         </ifMode>
@@ -199,8 +206,7 @@
 
     <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
         <span subform-parameter="encounter-location-widget">
-            <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
-                               tags="Vitals Location"/>
+            <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Vitals Location"/>
         </span>
     </subform>
 
@@ -255,8 +261,6 @@
                     <includeIf
                             velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime())) || $patient.gender == 'F' ">
 
-                        <!-- subform path="configuration/pih/subforms/muac-convert-widget.js"/ -->
-
                         <label>
                             <uimessage code="mirebalais.vitals.muac.navigation.title"/>
                         </label>
@@ -276,7 +280,7 @@
                             <p class="left">
                                 <span class="obs-field small">
                                     <input type="text" id="muac_cm" size="5" min="5" max="50" class="number numeric-range cm"/>
-                                    <span class="append-to-value small">
+                                    <span class="append-to-value">
                                         <uimessage code="emr.units.centimeters"/>
                                     </span>
                                     <span class="error field-error" style="display: none"/>
@@ -340,16 +344,16 @@
                     <!-- subform path="configuration/pih/subforms/glucose-convert-widget.js"/ -->
                     <p class="left">
                         <span class="obs-field small">
-                            <input type="text" id="milligramme" class="number numeric-range milligramme "/>
-                            <span class="append-to-value small">
+                            <input type="text" id="milligram" class="number numeric-range milligram"/>
+                            <span class="append-to-value">
                                 <uimessage code="mg/dL"/>
                             </span>
                             <span class="error field-error" style="display: none"/>
                         </span>
                     </p>
                 </ifMode>
-                <span class="small">
-                    <obs conceptId="CIEL:887" id="milimole"
+                <span class="mmol small">
+                    <obs conceptId="CIEL:887" id="millimole"
                          showUnits="mmol/L" unitsCssClass="append-to-value"/>
                 </span>
             </div>

@@ -1,6 +1,5 @@
 <div>
     <subform path="configuration/pih/subforms/vital-signs-widget.css"/>
-    <subform path="configuration/pih/subforms/vital-signs-widget.js"/>
 
 <div class="vitals five-columns">
     <div class="vitals-cell">
