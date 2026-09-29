@@ -294,8 +294,10 @@
                 <label>
                     <uimessage code="pihcore.prepConsent" />
                 </label>
+                <br/>
                 <obs conceptId="PIH:20887" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066" />
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="pihcore.yes,pihcore.no"/>
             </p>
         </div>
     </section>
