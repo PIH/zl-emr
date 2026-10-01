@@ -30,15 +30,15 @@ jobs:
     uses: ./.github/workflows/smoke-tests.yml
     secrets: inherit
 
-  deploy-to-ci:
+  deploy-to-app-cluster:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
     concurrency:
-      group: deploy-to-ci-${{ github.ref }}
+      group: deploy-to-app-cluster-${{ github.ref }}
       cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
     with:
-      runner-label: ci
+      runner-label: appclstr-01
       notify_ci_dashboard: true
     secrets: inherit
 
