@@ -33,12 +33,11 @@ jobs:
   deploy-to-app-cluster:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    concurrency:
-      group: deploy-to-app-cluster-${{ github.ref }}
-      cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
     with:
       runner-label: appclstr-01
+      instances: ci
+      host: false
       notify_ci_dashboard: true
     secrets: inherit
 
