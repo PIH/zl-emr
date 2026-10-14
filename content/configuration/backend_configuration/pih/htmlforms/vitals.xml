@@ -55,6 +55,12 @@
                     }
                 });
 
+                // in EDIT mode, populate the mg/dL field from the existing mmol/L value
+                var existingMmol = getValue('millimole.value');
+                if (existingMmol) {
+                    jq('#milligram').val(convertMmolToMgLiter(existingMmol));
+                }
+
             });
 
         </script>
