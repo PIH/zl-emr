@@ -41,15 +41,14 @@ jobs:
       notify_ci_dashboard: true
     secrets: inherit
 
-  deploy-to-haitihivtest:
+  deploy-to-hiv-ci:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
-    concurrency:
-      group: deploy-to-haitihivtest-${{ github.ref }}
-      cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/deploy-via-runner.yml@main
     with:
-      runner-label: haitihivtest
+      runner-label: appclstr-01
+      instances: hiv-ci
+      host: false
       notify_ci_dashboard: true
     secrets: inherit
 
