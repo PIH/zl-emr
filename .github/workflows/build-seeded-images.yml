@@ -16,14 +16,4 @@ jobs:
       image_name: partnersinhealth/zl-emr
       pih_config: haiti
     secrets: inherit
-
-  mirebalais:
-    if: github.repository_owner == 'PIH'
-    concurrency:
-      group: build-seeded-images-mirebalais-${{ github.ref }}
-      cancel-in-progress: true
-    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
-    with:
-      image_name: partnersinhealth/zl-emr
-      pih_config: mirebalais
-    secrets: inherit
+You will likely need changes to puppet too. Also, can you remove the hum-ci.env file, rename haitihivtest.env to hiv-ci.env, and ensure any references to these in the README and other docs are updated?
