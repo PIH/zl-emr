@@ -54,5 +54,6 @@
     "vitalsHomepageApp",
     "wristbands",
     "zika"
-  ]
+  ],
+  "localZlIdentifierGeneratorEnabled": "true"
 }
