@@ -12,7 +12,6 @@
   "idCardLocale": "ht",
 
   "localZlIdentifierGeneratorEnabled": "true",
-  "requireSeededIdentifierGenerators": "true",
 
   "components": [
     "activeVisits",

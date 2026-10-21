@@ -55,6 +55,5 @@
     "wristbands",
     "zika"
   ],
-  "localZlIdentifierGeneratorEnabled": "true",
-  "requireSeededIdentifierGenerators": "true"
+  "localZlIdentifierGeneratorEnabled": "true"
 }
