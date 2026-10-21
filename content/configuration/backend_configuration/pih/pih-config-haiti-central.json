@@ -11,6 +11,9 @@
   "idCardLabel": "Zanmi Lasante Patient ID Card",
   "idCardLocale": "ht",
 
+  "localZlIdentifierGeneratorEnabled": "true",
+  "requireSeededIdentifierGenerators": "true",
+
   "components": [
     "activeVisits",
     "adt",

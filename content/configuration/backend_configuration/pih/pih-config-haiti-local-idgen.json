@@ -1,4 +1,5 @@
 {
   "localZlIdentifierGeneratorEnabled": "true",
-  "localZlIdentifierGeneratorPrefix": "Y"
+  "localZlIdentifierGeneratorPrefix": "Y",
+  "requireSeededIdentifierGenerators": "false"
 }
