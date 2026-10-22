@@ -28,7 +28,7 @@ Component versions are defined in `distro/pom.xml` and resolved into `distro/ope
 |---|---|
 | `ci` | `haiti,haiti-hsn,haiti-local-idgen` |
 | `hiv-ci` | `haiti,haiti-hiv,haiti-hiv-ci` |
-| `zl-ci` | `haiti,haiti-central,haiti-local-idgen` |
+| `zl-ci` | `haiti,haiti-central,haiti-zl-ci` |
 
 These are the three sites with automated CI/CD. Nightly seed images are built per base config
 lineage rather than per site: `ci`, `hiv-ci`, and `zl-ci` all use the `haiti` lineage, published as

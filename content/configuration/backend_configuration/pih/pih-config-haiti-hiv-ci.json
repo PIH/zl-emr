@@ -1,5 +1,6 @@
 {
   "rebuildSearchIndexConfig": 2,
   "localZlIdentifierGeneratorEnabled": "true",
-  "localZlIdentifierGeneratorPrefix": "Y"
+  "localZlIdentifierGeneratorPrefix": "Y",
+  "allowUnseededIdentifierGenerators": "true"
 }
