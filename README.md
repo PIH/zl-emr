@@ -28,11 +28,11 @@ Component versions are defined in `distro/pom.xml` and resolved into `distro/ope
 |---|---|
 | `ci` | `haiti,haiti-hsn,haiti-local-idgen` |
 | `hiv-ci` | `haiti,haiti-hiv,haiti-hiv-ci` |
-| `zl-ci` | `haiti,haiti-central,haiti-local-idgen` |
+| `zl-ci` | `haiti,haiti-central,haiti-zl-ci` |
 
-These are the three sites with automated CI/CD (Bamboo deploy triggers). Nightly seed images are
-built per base config lineage rather than per site: `ci`, `hiv-ci`, and `zl-ci` all use the
-`haiti` lineage, published as `partnersinhealth/zl-emr-seed-haiti`. See [CI and Publishing](#ci-and-publishing) below. Many
+These are the three sites with automated CI/CD. Nightly seed images are built per base config
+lineage rather than per site: `ci`, `hiv-ci`, and `zl-ci` all use the `haiti` lineage, published as
+`partnersinhealth/zl-emr-seed-haiti`. See [CI and Publishing](#ci-and-publishing) below. Many
 other `pih-config-*.json` profiles exist under `content/configuration/backend_configuration/pih/`
 for Zanmi Lasante's production and field-site deployments — those are deployed through separate,
 existing infrastructure outside this repository's GitHub Actions.
@@ -140,7 +140,7 @@ CI is handled by GitHub Actions. On every push to `master`, the [Build and deplo
 
 1. Builds and publishes the Maven artifact to [Maven Central](https://central.sonatype.com/artifact/org.pih.openmrs/zl-distro) as `org.pih.openmrs:zl-distro`.
 2. Builds and pushes a multi-platform Docker image (amd64 + arm64) to Docker Hub at [`partnersinhealth/zl-emr`](https://hub.docker.com/r/partnersinhealth/zl-emr), tagged with both `latest` and the Maven project version.
-3. Fires the existing Bamboo `ci`, `hiv-ci`, and `zl-ci` deploy triggers, exactly as the legacy `deploy.yml` workflow did.
+3. Deploys to `ci` and `hiv-ci` on the app cluster, and to `zl-ci`, through their GitHub Actions runners.
 
 A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes a pre-initialized seed image to Docker Hub for the `haiti` base config lineage: `partnersinhealth/zl-emr-seed-haiti`.
 

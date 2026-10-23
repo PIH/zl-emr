@@ -2,3 +2,11 @@ Uuid,Identifier type,Location,Identifier source,Manual entry enabled,Auto genera
 78412aa5-d654-4db3-9bc4-a047348c9737,${patientIdentifierType.dossierNumber.uuid},${location.uhm.uuid},${identifierSource.uhmDossierGenerator.uuid},true,true
 1dde3c45-1114-45f5-9ea0-dc3cbc74adec,${patientIdentifierType.dossierNumber.uuid},${location.cdi.uuid},${identifierSource.cdiDossierGenerator.uuid},true,true
 3285e100-f222-4552-8957-228a97aa4b6b,${patientIdentifierType.dossierNumber.uuid},${location.cange.uuid},${identifierSource.cangeDossierGenerator.uuid},true,true
+56063210-ac01-4df3-ba5a-27c3b2e7a9f2,${patientIdentifierType.dossierNumber.uuid},${location.belladere.uuid},${identifierSource.belladereDossierGenerator.uuid},true,true
+0b200584-86ba-4048-98d4-2138be1bff93,${patientIdentifierType.dossierNumber.uuid},${location.boucanCarre.uuid},${identifierSource.boucanCarreDossierGenerator.uuid},true,true
+6f68001c-5552-4837-9460-c98451a11176,${patientIdentifierType.dossierNumber.uuid},${location.cercaLaSource.uuid},${identifierSource.cercaLaSourceDossierGenerator.uuid},true,true
+5281013f-4993-4b2a-96db-d44b3d77a4af,${patientIdentifierType.dossierNumber.uuid},${location.hinche.uuid},${identifierSource.hincheDossierGenerator.uuid},true,true
+02b658ba-9f3f-492c-9196-849fab3bced5,${patientIdentifierType.dossierNumber.uuid},${location.saintMarcHsn.uuid},${identifierSource.saintMarcHsnDossierGenerator.uuid},true,true
+94c97d7c-edab-43bc-8caf-fd3ce57eac29,${patientIdentifierType.dossierNumber.uuid},${location.laColline.uuid},${identifierSource.laCollineDossierGenerator.uuid},true,true
+7a3a22cb-35a2-4708-81a7-10ca504930af,${patientIdentifierType.dossierNumber.uuid},${location.saintMarcSspe.uuid},${identifierSource.saintMarcSspeDossierGenerator.uuid},true,true
+31bf9e26-9141-43ad-b030-a27abcf70998,${patientIdentifierType.dossierNumber.uuid},${location.thomonde.uuid},${identifierSource.thomondeDossierGenerator.uuid},true,true

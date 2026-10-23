@@ -331,74 +331,93 @@
 
     <section id="clinical-para" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.clinicalParameters">
-        <div class="section-container six-columns">
-            <div>
-                <label>
-                    <uimessage code="mirebalais.vitals.map.short"/>
-                </label>
-                <span class="small">
-                    <obs conceptId="CIEL:163187" id="map_mmhg"
-                         showUnits="mmHg" unitsCssClass="append-to-value"/>
-                </span>
-            </div>
+        <div class="section-container">
+            <div class="three-columns">
+                <div>
+                    <label>
+                        <uimessage code="mirebalais.vitals.map.short"/>
+                    </label>
+                    <span class="small">
+                        <obs conceptId="CIEL:163187" id="map_mmhg"
+                             showUnits="mmHg" unitsCssClass="append-to-value"/>
+                    </span>
+                </div>
 
-            <div>
-                <label>
-                    <uimessage code="mirebalais.vitals.blood.glucose"/>
-                </label>
-                <ifMode mode="VIEW" include="false">
-                    <!-- subform path="configuration/pih/subforms/glucose-convert-widget.js"/ -->
-                    <p class="left">
-                        <span class="obs-field small">
-                            <input type="text" id="milligram" class="number numeric-range milligram"/>
-                            <span class="append-to-value">
-                                <uimessage code="mg/dL"/>
+                <div>
+                    <label>
+                        <uimessage code="mirebalais.vitals.blood.glucose"/>
+                    </label>
+                    <ifMode mode="VIEW" include="false">
+                        <!-- subform path="configuration/pih/subforms/glucose-convert-widget.js"/ -->
+                        <p class="left">
+                            <span class="obs-field small">
+                                <input type="text" id="milligram" class="number numeric-range milligram"/>
+                                <span class="append-to-value">
+                                    <uimessage code="mg/dL"/>
+                                </span>
+                                <span class="error field-error" style="display: none"/>
                             </span>
-                            <span class="error field-error" style="display: none"/>
-                        </span>
+                        </p>
+                    </ifMode>
+                    <span class="mmol small">
+                        <obs conceptId="CIEL:887" id="millimole"
+                             showUnits="mmol/L" unitsCssClass="append-to-value"/>
+                    </span>
+                </div>
+                <br/>
+
+                <div>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.airSupply"/>
+                        </label>
+                        <br/>
+                        <obs id="air" conceptId="CIEL:162739" style="radio"
+                             answerConceptIds="CIEL:162735,CIEL:162738"
+                             answerSeparator="&lt;br /&gt;">
+                            <controls>
+                                <when value="CIEL:162738" thenDisplay="#oxy2"/>
+                            </controls>
+                        </obs>
                     </p>
-                </ifMode>
-                <span class="mmol small">
-                    <obs conceptId="CIEL:887" id="millimole"
-                         showUnits="mmol/L" unitsCssClass="append-to-value"/>
-                </span>
-            </div>
-            <br/>
-
-            <div>
-                <label>
-                    <uimessage code="mirebalais.vitals.oxygen.flow.rate"/>
-                </label>
-                <span class="small">
-                    <obs conceptId="CIEL:165986" showUnits="L/min"/>
-                </span>
+                    <div id="oxy2" class="indented">
+                        <label>
+                            <uimessage code="mirebalais.vitals.oxygen.flow.rate"/>
+                        </label>
+                        <span class="small">
+                            <obs conceptId="CIEL:165986" showUnits="L/min"/>
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <label>
-                    <uimessage code="mirebalais.vitals.gcs.short"/>
-                </label>
-                <span class="small">
-                    <obs conceptId="CIEL:160347"/>
-                </span>
-            </div>
+            <div class="three-columns">
+                <div>
+                    <label>
+                        <uimessage code="mirebalais.vitals.gcs.short"/>
+                    </label>
+                    <span class="small">
+                        <obs conceptId="CIEL:160347"/>
+                    </span>
+                </div>
 
-            <div>
-                <label>
-                    <uimessage code="mirebalais.vitals.rass.short"/>
-                </label>
-                <span class="small">
-                    <obs conceptId="PIH:20664"/>
-                </span>
-            </div>
+                <div>
+                    <label>
+                        <uimessage code="mirebalais.vitals.rass.short"/>
+                    </label>
+                    <span class="small">
+                        <obs conceptId="PIH:20664"/>
+                    </span>
+                </div>
 
-            <div>
-                <label>
-                    <uimessage code="pihcore.lab.urineOutput"/>
-                </label>
-                <span class="small">
-                    <obs conceptId="CIEL:161929" showUnits="true"/>
-                </span>
+                <div>
+                    <label>
+                        <uimessage code="pihcore.lab.urineOutput"/>
+                    </label>
+                    <span class="small">
+                        <obs conceptId="CIEL:161929" showUnits="true"/>
+                    </span>
+                </div>
             </div>
         </div>
     </section>
