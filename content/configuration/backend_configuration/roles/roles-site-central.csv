@@ -1,2 +1,2 @@
 Uuid,Role name,Description,Inherited roles,Privileges
-fbce4280-c716-495d-952d-f5a1d49cfd55,Application Role: remoteIdentifierGeneration,Issues ZL EMR IDs to other servers (TASKS-564),,Generate Batch of Identifiers
+fbce4280-c716-495d-952d-f5a1d49cfd55,Application Role: remoteIdentifierGeneration,Issues ZL EMR IDs to other servers,,Generate Batch of Identifiers
