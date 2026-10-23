@@ -142,6 +142,6 @@ CI is handled by GitHub Actions. On every push to `master`, the [Build and deplo
 2. Builds and pushes a multi-platform Docker image (amd64 + arm64) to Docker Hub at [`partnersinhealth/zl-emr`](https://hub.docker.com/r/partnersinhealth/zl-emr), tagged with both `latest` and the Maven project version.
 3. Deploys to `ci` and `hiv-ci` on the app cluster, and to `zl-ci`, through their GitHub Actions runners.
 
-A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes pre-initialized seed images to Docker Hub for the two base config lineages: `partnersinhealth/zl-emr-seed-haiti` (general Haiti/ZL-network config) and `partnersinhealth/zl-emr-seed-mirebalais` (Mirebalais hospital config).
+A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes a pre-initialized seed image to Docker Hub for the `haiti` base config lineage: `partnersinhealth/zl-emr-seed-haiti`.
 
 A separate [Update Versions](.github/workflows/update-versions.yml) workflow runs hourly and automatically commits any available snapshot dependency updates to `master`.
