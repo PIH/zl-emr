@@ -111,18 +111,22 @@ openmrs-sdk update-config <server-id>
 
 For each supported configuration profile, an example environment file is provided in the repo root to get started quickly.
 Because this file is found in the distribution repository, it is assumed that this is checked out on your machine, and
-that `openmrs-docker` commands are running from the root of the distribution repository — it sets `DISTRO_SOURCE_DIR`
+that `openmrs-docker` commands are running from the root of the distribution repository — it sets `OPENMRS_DISTRO_DIR`
 to this location. If you're using it as an example for running elsewhere, you may need to change or remove that.
 
 To use the example environment file for `zl-ci` to get up and running with a new instance:
 
 ```bash
 source zl-ci.env
-openmrs-docker create zl-ci
-openmrs-docker zl-ci initialize # Optional, but speeds up initial startup
+openmrs-docker zl-ci create
+# Optional, but speeds up initial startup
+openmrs-docker zl-ci initialize --from-image partnersinhealth/zl-emr-seed-haiti:latest
 openmrs-docker zl-ci start
-openmrs-docker zl-ci wait  # Tails logs until OpenMRS is ready, then exits
+openmrs-docker zl-ci wait  # until every service is ready
 ```
+
+New to these tools? [Getting to know the tools](https://github.com/PIH/openmrs-contrib-distro-tools/blob/main/docs/getting-to-know-the-tools.md) walks through what
+`openmrs-docker` and `pihx` can do.
 
 Once created, day-to-day commands only need the instance name:
 
