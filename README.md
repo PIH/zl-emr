@@ -122,8 +122,11 @@ openmrs-docker zl-ci create
 # Optional, but speeds up initial startup
 openmrs-docker zl-ci initialize --from-image partnersinhealth/zl-emr-seed-haiti:latest
 openmrs-docker zl-ci start
-openmrs-docker zl-ci wait  # Tails logs until OpenMRS is ready, then exits
+openmrs-docker zl-ci wait  # until every service is ready
 ```
+
+New to these tools? [Getting to know the tools](https://github.com/PIH/openmrs-contrib-distro-tools/blob/main/docs/getting-to-know-the-tools.md) walks through what
+`openmrs-docker` and `pihx` can do.
 
 Once created, day-to-day commands only need the instance name:
 
