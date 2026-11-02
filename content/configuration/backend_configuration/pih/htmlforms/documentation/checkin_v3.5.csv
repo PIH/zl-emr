@@ -1,0 +1,19 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Retrospective Checkin visit Type label,Coded,$reasonsForVisit,dropdown,No,no,PIH:Type of HUM visit,$reasonsForVisit,,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,radio,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,dropdown,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct

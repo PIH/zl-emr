@@ -1,0 +1,24 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Pregnant,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:5272,CIEL:1065|CIEL:1066,,
+Zl maternal Breastfeeding,Coded,Pihcore.Currently | Zl.Breastfeedstopped,radio,No,Weaned → show #wean-date,CIEL:985,PIH:CURRENTLY|CIEL:1152,,
+Zl wean Date,Coded,N/A,radio,No,no,CIEL:166566,,,
+Medication side effects,Coded,Abdominal pain | Rash | Nausea | Vomiting | Diarrhea | Fatigue | Lymphadenopathy | Fever | Other,checkbox,No,no,PIH:ADVERSE EFFECT,CIEL:151|CIEL:512|CIEL:5978|CIEL:122983|CIEL:142412|CIEL:140501|PIH:161|CIEL:140238|CIEL:5622,Medication side effects,
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:1729,,,
+Sti Symp,Coded,Urethral discharge | Genital ulcers | Abnormal vaginal bleeding | Foul smelling vaginal discharge | Abdominal pain | Swelling of scrotum | Inguinal bubo | Other,checkbox,No,no,PIH:1293,CIEL:123529|CIEL:864|CIEL:150802|CIEL:165162|CIEL:151|CIEL:125203|CIEL:137155|CIEL:5622,Sti Symp,
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:1374,,,
+Hiv title,Coded,Pihcore.Positivesign | Pihcore.Negativesign | Pihcore.Indeterminate,radio,No,no,CIEL:163722,CIEL:703|CIEL:664|CIEL:1138,Lab results title,PIH:11522
+Hiv title,Date,N/A,date,No,no,PIH:DATE OF LABORATORY TEST,,Lab results title,PIH:11522
+Syphilis,Coded,Pihcore.Reactive | Pihcore.Nonreactive,radio,No,no,PIH:RPR,PIH:REACTIVE|PIH:NON-REACTIVE,Lab results title,PIH:11523
+Syphilis,Date,N/A,date,No,no,PIH:DATE OF LABORATORY TEST,,Lab results title,PIH:11523
+Cl Cr,Coded,N/A,radio,No,no,CIEL:161134,,,
+Drug order,Other,Drug order widget,drug-order,No,no,,,,
+Hiv Risk Counsel,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:20898,CIEL:1065|CIEL:1066,,
+Fp condoms Provided,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:159777,CIEL:1065|CIEL:1066,,
+Lube Provided,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:21424,CIEL:1065|CIEL:1066,,
+Vmmc,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:166677,CIEL:145096|CIEL:163841,,
+Other Prevention,Coded,N/A,radio,No,no,PIH:21428,,,
+Prep Adherence,Coded,>95% | >50% | 50% | <50% | 0%,radio,No,no,CIEL:164847,PIH:20901|PIH:20900|PIH:20902|PIH:20903|CIEL:1107,,
+Disposition,Other,Disposition widget,disposition widget,Yes,no,,,,
+Prep Adherence,Date,N/A,date,No,no,PIH:RETURN VISIT DATE,,,
+Remarks,Text,N/A,textarea,No,no,PIH:1620,,,

@@ -1,0 +1,83 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Adverse Event,Coded,yes,checkbox,No,no,PIH:1297,CIEL:121764,Adverse Event,PIH:1295
+Adverse Event,Coded,Neuropathy | LacticAcidosis | NauseaVomiting | Hepatitis | Anemia | Jaundice | Rash,checkbox,No,no,PIH:1297,CIEL:118983|CIEL:136162|CIEL:133473|CIEL:116986|CIEL:121629|CIEL:136443|CIEL:512,Adverse Event,PIH:1295
+Neuropathy,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+LacticAcidosis,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+NauseaVomiting,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Hepatitis,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Anemia,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Jaundice,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Rash,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Adverse Event,Coded,Other,checkbox,No,no,PIH:1297,CIEL:5622,Adverse Event,PIH:1295
+Other,Coded,N/A,radio,No,no,PIH:1300,,,PIH:1295
+Health Condition,Coded,Good | Satisfactory | Unchanged | Deteriorated,radio,No,no,CIEL:160116,PIH:GOOD|PIH:SATISFACTORY|CIEL:162679|PIH:DETERIORATION,,
+Visit Note plan duration,Coded,Epigastric pain | Nausea | Vomiting | Jaundice | Diarrhea | Dysphagia | CIEL:128321 | Rash | Headache | Vision problem | Seizure | Focal neurological deficit | Vertigo | Confusion | Paresthesia | Genital discharge | Genital ulcers | Fever | Cough,radio,No,no,CIEL:1728,CIEL:141128|CIEL:5978|CIEL:122983|CIEL:136443|CIEL:142412|CIEL:118789|CIEL:128321|CIEL:512|CIEL:139084|CIEL:118938|CIEL:113054|CIEL:1466|CIEL:111525|CIEL:120345|CIEL:6004|PIH:1816|CIEL:864|CIEL:140238|CIEL:143264,Visit Note plan duration,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/symptom present,Coded,No | Yes,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Sign/Symptom duration,Coded,N/A,radio,No,no,CIEL:1731,,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Time units,Coded,Days | Weeks | Months,radio,No,no,CIEL:1732,CIEL:1072|CIEL:1073|CIEL:1074,,CIEL:1727
+Visit Note plan duration,Coded,Other,radio,No,no,CIEL:1728,CIEL:5622,Visit Note plan duration,CIEL:1727
+Stage label,Coded,WHO Stage 1 | WHO Stage 2 | WHO Stage 3 | WHO Stage 4,radio,No,no,PIH:CURRENT WHO HIV STAGE,CIEL:1204|CIEL:1205|CIEL:1206|CIEL:1207,,
+Hiv who Stage1,Coded,Asymptomatic | PersistGenLymph,checkbox,No,no,CIEL:6042,CIEL:5327|CIEL:5328,Hiv who Stage1,
+Hiv who Stage2,Coded,WeightLossLess10% | RecurrantURI | Zona | Perleche | OralUlcers | PapularPruriticEruption | seborrDermatitis | FungalNailInfection,checkbox,No,no,CIEL:6042,CIEL:5332|CIEL:127784|CIEL:117543|CIEL:148762|CIEL:159912|CIEL:1249|CIEL:113116|CIEL:132387,Hiv who Stage2,
+Hiv who Stage2,Coded,PersistentHepatosplenomegaly | Prurigo nodularis | VerrucaPlanus | FungalNailInfection | MolluscumContagiosum | RecurrentAphthousUlcer | PersistentParotidSwelling | LinearGingivalErythema | Zona | URI,checkbox,No,no,CIEL:6042,CIEL:160436|CIEL:128321|CIEL:1211|CIEL:132387|CIEL:1212|CIEL:127841|CIEL:166061|CIEL:159344|CIEL:117543|PIH:106,Hiv who Stage2,
+Hiv who Stage3,Coded,WeightLossMore10% | DiarrheaMore1Month | FeverMore1Month | PersistentOralCandidiasis | LeukoplastOral | PulmonaryTB | SevereBactInfection | AcuteUlcer | UnexplainedAnemiaEtc,checkbox,No,no,CIEL:6042,CIEL:5339|CIEL:5018|CIEL:5027|PIH:2580|CIEL:5337|CIEL:42|CIEL:5030|CIEL:149629|PIH:2582,Hiv who Stage3,
+Hiv who Stage3,Coded,ModMalnutrition | DiarrheaMore1Month | PersistentOralCandidiasis | FeverMore1Month | LeukoplastOral | LymphTB | AcuteUlcer | PulmonaryTB | SevereBactInfection | LIP | ChronLungDisease | UnexplainedAnemiaEtc,checkbox,No,no,CIEL:6042,CIEL:134722|CIEL:5018|PIH:2580|CIEL:5027|CIEL:5337|CIEL:111873|CIEL:149629|CIEL:42|CIEL:5030|CIEL:135458|CIEL:155569|PIH:2582,Hiv who Stage3,
+Hiv who Stage4,Coded,Wasting | PneumocystisPneumonia | RecurrentBactPneumonia | HerpesSimplex | Candidiosis | ExtraPulmonaryTB | KaposiSarcoma | CytomegalovirusDisease | Toxoplasmosis | HIVencephalopathy | Cryptococcocus | Mycobacteriosis | LeukoEnceph | Cryptosporidiosis | ChronicIsosporidios | Mycosis | RecurrentSepticemia | NonHodgkinsLymph | CervicalCancer | Leishmaniosis | NephropathyCardiomyopathySymptoms,checkbox,No,no,CIEL:6042,CIEL:823|CIEL:130021|CIEL:1215|CIEL:138706|CIEL:5340|CIEL:5042|CIEL:507|CIEL:5035|CIEL:990|CIEL:160442|CIEL:5033|CIEL:5043|CIEL:5046|CIEL:5034|CIEL:160520|CIEL:5350|PIH:11407|CIEL:115195|CIEL:116023|CIEL:159338|PIH:2721,Hiv who Stage4,
+Hiv who Stage4,Coded,Stunting | PneumocystisPneumonia | RecurrentBactPneumonia | HerpesSimplex | Candidiosis | ExtraPulmonaryTB | CytomegalovirusDisease | KaposiSarcoma | Toxoplasmosis | Cryptococcocus | Mycosis | HIVencephalopathy | Mycobacteriosis | Cryptosporidiosis | NephropathyCardiomyopathySymptoms | ChronicIsosporidios | NonHodgkinsLymph | LeukoEnceph,checkbox,No,no,CIEL:6042,CIEL:164086|CIEL:130021|CIEL:1215|CIEL:138706|CIEL:5340|CIEL:5042|CIEL:5035|CIEL:507|CIEL:990|CIEL:5033|CIEL:5350|CIEL:160442|CIEL:5043|CIEL:5034|PIH:2721|CIEL:160520|CIEL:115195|CIEL:5046,Hiv who Stage4,
+Assessment,Coded,pihcore.noOI,checkbox,No,no,PIH:1401,CIEL:1107,,
+Diagnoses (encounterDiagnosesByObs),Other,Pick diagnoses,diagnoses widget,No,no,,,,
+Free Text Comments,Text,N/A,textarea,No,no,PIH:CLINICAL IMPRESSION COMMENTS,,,

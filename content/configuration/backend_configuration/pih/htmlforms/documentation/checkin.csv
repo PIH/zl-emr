@@ -1,0 +1,26 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Retrospective Checkin visit Type label,Coded,Standard outpatient visit | Pediatrics | Internal medicine specialty | Emergency visit | Standard dental visit | NCD clinic | Oncology | Radiology services | Laboratory visit,checkbox,No,no,PIH:Type of HUM visit,PIH:7705|CIEL:165048|CIEL:165019|PIH:6192|PIH:7706|CIEL:168363|PIH:Oncology|PIH:9355|PIH:6190,Retrospective Checkin visit Type label,
+Surgery Consult,Coded,General surgical consultation | Orthopedic surgical consultation | Urology surgical consultation | Opthalmology surgery consultation,checkbox,No,no,PIH:Type of HUM visit,PIH:General Surgical Consultation|PIH:Orthopedic Surgical Consultation|PIH:21719|PIH:21720,Surgery Consult,
+Womens Health,Coded,Maternal health clinic | Postnatal visit | Family planning services | Labor and delivery visit | Gynecology specialty | Caesarean section | Gynecology interventions,checkbox,No,no,PIH:Type of HUM visit,PIH:ANTENATAL CLINIC|CIEL:166625|PIH:FAMILY PLANNING SERVICES|PIH:Labor and delivery visit|CIEL:165013|CIEL:1171|PIH:21722,Womens Health,
+Gen Surgery,Coded,pihcore.minorSurgery,checkbox,No,no,PIH:Type of HUM visit,PIH:20330,,
+Gen Surgery,Coded,pihcore.majorSurgery,checkbox,No,no,PIH:Type of HUM visit,PIH:21723,,
+Gen Surgery,Coded,Orthopedic surgery | Opthalmology surgery | Urology surgery | Surgery,checkbox,No,no,PIH:Type of HUM visit,PIH:21724|PIH:21725|PIH:21726|PIH:SURGERY,Gen Surgery,
+Hospitalized,Coded,Inpatient internal medicine | Inpatient surgery | Inpatient pre-operative | Inpatient post-operative | Pediatric ward | Maternity ward,checkbox,No,no,PIH:Type of HUM visit,PIH:21727|PIH:21728|PIH:21729|PIH:21730|PIH:HOSPITAL PEDIATRICS|PIH:MATERNITY WARD,Hospitalized,
+Other Non Med Services,Coded,Social assistance and psychosocial support | Birth certificate | Certificate of injuries and wounds | Marriage certificate,checkbox,No,no,PIH:Type of HUM visit,PIH:8883|PIH:21167|PIH:21166|PIH:7694,Other Non Med Services,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,radio,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,dropdown,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct

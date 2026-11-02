@@ -1,0 +1,11 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Specify Type Feeding,Coded,Zl.Breastfeedexclusively | Pihcore.Formulaexclusively | Zl.Mixedfeeding,radio,No,no,CIEL:1151,CIEL:5526|CIEL:5254|CIEL:6046,,
+Duration Breast,Coded,N/A,radio,No,no,CIEL:160603,,,
+Date Weaned,Coded,N/A,radio,No,no,CIEL:166566,,,
+Type Weaned,Coded,Pihcore.Sudden | Pihcore.Gradual,radio,No,no,CIEL:166565,CIEL:1839|CIEL:1841,,
+Food Before6months,Coded,Yes | No,radio,No,no,CIEL:5633,CIEL:1065|CIEL:1066,,
+Formula Prep Training,Coded,Yes | No,radio,No,no,CIEL:159880,CIEL:1065|CIEL:1066,,
+Provided Formula,Coded,Yes | No,radio,No,no,PIH:3581,CIEL:1065|CIEL:1066,,
+Vaccinations On Schedule,Coded,Yes | No | Unknown,radio,No,no,CIEL:5585,CIEL:1065|CIEL:1066|CIEL:1067,,
+Drug order,Other,Drug order widget,drug-order,No,no,,,,
+I18n Program name 7e06bf82-9f1a-4218-b68f-823082ef519b,Text,N/A,textarea,No,no,PIH:PRESENTING HISTORY,,,

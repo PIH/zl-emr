@@ -1,0 +1,113 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Name CHW,Coded,N/A,radio,No,no,CIEL:164141,,,
+Name CHW,Coded,N/A,radio,No,no,CIEL:164141,,,
+Name CHW,Coded,N/A,radio,No,no,CIEL:164141,,,
+Result,Coded,cd4Percent | cd4Count,checkbox,No,no,CIEL:162087,CIEL:730|CIEL:5497,Result,CIEL:1361
+cd4Percent,Coded,N/A,radio,No,no,CIEL:730,,,CIEL:1361
+cd4Count,Coded,N/A,radio,No,no,CIEL:5497,,,CIEL:1361
+cd4Percent,Coded,N/A,radio,No,no,PIH:3267,,,CIEL:1361
+cd4Count,Coded,N/A,radio,No,no,PIH:3267,,,CIEL:1361
+Result,Coded,viralLoad,checkbox,No,no,CIEL:162087,CIEL:856,Result,PIH:HIV viral load construct
+viralLoad,Coded,N/A,radio,No,no,CIEL:856,,,PIH:HIV viral load construct
+viralLoad,Coded,LDL,checkbox,No,no,CIEL:1305,CIEL:1306,,PIH:HIV viral load construct
+viralLoad,Coded,N/A,radio,No,no,PIH:3267,,,PIH:HIV viral load construct
+Result,Coded,tbSmear,checkbox,No,no,CIEL:162087,CIEL:307,Result,CIEL:1361
+tbSmear,Coded,N/A,radio,No,no,CIEL:307,,,CIEL:1361
+tbSmear,Coded,N/A,radio,No,no,PIH:3267,,,CIEL:1361
+Hiv who Stages,Coded,WHO Stage 1 | WHO Stage 2 | WHO Stage 3 | WHO Stage 4,radio,No,no,PIH:CURRENT WHO HIV STAGE,CIEL:1204|CIEL:1205|CIEL:1206|CIEL:1207,,
+Specify Type Feeding,Coded,Zl.Breastfeedexclusively | Pihcore.Formulaexclusively | Zl.Mixedfeeding,radio,No,no,CIEL:1151,CIEL:5526|CIEL:5254|CIEL:6046,,
+Provided Formula,Coded,Yes | No,radio,No,no,PIH:3581,CIEL:1065|CIEL:1066,,
+Counselling breastfeeding,Coded,Yes | No,radio,No,no,CIEL:1910,CIEL:1065|CIEL:1066,,
+Food Before6months,Coded,Yes | No,radio,No,no,CIEL:5633,CIEL:1065|CIEL:1066,,
+Formula Prep Training,Coded,Yes | No,radio,No,no,CIEL:159880,CIEL:1065|CIEL:1066,,
+Vaccinated,Coded,Yes | No | Unknown,radio,No,Yes → show #vaccinationCard,CIEL:164134,CIEL:1065|CIEL:1066|CIEL:1067,,
+Child Weaned,Coded,Yes | No,radio,No,no,CIEL:1152,CIEL:1065|CIEL:1066,,
+Arv Treatment,Coded,Emr.Yes | Pihcore.None.Label,radio,No,Yes → show #current-arvs,CIEL:160117,CIEL:1065|CIEL:1107,,
+Hiv start Date ARV,Coded,N/A,radio,No,no,CIEL:159599,,Arv Treatment,PIH:13156
+Regimen,Coded,Azt + 3Tc + Efv | Azt + 3Tc + Nvp | Azt + 3Tc + Atv/R | Azt + 3Tc + Lpr/R | Tdf + 3Tc + Dtg | Tdf + 3Tc + Efv | Tdf + 3Tc + Nvp | Tdf + 3Tc + Atv/R | Tdf + 3Tc + Lpv/R | Pihcore.Other,radio,No,no,CIEL:1282,CIEL:160124|CIEL:1652|CIEL:164511|CIEL:162561|CIEL:165086|CIEL:164505|CIEL:162565|CIEL:164512|CIEL:162201|CIEL:5622,Arv Treatment,PIH:13156
+Other,Coded,N/A,radio,No,no,CIEL:5424,,Arv Treatment,PIH:13156
+Treatment Line,Coded,1st | 2nd | 3rd,radio,No,no,PIH:13115,PIH:7428|PIH:7429|PIH:7430,Arv Treatment,PIH:13156
+Anti Tb Treatment,Coded,Emr.Yes | Pihcore.None.Label,radio,No,Yes → show .current-tb-meds,CIEL:159798,CIEL:1065|CIEL:1066,,
+Start Date,Coded,N/A,radio,No,no,CIEL:1113,,,
+Start Date,Coded,Pihcore.Tb.Initialtreatment | Pihcore.Tb.Retreatment | Pihcore.Tb.Mdrtbtreatment,radio,No,no,CIEL:1111,PIH:2406|PIH:2408|CIEL:159909,,
+Start Date,Coded,N/A,radio,No,no,CIEL:160136,,,
+Start Date,Coded,N/A,radio,No,no,PIH:Anti TB free text,,,
+Treatment,Coded,Cotrimoxazole,radio,No,no,PIH:2289,CIEL:105281,Treatment,PIH:2739
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,,PIH:2739
+Treatment end date,Date,N/A,date,No,no,CIEL:164384,,,PIH:2739
+Treatment,Coded,Isoniazid,radio,No,no,PIH:2289,CIEL:78280,Treatment,PIH:2739
+INH prophlylaxis treatment line,Coded,Primary | Secondary,radio,No,no,PIH:13786,CIEL:159943|CIEL:159944,,PIH:2739
+Treatment start date,Date,N/A,date,No,no,CIEL:163526,,,PIH:2739
+Treatment end date,Date,N/A,date,No,no,CIEL:164384,,,PIH:2739
+Treatment,Coded,Rifapentine + Isoniazid | Fluconazole | Dapsone,radio,No,no,PIH:2289,CIEL:167692|CIEL:76488|CIEL:74250,Treatment,PIH:2739
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,,PIH:2739
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,,PIH:2739
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,,PIH:2739
+Treatment end date,Date,N/A,date,No,no,CIEL:164384,,,PIH:2739
+Treatment end date,Date,N/A,date,No,no,CIEL:164384,,,PIH:2739
+Treatment end date,Date,N/A,date,No,no,CIEL:164384,,,PIH:2739
+Treatment,Coded,pihcore.other,radio,No,no,PIH:2289,PIH:3120,Treatment,PIH:2739
+Treatment,Coded,N/A,radio,No,no,CIEL:163526,,Treatment,PIH:2739
+Treatment,Date,N/A,date,No,no,CIEL:164384,,Treatment,PIH:2739
+Other Meds,Text,N/A,text,No,no,PIH:13318,,,
+Arv Treatment,Text,N/A,textarea,No,no,CIEL:160531,,,
+Arv Treatment,Coded,Positive | Negative,radio,No,no,CIEL:160108,CIEL:703|CIEL:664,,
+Zl sexually Active,Coded,Yes | No,radio,No,no,CIEL:160109,CIEL:1065|CIEL:1066,,
+Family Planning title,Coded,Yes,checkbox,No,no,CIEL:1382,CIEL:1065,,
+Family Planning method,Coded,Oral contraception | Medroxyprogesterone acetate (Depo-provera) | Condoms | Levonorgestrel | Intra uterine device (IUD) | Tubal ligation | Vasectomy,checkbox,No,no,CIEL:374,CIEL:780|CIEL:907|CIEL:190|CIEL:78796|CIEL:5275|CIEL:1472|CIEL:1489,Family Planning method,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family planning start date,Coded,N/A,radio,No,no,CIEL:163757,,,PIH:Family planning construct
+Family Planning method,Coded,Other,checkbox,No,no,CIEL:374,CIEL:5622,Family Planning method,PIH:Family planning construct
+Family Planning method,Coded,N/A,radio,No,no,CIEL:163757,,Family Planning method,PIH:Family planning construct
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:2996,,,
+Pregnant,Coded,Yes | No,radio,No,Yes → show #pregnant,CIEL:5272,CIEL:1065|CIEL:1066,,
+Last Period,Date,N/A,date,No,no,CIEL:1427,,,
+Due Date,Date,N/A,date,No,no,CIEL:5596,,,
+Delivery,Coded,pihcore.delivered,radio,No,Yes → show #delivery,PIH:14990,CIEL:1065|CIEL:1066,,
+Delivery Date Time,Date,N/A,date,No,no,CIEL:5599,,,
+Feeding plan,Coded,Pihcore.Currently | Zl.Breastfeedstopped,radio,No,Weaned → show #wean-date,CIEL:985,PIH:CURRENTLY|CIEL:1152,,
+Zl wean Date,Coded,N/A,radio,No,no,CIEL:166566,,,
+pihcore.screeningSyph,Coded,pihcore.screeningSyph,checkbox,No,no,CIEL:164801,CIEL:1065,,
+Syphilis,Coded,Positive | Negative | Not tested | No test,radio,No,no,CIEL:165303,CIEL:703|CIEL:664|CIEL:1138|PIH:3083,,
+pihcore.syphilisTreatmentPregnantMother,Coded,pihcore.syphilisTreatmentPregnantMother,checkbox,No,no,CIEL:1628,CIEL:112493,Syphilis,CIEL:166557
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,Syphilis,CIEL:166557
+Treatment end date,Coded,N/A,radio,No,no,CIEL:164384,,Syphilis,CIEL:166557
+pihcore.syphilisTreatmentPartner,Coded,pihcore.syphilisTreatmentPartner,checkbox,No,no,CIEL:1628,CIEL:112493,Syphilis,CIEL:166558
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,Syphilis,CIEL:166558
+Treatment end date,Coded,N/A,radio,No,no,CIEL:164384,,Syphilis,CIEL:166558
+Received Post Test Counsel,Coded,No | Yes,radio,No,no,CIEL:159382,CIEL:1066|CIEL:1065,,
+Patient Received Advice,Coded,Cervical cancer screening | Behavioral regulation counseling | Family planning counseling | Referral for sexually transmitted infection screening | Partner referred for HIV test,checkbox,No,no,CIEL:163560,CIEL:151185|CIEL:165489|CIEL:1382|CIEL:163559|CIEL:159381,Patient Received Advice,
+Referred MH,Coded,No | Yes,radio,No,no,PIH:13002,CIEL:1066|CIEL:1065,,
+Med rx Doses Month,Coded,N/A,radio,No,no,PIH:13067,,,
+Med missed Doses Month,Coded,N/A,radio,No,no,CIEL:160110,,,
+Daily CHWvisit,Coded,Yes | No,radio,No,No → show #reason-without-chw,CIEL:160111,CIEL:1065|CIEL:1066,,
+If Not Specify Reason,Coded,N/A,radio,No,no,PIH:13065,,,
+Adverse Event,Coded,None | Neuropathy | LacticAcidosis | NauseaVomiting | Hepatitis | Anemia | Jaundice | Rash,checkbox,No,no,PIH:ADVERSE EFFECT,CIEL:1107|CIEL:118983|CIEL:136162|CIEL:133473|CIEL:116986|CIEL:121629|CIEL:136443|CIEL:512,Adverse Event,PIH:ADVERSE EFFECT CONSTRUCT
+None,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Neuropathy,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+LacticAcidosis,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+NauseaVomiting,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Hepatitis,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Anemia,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Jaundice,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Rash,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Adverse Event,Coded,Other,checkbox,No,no,PIH:ADVERSE EFFECT,CIEL:5622,Adverse Event,PIH:ADVERSE EFFECT CONSTRUCT
+Other,Coded,N/A,radio,No,no,PIH:1300,,,PIH:ADVERSE EFFECT CONSTRUCT
+Hiv clinical State short,Coded,Good | Satisfactory | Unchanged | Deteriorated,radio,No,no,CIEL:160116,PIH:GOOD|PIH:SATISFACTORY|CIEL:162679|PIH:DETERIORATION,,
+Hiv who Stages,Coded,WHO Stage 1 | WHO Stage 2 | WHO Stage 3 | WHO Stage 4,radio,No,no,PIH:CURRENT WHO HIV STAGE,CIEL:1204|CIEL:1205|CIEL:1206|CIEL:1207,,
+Hiv who Stages,Coded,N/A,radio,No,no,CIEL:5497,,Hiv who Stages,PIH:3434
+Hiv who Stages,Coded,N/A,radio,No,no,PIH:10783,,Hiv who Stages,PIH:3434
+Daily Dose ARV,Coded,Yes | No,radio,No,No → show #side-by-side-reason,PIH:13649,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,N/A,radio,No,no,PIH:1709,,,
+Daily Dose ARV,Coded,N/A,radio,No,no,CIEL:160110,,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,PIH:13654,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,CIEL:160111,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,CIEL:5586,CIEL:1065|CIEL:1066,,
+Zl breastfeeding Since Last Visit,Coded,Yes | No,radio,No,Yes → show #bf-status,PIH:6981,CIEL:1065|CIEL:1066,,
+Zl breastfeeding Since Last Visit,Coded,Pihcore.Exclusively | Zl.Mixed | Zl.Breastfeedstopped,radio,No,Weaned → show #wean-date,CIEL:985,CIEL:5526|CIEL:6046|CIEL:1152,,
+Zl wean Date,Coded,N/A,radio,No,no,CIEL:166566,,,

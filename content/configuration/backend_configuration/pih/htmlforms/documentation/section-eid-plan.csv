@@ -1,0 +1,19 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+PCR:,Coded,Positive | Negative | Not tested,radio,No,Positive → show #notify-parent,CIEL:1030,CIEL:703|CIEL:664|CIEL:1138,,PIH:11522
+PCR:,Coded,N/A,radio,No,no,CIEL:164400,,,PIH:11522
+Notify Parent Guardian,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:163525,CIEL:1065|CIEL:1066,,
+Clinical Impressions,Text,N/A,textarea,No,no,CIEL:162749,,,
+Diagnoses (encounterDiagnosesByObs),Other,Pick diagnoses,diagnoses widget,No,no,,,,
+Action Plan,Text,N/A,textarea,No,no,PIH:1620,,,
+Received,Coded,Transport assistance | Nutritional assistance,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE ALREADY RECEIVED,PIH:ASSISTANCE WITH TRANSPORT|PIH:NUTRITIONAL AID,Received,
+Received,Coded,Transport assistance | Nutritional assistance,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE RECOMMENDED,PIH:ASSISTANCE WITH TRANSPORT|PIH:NUTRITIONAL AID,Received,
+Received,Coded,N/A,radio,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE NON-CODED,,,
+Received,Coded,Other,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE ALREADY RECEIVED,CIEL:5622,,
+Received,Coded,Other,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE RECOMMENDED,CIEL:5622,,
+Remarks,Text,N/A,text,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE COMMENT,,,
+External Transfer Question,Coded,pihcore.yes,checkbox,No,no,PIH:HUM Disposition categories,CIEL:160036,Clinical Impressions,PIH:13170
+External Transfer Question,Coded,Pihcore.Internal | Pihcore.External,radio,No,Zanmi Lasante supported site → show #internal-transfer-out; Non-PIH facility → show #external-transfer-out,PIH:Transfer out location,PIH:8855|PIH:8856,Clinical Impressions,PIH:13170
+Internal Transfer Location,Coded,N/A,location,No,no,PIH:8621,,Clinical Impressions,PIH:13170
+External Transfer Location,Coded,N/A,radio,No,no,PIH:11483,,Clinical Impressions,PIH:13170
+External Transfer Location,Coded,pihcore.pepfarSite,radio,No,no,PIH:PEPFAR partner site,CIEL:1065,Clinical Impressions,PIH:13170
+Return Visit Date,Date,N/A,date,No,no,CIEL:5096,,,
