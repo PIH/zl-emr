@@ -1,0 +1,18 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Zl registration patient contact Person contact Name question,Coded,N/A,radio,Yes,no,PIH:NAMES AND FIRSTNAMES OF CONTACT,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person relationships label,Coded,N/A,radio,Yes,no,PIH:RELATIONSHIPS OF CONTACT,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person contact Name question,Coded,N/A,radio,Yes,no,PIH:NAMES AND FIRSTNAMES OF CONTACT,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person relationships label,Coded,N/A,radio,Yes,no,PIH:RELATIONSHIPS OF CONTACT,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address country,Coded,N/A,radio,Yes,no,PIH:Country,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address state Province,Coded,N/A,radio,Yes,no,PIH:State Province,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address city Village,Coded,N/A,radio,Yes,no,PIH:City Village,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address neighborhood Cell,Coded,N/A,radio,Yes,no,PIH:Address3,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address address1,Coded,N/A,radio,No,no,PIH:Address1,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Haiticore address address2,Coded,N/A,radio,No,no,PIH:Address2,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:Address2,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:Address1,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:Address3,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:City Village,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:State Province,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Zl registration patient contact Person address label,Coded,N/A,radio,No,no,PIH:Country,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT
+Registrationapp patient phone label,Coded,N/A,radio,Yes,no,PIH:TELEPHONE NUMBER OF CONTACT,,Zl registration patient contact Person header,PIH:PATIENT CONTACTS CONSTRUCT

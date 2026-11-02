@@ -1,0 +1,9 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Diagnoses (encounterDiagnosesByObs),Other,Pick diagnoses,diagnoses widget,No,no,,,,
+Clinic consult title,Coded,mirebalaisreports.noncodeddiagnoses.name,checkbox,No,no,PIH:20580,CIEL:1065,,
+Clinic consult title,Text,N/A,textarea,No,no,PIH:7416,,,
+Procedure,Coded,N/A,autocomplete,No,no,PIH:Outpatient procedure,,,
+Disposition,Other,Disposition widget,disposition widget,Yes,no,,,,
+Procedure,Date,N/A,date,No,no,PIH:RETURN VISIT DATE,,,
+Free Text Comments,Text,N/A,textarea,No,no,PIH:CLINICAL IMPRESSION COMMENTS,,,

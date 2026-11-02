@@ -1,0 +1,32 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Dispensed,Coded,Pihcore.Topatient | Pihcore.Tochw | Pihcore.Incommunity,radio,No,CHW (Community Health Worker) → show #medPickupChwId; Community health → show #medPickupComId,PIH:12071,CIEL:162571|CIEL:1555|PIH:9361,,
+Name CHW,Coded,N/A,radio,No,no,$medPickupChw,,,
+Name Com,Coded,N/A,radio,No,no,$medPickupCom,,,
+Treatment Line,Coded,1st | 2nd | 3rd,radio,No,no,PIH:13115,PIH:7428|PIH:7429|PIH:7430,,
+Subform: allergies-table.xml,Other,Subform — configuration/pih/subforms/allergies-table.xml,subform,No,no,,,,
+Treatment Line,Coded,pihcore.equivalentART,checkbox,No,no,PIH:3277,CIEL:1065,,
+Zl arv1,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl arv1,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl arv2,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl arv2,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl arv3,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl arv3,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl tms Dapsone,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl tms Dapsone,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl tb Pro Prim I,Coded,Primary,radio,No,no,PIH:13786,CIEL:159943,Category,CIEL:1442
+Zl tb Pro Prim I,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl tb Pro Prim I,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl tb Pro Prim II,Coded,Primary isoniazid prophylaxis II,radio,No,no,PIH:13786,PIH:21123,Category,CIEL:1442
+Zl tb Pro Prim II,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl tb Pro Prim II,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl tb Pro Sec I,Coded,Secondary,radio,No,no,PIH:13786,CIEL:159944,Category,CIEL:1442
+Zl tb Pro Sec I,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl tb Pro Sec I,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Zl tb Pro Sec II,Coded,Secondary isoniazid prophylaxis II,radio,No,no,PIH:13786,PIH:21124,Category,CIEL:1442
+Zl tb Pro Sec II,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+Zl tb Pro Sec II,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+B6,Coded,N/A,radio,No,no,CIEL:1282,,Category,CIEL:1442
+B6,Coded,N/A,radio,No,no,CIEL:1443,,Category,CIEL:1442
+Months Dispensed,Coded,N/A,radio,No,no,PIH:3102,,,
+Next Dispense Date,Date,N/A,date,No,no,CIEL:5096,,,

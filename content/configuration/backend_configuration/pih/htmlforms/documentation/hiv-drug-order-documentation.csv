@@ -1,0 +1,3 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Encounter Date,Date,N/A,date/time,Yes,no,encounterDate,,,
+Drug order,Other,Drug order widget,drug-order,No,no,,,,

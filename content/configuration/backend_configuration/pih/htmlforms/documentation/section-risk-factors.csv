@@ -1,0 +1,11 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Hiv syphilis History,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:163276,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv other STIHistory,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:156660,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv sexual Agression History,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:123160,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv multiple Partners,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:5567,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv sex Without Condom,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:159218,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv anal Sex,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:163278,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv with Sex Worker,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:160580,CIEL:1066|CIEL:1065|CIEL:1067,,
+Hiv sex Worker,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,CIEL:160579,CIEL:1066|CIEL:1065|CIEL:1067,,
+Other,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,No,no,PIH:Other risk factor,CIEL:1066|CIEL:1065|CIEL:1067,,
+Comment,Coded,N/A,radio,No,no,CIEL:161011,,Comment,CIEL:163288

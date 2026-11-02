@@ -1,0 +1,29 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Subform: encounter-provider-location-date.xml,Other,Subform — configuration/pih/subforms/encounter-provider-location-date.xml,subform,No,no,,,,
+Population Cat,Coded,Male who has sex with men | Female sex worker | Transgender | Intravenous drug use | Discordant couple | Other,checkbox,No,no,CIEL:160581,CIEL:160578|CIEL:166513|CIEL:166415|CIEL:105|CIEL:6096|CIEL:5622,Population Cat,
+Socio Economic level Education,Coded,Pihcore.None.Label | Zl.Registration.Patient.Levelofstudy.Primary.Label | Zl.Registration.Patient.Levelofstudy.Secondary.Label | Zl.Registration.Patient.Levelofstudy.Uni.Label,radio,No,no,CIEL:1712,CIEL:1107|CIEL:1713|CIEL:1714|CIEL:159785,,
+Hiv title,Coded,Pihcore.Positivesign | Pihcore.Negativesign | Pihcore.Indeterminate,radio,No,no,CIEL:163722,CIEL:703|CIEL:664|CIEL:1138,Required,PIH:11522
+Hiv title,Date,N/A,date,No,no,PIH:DATE OF LABORATORY TEST,,Required,PIH:11522
+Syphilis,Coded,Pihcore.Reactive | Pihcore.Nonreactive,radio,No,no,PIH:RPR,PIH:REACTIVE|PIH:NON-REACTIVE,Required,PIH:11523
+Syphilis,Date,N/A,date,No,no,PIH:DATE OF LABORATORY TEST,,Required,PIH:11523
+Prep Counsel,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:165335,CIEL:1065|CIEL:1066,,
+Interest In Prep,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:166657,CIEL:1065|CIEL:1066,,
+Lab exam results,Coded,N/A,radio,No,no,CIEL:161134,,,
+Hep Bs Ag short,Coded,Pihcore.Positivesign | Pihcore.Negativesign | Pihcore.Unavailable,radio,No,no,CIEL:159430,CIEL:703|CIEL:664|PIH:14693,,
+Status,Coded,Pihcore.Positivesign | Pihcore.Negativesign,radio,No,no,CIEL:45,CIEL:703|CIEL:664,,
+Date Last Sex,Coded,N/A,radio,No,no,PIH:20885,,,
+Acute HIVsigns,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:20888,CIEL:1065|CIEL:1066,,
+Start Prep,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:20886,CIEL:1065|CIEL:1066,,
+Prep Consent,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:20887,CIEL:1065|CIEL:1066,,
+Prep Start Date,Coded,N/A,radio,No,no,PIH:20897,,,
+Drug order,Other,Drug order widget,drug-order,No,no,,,,
+Hiv Risk Counsel,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:20898,CIEL:1065|CIEL:1066,,
+Fp condoms Provided,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:159777,CIEL:1065|CIEL:1066,,
+Lube Provided,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,PIH:21424,CIEL:1065|CIEL:1066,,
+Vmmc,Coded,Pihcore.Yes | Pihcore.No,radio,No,no,CIEL:166677,CIEL:145096|CIEL:163841,,
+Other Prevention,Coded,N/A,radio,No,no,PIH:21428,,,
+Followed Elsewhere Pr EP,Coded,Pihcore.Yes | Pihcore.No,radio,No,Yes → show #est-prog-start,CIEL:170089,CIEL:1065|CIEL:1066,,
+Estimated Program Start Date,Coded,N/A,radio,No,no,PIH:21422,,,
+Reference Clinic,Coded,N/A,radio,No,no,PIH:11483,,,
+Reference Date,Coded,N/A,radio,No,no,CIEL:163181,,,
+Followed Elsewhere Pr EP,Date,N/A,date,No,no,PIH:RETURN VISIT DATE,,,

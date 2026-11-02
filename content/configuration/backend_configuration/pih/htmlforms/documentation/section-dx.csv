@@ -1,0 +1,5 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Diagnoses (encounterDiagnosesByObs),Other,Pick diagnoses,diagnoses widget,No,no,,,,
+Zl exam clinical Impression title,Coded,mirebalaisreports.noncodeddiagnoses.name,checkbox,No,no,PIH:20580,CIEL:1065,,
+Zl exam clinical Impression title,Text,N/A,textarea,No,no,PIH:7416,,,
+Free Text Comments,Text,N/A,textarea,No,no,PIH:CLINICAL IMPRESSION COMMENTS,,,

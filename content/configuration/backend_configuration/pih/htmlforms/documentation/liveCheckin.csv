@@ -1,0 +1,26 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Encounter Date,Date,N/A,date/time,Yes,no,encounterDate,,,
+Encounter Location,Location,List of available locations,location select,Yes,no,,,,
+Encounter Date,Date,N/A,date/time,Yes,no,encounterDate,,,
+Encounter Location,Location,List of available locations,location select,Yes,no,,,,
+Gyn Intervent,Coded,Dilation and curettage | Treatment of Bartholin's cyst | Myomectomy | Hysterectomy | Caesarean section,checkbox,No,no,PIH:Type of HUM visit,CIEL:1637|PIH:21174|PIH:20149|CIEL:159837|CIEL:1171,Gyn Intervent,
+Certs,Coded,Medical certificate | Marriage certificate | Certificate of injuries and wounds | Birth certificate,checkbox,No,no,PIH:Type of HUM visit,PIH:7702|PIH:7694|PIH:21166|PIH:21167,Certs,
+Visit Note plan other,Coded,Standard outpatient visit | Gynecology specialty | Internal medicine specialty | Pediatrics | Standard dental visit | Radiology services,checkbox,No,no,PIH:Type of HUM visit,PIH:7705|CIEL:165013|CIEL:165019|CIEL:165048|PIH:7706|PIH:9355,Visit Note plan other,
+Minor Surgery,Coded,Ankyloglossia treatment | Polydactyly surgery | Circumcision | Treatment for breast adenofibroma | Excision of lipoma | Removal of foreign body | Ingrown nail care | Keloid excision | Minor surgery for cyst,checkbox,No,no,PIH:Type of HUM visit,PIH:21175|PIH:21176|CIEL:161803|PIH:21177|CIEL:165166|PIH:21170|PIH:21178|PIH:21171|PIH:21179,Minor Surgery,
+Major Surgery,Coded,Hernia repair | Repair of umbilical hernia | Repair of hydrocele,checkbox,No,no,PIH:Type of HUM visit,PIH:21172|CIEL:161795|CIEL:161808,Major Surgery,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,dropdown,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin visit Type label,Coded,N/A,radio,No,no,PIH:Type of HUM visit,,,
+Retrospective Checkin payment Amount label,Coded,N/A,radio,No,no,PIH:Payment amount,,Retrospective Checkin visit Type label,PIH:Payment construct
+Retrospective Checkin receipt Number label,Coded,N/A,dropdown,No,no,PIH:Receipt number,,Retrospective Checkin visit Type label,PIH:Payment construct

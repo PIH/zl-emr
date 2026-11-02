@@ -1,0 +1,51 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Dispense Iron Folate,Coded,Yes | No,radio,No,no,CIEL:104677,CIEL:1065|CIEL:1066,,
+Register Mom Club,Coded,Yes | No,radio,No,no,PIH:13261,CIEL:1065|CIEL:1066,,
+Delivery Plan,Coded,Yes | No,radio,No,no,CIEL:159758,CIEL:1065|CIEL:1066,,
+Dispense Iron Folate,Coded,Yes | No,radio,No,no,CIEL:104677,CIEL:1065|CIEL:1066,,
+Register Mom Club,Coded,Yes | No,radio,No,no,PIH:13261,CIEL:1065|CIEL:1066,,
+Delivery Plan,Coded,Yes | No,radio,No,no,CIEL:159758,CIEL:1065|CIEL:1066,,
+Taking Arvs,Coded,No | Yes,radio,No,no,CIEL:5586,CIEL:1066|CIEL:1065,,
+Delivery Plan,Coded,Cervical cancer screening | Behavioral regulation counseling | Family planning counseling | Referral for sexually transmitted infection screening | Partner referred for HIV test,checkbox,No,no,CIEL:163560,CIEL:151185|CIEL:165489|CIEL:1382|CIEL:163559|CIEL:159381,Delivery Plan,
+Referred MH,Coded,No | Yes,radio,No,no,PIH:13002,CIEL:1066|CIEL:1065,,
+Visit Note plan,Coded,Primary | Secondary,radio,No,no,PIH:13786,CIEL:159943|CIEL:159944,,
+Hiv needs ART,Coded,Pihcore.Nonotindicated | Pihcore.Yesbutrefused | Pihcore.Yesdenystatus | Pihcore.Yesafterchw | Pihcore.Yesstartnow | Pihcore.Yestreatmentstarted | Pihcore.Yesdelayedformedicalreason | Pihcore.Yespatientdiedbeforeenrollingart | Pihcore.Yespatienttransferredanothersite | Pihcore.Yesdelayed,radio,No,no,CIEL:162703,CIEL:1066|CIEL:127750|PIH:14666|PIH:2222|PIH:1619|CIEL:160037|PIH:14842|CIEL:160034|CIEL:160036|PIH:7262,,
+If Yes Reason,Text,N/A,text,No,no,PIH:13021,,,
+Treatment Line,Coded,1st | 2nd | 3rd,radio,No,no,PIH:13115,PIH:7428|PIH:7429|PIH:7430,,
+Hiv start ARVfor PMTCT,Coded,No | Yes,radio,No,no,CIEL:5576,CIEL:1066|CIEL:1065,,
+Ifyes Transfer PMTCT,Coded,emr.yes,checkbox,No,no,PIH:8854,PIH:6260,,
+Tb need Treatment,Coded,Pihcore.Ongoingexam | Emr.No | Emr.Yes | Pihcore.Treatmentstarted,radio,No,no,PIH:1559,PIH:2224|CIEL:1066|CIEL:1065|PIH:1432,,
+Tb need Treatment,Coded,Pihcore.Tb.Medsnotindicated | Pihcore.Tb.Medsstarted | Pihcore.Tb.Medsstopped | Pihcore.Tb.Medschanged | Pihcore.Tb.Ongoing,radio,No,no,PIH:1559,CIEL:1066|CIEL:160017|CIEL:1267|CIEL:981|CIEL:163057,,
+Date,Coded,N/A,radio,No,no,CIEL:1113,,,
+Specify Regimen,Coded,Pihcore.Tb.Initialtreatment | Pihcore.Tb.Retreatment | Pihcore.Tb.Mdrtbtreatment,radio,No,no,CIEL:159792,PIH:2406|PIH:2408|CIEL:159909,,
+stiDischarge,Coded,Yes | No,radio,No,no,PIH:1816,CIEL:1065|CIEL:1066,,
+burnUrine,Coded,Yes | No,radio,No,no,CIEL:163606,CIEL:1065|CIEL:1066,,
+genitalUlcer,Coded,Yes | No,radio,No,no,CIEL:864,CIEL:1065|CIEL:1066,,
+Other,Coded,N/A,radio,No,no,PIH:1374,,,
+Syph need Treatment,Coded,Pihcore.Ongoingexam | Emr.No | Emr.Yes | Pihcore.Treatmentstarted,radio,No,no,CIEL:165331,PIH:2224|CIEL:1066|CIEL:1065|CIEL:160037,,
+Start Date,Coded,N/A,radio,No,no,PIH:13023,,,
+Remarks,Text,N/A,text,No,no,PIH:1374,,,
+Syph need Treatment,Coded,Emr.Yes | Emr.No,radio,No,Yes → show #start-date-syph-treatment,CIEL:165331,CIEL:1065|CIEL:1066,,
+Start Date,Coded,N/A,radio,No,no,PIH:13023,,,
+Treatment Needed Other STI,Coded,Yes | No,radio,No,Yes → show #other-sti-details,PIH:13077,CIEL:1065|CIEL:1066,,
+Treatment Needed Other STI,Coded,Sexually transmitted chlamydial disease | Gonorrhea | Genital herpes | HPV | Hepatitis B,checkbox,No,no,PIH:13076,PIH:7247|CIEL:117767|CIEL:117829|CIEL:1213|CIEL:111759,Treatment Needed Other STI,PIH:13027
+Other STI,Coded,Other,checkbox,No,no,PIH:13076,CIEL:5622,Treatment Needed Other STI,PIH:13027
+Start Date,Coded,N/A,radio,No,no,CIEL:1428,,Treatment Needed Other STI,PIH:13027
+Drug order,Other,Drug order widget,drug-order,No,no,,,,
+Drug order,Other,Drug order widget,drug-order,No,no,,,,
+Method of family planning,Coded,Condoms | Oral contraception | Tubal ligation | Vasectomy | Intra uterine device (IUD) | Medroxyprogesterone acetate (Depo-provera) | Levonorgestrel | Abstinence | None | Other,checkbox,No,no,CIEL:374,CIEL:190|CIEL:780|CIEL:1472|CIEL:1489|CIEL:5275|CIEL:907|CIEL:78796|CIEL:159524|CIEL:1107|CIEL:5622,Method of family planning,PIH:Family planning construct
+Remarks,Text,N/A,text,No,no,PIH:FAMILY PLANNING COMMENT,,,
+Received,Coded,Transport assistance | Nutritional assistance,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE ALREADY RECEIVED,PIH:ASSISTANCE WITH TRANSPORT|PIH:NUTRITIONAL AID,Received,
+Received,Coded,Transport assistance | Nutritional assistance,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE RECOMMENDED,PIH:ASSISTANCE WITH TRANSPORT|PIH:NUTRITIONAL AID,Received,
+Received,Coded,N/A,radio,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE NON-CODED,,,
+Received,Coded,Other,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE ALREADY RECEIVED,CIEL:5622,,
+Received,Coded,Other,checkbox,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE RECOMMENDED,CIEL:5622,,
+Remarks,Text,N/A,text,No,no,PIH:SOCIO-ECONOMIC ASSISTANCE COMMENT,,,
+External Transfer Question,Coded,Pihcore.Referral | Pihcore.Transfer,radio,No,Referral → show #transfer-out-details; Transfer → show #transfer-out-details,PIH:REFERRAL OR TRANSFER,PIH:11521|PIH:6965,Art Drug Orders,PIH:13170
+External Transfer Question,Coded,Pihcore.Internal | Pihcore.External,radio,No,Zanmi Lasante supported site → show #internal-transfer-out; Non-PIH facility → show #external-transfer-out,PIH:Transfer out location,PIH:8855|PIH:8856,Art Drug Orders,PIH:13170
+Transfer Referral Location,Coded,N/A,location,No,no,PIH:8621,,Art Drug Orders,PIH:13170
+Transfer Referral Location,Coded,N/A,radio,No,no,PIH:11483,,Art Drug Orders,PIH:13170
+Transfer Referral Location,Coded,pihcore.pepfarSite,radio,No,no,PIH:PEPFAR partner site,CIEL:1065,Art Drug Orders,PIH:13170
+Clinical Impressions,Text,N/A,textarea,No,no,CIEL:162749,,,
+Action Plan,Text,N/A,textarea,No,no,PIH:1620,,,
+Action Plan,Date,N/A,date,No,no,PIH:RETURN VISIT DATE,,,

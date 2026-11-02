@@ -1,0 +1,190 @@
+Question,Datatype,Possible Answers,input type,required?,skip logic?,concept for question,concepts for answers,group name (if part of concept group),concept group mapping
+Name CHW,Coded,N/A,radio,No,no,CIEL:164141,,,
+External Refer In Question,Coded,Pihcore.Referral | Pihcore.Transfer,radio,No,Referral → show #transfer-referral-details; Transfer → show #transfer-referral-details,PIH:REFERRAL OR TRANSFER,PIH:11521|PIH:6965,History label,PIH:13169
+External Refer In Question,Coded,Pihcore.Internal | Pihcore.External,radio,No,Zanmi Lasante supported site → show #internal-transfer; Non-PIH facility → show #external-transfer,PIH:REFERRED FROM ANOTHER SITE,PIH:8855|PIH:8856,History label,PIH:13169
+Transfer Referral Location,Coded,N/A,location,No,no,PIH:8621,,History label,PIH:13169
+Transfer Referral Location,Coded,pihcore.refer.referByMCH,checkbox,No,no,PIH:13679,CIEL:1065,History label,PIH:13169
+Transfer Referral Location,Coded,N/A,radio,No,no,PIH:11483,,History label,PIH:13169
+Transfer Referral Location,Coded,pihcore.pepfarSite,radio,No,no,PIH:PEPFAR partner site,CIEL:1065,History label,PIH:13169
+Test Ordered By,Coded,Voluntary counseling and testing center | Maternal and child health program | Outpatient consultation | Mobile voluntary counseling and testing program | Family planning clinic | Maternity ward | Surgery | General medicine department | Pediatric ward,radio,No,no,CIEL:159936,CIEL:159940|CIEL:159937|CIEL:160542|CIEL:159939|PIH:2714|PIH:2235|PIH:6298|PIH:7891|PIH:2717,Test Ordered By,
+Test Ordered By,Coded,pihcore.other,radio,No,no,CIEL:159936,CIEL:5622,,
+Hiv test Date,Coded,N/A,radio,No,no,CIEL:164400,,,
+Hiv status Known Before Pregnancy,Coded,Coreapps.Yes | Coreapps.No,radio,No,no,PIH:13955,PIH:1065|PIH:1066,,
+Hiv partner Testing,Coded,No | Yes | No partner,radio,No,no,CIEL:159381,CIEL:1066|CIEL:1065|PIH:NO PARTNER,,
+History label,Coded,Sexually active with men | Sexually active with women | Intravenous drug use | Blood transfusion | Maternal to fetal transmission of human immunodeficiency virus | Accidental exposure to blood or body fluid | Sex with person known to be infected by human immunodeficiency virus | Sex with injectable drug user | Heterosexual sex with bisexual | Heterosexual sex with person with blood transfusion,checkbox,No,no,CIEL:160581,CIEL:163290|CIEL:163291|CIEL:105|CIEL:1063|CIEL:163273|CIEL:163274|CIEL:163289|PIH:11534|CIEL:165433|CIEL:165434,History label,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163288
+5622,Coded,Other,checkbox,No,no,CIEL:160581,CIEL:5622,History label,CIEL:163288
+Exposure start date/time,Coded,N/A,radio,No,no,CIEL:162601,,History label,CIEL:163288
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:163276,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:156660,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:123160,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:5567,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:159218,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:163278,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:160580,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar | Pihcore.Unknown.Onechar,radio,Yes,no,CIEL:160579,CIEL:1066|CIEL:1065|CIEL:1067,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+{toggle},Coded,N/A,radio,No,no,CIEL:162601,,,CIEL:163292
+Other Risk Factors,Coded,Other risk factor,checkbox,No,no,CIEL:160581,PIH:11406,Other Risk Factors,CIEL:163288
+Other Risk Factors,Coded,N/A,radio,No,no,CIEL:162601,,Other Risk Factors,CIEL:163288
+Comment,Coded,N/A,radio,No,no,PIH:12999,,,
+History label,Coded,pihcore.screeningSyph,checkbox,No,no,CIEL:164801,CIEL:1065,,
+Syphilis,Coded,Positive | Negative | Not tested | No test,radio,No,no,CIEL:165303,CIEL:703|CIEL:664|CIEL:1138|PIH:3083,,
+pihcore.syphilisTreatmentPregnantMother,Coded,pihcore.syphilisTreatmentPregnantMother,checkbox,No,no,CIEL:1628,CIEL:112493,Syphilis,CIEL:166557
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,Syphilis,CIEL:166557
+Treatment end date,Coded,N/A,radio,No,no,CIEL:164384,,Syphilis,CIEL:166557
+pihcore.syphilisTreatmentPartner,Coded,pihcore.syphilisTreatmentPartner,checkbox,No,no,CIEL:1628,CIEL:112493,Syphilis,CIEL:166558
+Treatment start date,Coded,N/A,radio,No,no,CIEL:163526,,Syphilis,CIEL:166558
+Treatment end date,Coded,N/A,radio,No,no,CIEL:164384,,Syphilis,CIEL:166558
+History label,Coded,pihcore.pregnant,checkbox,No,no,CIEL:5272,CIEL:1065,,
+Last Period,Date,N/A,date,No,no,CIEL:1427,,,
+Due Date,Date,N/A,date,No,no,CIEL:5596,,,
+Grava,Coded,N/A,radio,Yes,no,CIEL:5624,,,
+Para,Coded,N/A,radio,Yes,no,CIEL:1053,,,
+Abortus,Coded,N/A,radio,Yes,no,CIEL:1823,,,
+Living,Coded,N/A,radio,Yes,no,CIEL:1825,,,
+Duration Menst Cycle,Coded,N/A,radio,No,no,CIEL:160597,,,
+Duration Menses,Coded,N/A,radio,No,no,CIEL:163732,,,
+Menstruation,Coded,Pihcore.Regular | Pihcore.Irregular,radio,No,no,CIEL:160600,CIEL:1065|CIEL:1066,,
+Menstruation,Coded,Dysmenorrhea,checkbox,No,no,PIH:DIAGNOSIS,CIEL:127,Menstruation,PIH:Visit Diagnoses
+Adverse Event,Coded,coreapps.yes,checkbox,No,no,CIEL:121764,CIEL:1065,,
+Pathology,Coded,pneumonia | herpes | thrush | dermatitis | enteropathy | diarrhea | anemia | sti | PeripheralNeuropathy | seizure | OtherNeuroSympt | htn | otherCardio | hepatitis | diabetes | surgery | cholera | chikungunya | covid | other,checkbox,No,no,CIEL:1628,PIH:PNEUMONIA|PIH:HERPES ZOSTER|CIEL:5334|PIH:DERMATITIS|CIEL:119175|PIH:DIARRHEA|PIH:ANEMIA|PIH:SEXUALLY TRANSMITTED INFECTION|CIEL:118983|PIH:SEIZURE|PIH:995|PIH:HYPERTENSION|CIEL:119270|PIH:HEPATITIS|PIH:DIABETES|PIH:SURGERY|PIH:CHOLERA|CIEL:120742|CIEL:165623|PIH:OTHER,Pathology,CIEL:1633
+pneumonia,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+herpes,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+thrush,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+dermatitis,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+enteropathy,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+diarrhea,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+anemia,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+sti,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+PeripheralNeuropathy,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+seizure,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+OtherNeuroSympt,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+htn,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+otherCardio,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+hepatitis,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+diabetes,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+surgery,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+cholera,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+chikungunya,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+covid,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+other,Coded,Pihcore.No.Onechar | Pihcore.Yes.Onechar,radio,No,no,CIEL:1729,CIEL:1066|CIEL:1065,,CIEL:1633
+pneumonia,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+herpes,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+thrush,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+dermatitis,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+enteropathy,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+diarrhea,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+anemia,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+sti,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+PeripheralNeuropathy,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+seizure,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+OtherNeuroSympt,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+htn,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+otherCardio,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+hepatitis,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+diabetes,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+surgery,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+cholera,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+chikungunya,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+covid,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+other,Coded,N/A,radio,No,no,CIEL:159948,,,CIEL:1633
+pneumonia,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+herpes,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+thrush,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+dermatitis,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+enteropathy,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+diarrhea,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+anemia,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+sti,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+PeripheralNeuropathy,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+seizure,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+OtherNeuroSympt,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+htn,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+otherCardio,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+hepatitis,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+diabetes,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+surgery,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+cholera,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+chikungunya,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+covid,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+other,Coded,N/A,radio,No,no,CIEL:160221,,,CIEL:1633
+Tb patient Active TB,Coded,coreapps.yes,checkbox,No,no,CIEL:1389,CIEL:1065,,
+If Yes Test Date,Coded,N/A,radio,No,no,PIH:11526,,,
+If Yes Test Date,Coded,Pulmonary tuberculosis,checkbox,No,no,CIEL:160040,CIEL:42,,
+If Yes Test Date,Coded,Extra-pulmonary tuberculosis,checkbox,No,no,CIEL:160040,CIEL:5042,,
+If Yes Test Date,Coded,pihcore.dstComplete,checkbox,No,no,PIH:3039,CIEL:1065,,
+Result,Coded,N/A,radio,No,no,CIEL:159391,,,
+Treatment,Coded,Initial TB treatment with 2 RHZE / 4 RH | TB retreatment with 2 RHZE / 4 RH | Multi-drug resistant tuberculosis regimen,radio,No,no,CIEL:1282,PIH:2406|PIH:2408|CIEL:159909,Treatment,PIH:1589
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1589
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1589
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1589
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1589
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1589
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1589
+Reason order stopped,Coded,Pihcore.Cured | Pihcore.Failure | Pihcore.Defaulted,radio,No,no,CIEL:6098,CIEL:159791|CIEL:843|CIEL:160031,,PIH:1589
+Reason order stopped,Coded,Pihcore.Cured | Pihcore.Failure | Pihcore.Defaulted,radio,No,no,CIEL:6098,CIEL:159791|CIEL:843|CIEL:160031,,PIH:1589
+Reason order stopped,Coded,Pihcore.Cured | Pihcore.Failure | Pihcore.Defaulted,radio,No,no,CIEL:6098,CIEL:159791|CIEL:843|CIEL:160031,,PIH:1589
+Treatment,Coded,Cotrimoxazole,radio,No,no,CIEL:1282,CIEL:105281,Treatment,PIH:1501
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1501
+Historical drug stop date,Coded,N/A,radio,No,no,CIEL:1191,,,PIH:1501
+Treatment,Coded,Isoniazid,radio,No,no,CIEL:1282,CIEL:78280,Treatment,PIH:1501
+INH prophlylaxis treatment line,Coded,Primary | Secondary,radio,No,no,PIH:13786,CIEL:159943|CIEL:159944,,PIH:1501
+Historical drug start date,Date,N/A,date,No,no,CIEL:1190,,,PIH:1501
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1501
+Treatment,Coded,Fluconazole | Dapsone,radio,No,no,CIEL:1282,CIEL:76488|CIEL:74250,Treatment,PIH:1501
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1501
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1501
+Historical drug stop date,Coded,N/A,radio,No,no,CIEL:1191,,,PIH:1501
+Historical drug stop date,Coded,N/A,radio,No,no,CIEL:1191,,,PIH:1501
+Treatment,Coded,TDF + 3TC + (EFV or NVP) | AZT + 3TC + (EFV or NVP) | Regimen with D4T | TDF + 3TC + LPV/r,radio,No,no,CIEL:1282,PIH:13013|PIH:13014|PIH:13012|CIEL:162201,Treatment,PIH:1590
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1590
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1590
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1590
+Historical drug start date,Coded,N/A,radio,No,no,CIEL:1190,,,PIH:1590
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1590
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1590
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1590
+Historical drug stop date,Date,N/A,date,No,no,CIEL:1191,,,PIH:1590
+Treatment,Coded,Other,radio,No,no,CIEL:1282,CIEL:5622,Treatment,PIH:1590
+Treatment,Coded,N/A,radio,No,no,CIEL:1190,,Treatment,PIH:1590
+Treatment,Date,N/A,date,No,no,CIEL:1191,,Treatment,PIH:1590
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:1527,,,
+pihcore.mch.counselling.familyPlanning,Coded,pihcore.mch.counselling.familyPlanning,checkbox,No,no,CIEL:165309,CIEL:1382,,
+Patient Type,Coded,Pihcore.Currently.Using.Birth.Control | Pihcore.Accepted,radio,No,no,PIH:14321,CIEL:965|PIH:13958,,
+Fp Method,Coded,Coc | Cop | Pihcore.Fp.Rhythm | Condoms | Depo-Provera | Pihcore.Fp.Iud | Implant | Pihcore.Fp.Tuballig | Pihcore.Fp.Breast,radio,No,no,CIEL:374,CIEL:159783|CIEL:80784|CIEL:5277|CIEL:190|CIEL:907|CIEL:5275|CIEL:1873|CIEL:1472|CIEL:136163,Fp Method,PIH:Family planning construct
+Start Date,Coded,N/A,radio,No,no,CIEL:163757,,Fp Method,PIH:Family planning construct
+End Date,Coded,N/A,radio,No,no,CIEL:163758,,Fp Method,PIH:Family planning construct
+Date Implant,Coded,N/A,radio,No,no,PIH:3203,,,
+Prophylaxis,Text,N/A,textarea,No,no,PIH:PRESENTING HISTORY,,,
+Zl if Other Specify,Coded,N/A,checkbox,No,no,PIH:Radiology procedure performed,,Zl if Other Specify,PIH:Radiology report construct
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:Radiology report comments,,Zl if Other Specify,PIH:Radiology report construct
+Zl if Other Specify,Coded,N/A,radio,No,no,PIH:12847,,Zl if Other Specify,PIH:Radiology report construct
+Received Post Test Counsel,Coded,No | Yes,radio,No,Yes → show #post-test-counseling-date,CIEL:159382,CIEL:1066|CIEL:1065,,
+Date Post Test,Coded,N/A,radio,No,no,PIH:11525,,,
+Patient Received Advice,Coded,Cervical cancer screening | Behavioral regulation counseling | Family planning counseling | Referral for sexually transmitted infection screening | Partner referred for HIV test,checkbox,No,no,CIEL:163560,CIEL:151185|CIEL:165489|CIEL:1382|CIEL:163559|CIEL:159381,Patient Received Advice,
+Referred MH,Coded,No | Yes,radio,No,no,PIH:13002,CIEL:1066|CIEL:1065,,
+Daily Dose ARV,Coded,Yes | No,radio,No,No → show #side-by-side-reason,PIH:13649,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,N/A,radio,No,no,PIH:1709,,,
+Daily Dose ARV,Coded,N/A,radio,No,no,CIEL:160110,,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,PIH:13654,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,CIEL:160111,CIEL:1065|CIEL:1066,,
+Daily Dose ARV,Coded,Yes | No,radio,No,no,CIEL:5586,CIEL:1065|CIEL:1066,,
+Zl breastfeeding Since Last Visit,Coded,Yes | No,radio,No,Yes → show #bf-status,PIH:6981,CIEL:1065|CIEL:1066,,
+Zl breastfeeding Since Last Visit,Coded,Pihcore.Exclusively | Zl.Mixed | Zl.Breastfeedstopped,radio,No,Weaned → show #wean-date,CIEL:985,CIEL:5526|CIEL:6046|CIEL:1152,,
+Zl wean Date,Coded,N/A,radio,No,no,CIEL:166566,,,
