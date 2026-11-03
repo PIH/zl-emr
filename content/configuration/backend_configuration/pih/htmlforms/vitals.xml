@@ -358,11 +358,14 @@
                                 <span class="error field-error" style="display: none"/>
                             </span>
                         </p>
+                        <p class="left small">
+                            <uimessage code="mirebalais.vitals.or"/>
+                        </p>
                     </ifMode>
-                    <span class="mmol small">
+                    <p class="mmol small">
                         <obs conceptId="CIEL:887" id="millimole"
                              showUnits="mmol/L" unitsCssClass="append-to-value"/>
-                    </span>
+                    </p>
                 </div>
                 <br/>
 
