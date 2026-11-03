@@ -2,3 +2,5 @@
 *.iml
 target/
 
+# OS X auto-generated files #
+.DS_Store
