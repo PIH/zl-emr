@@ -11,11 +11,10 @@ import { EntryFormPage, ViewFormPage, viewMismatches, VISIT_PAGE_URL, visitPageP
 // The location select starts with the session location (Klinik Ekstèn carries the Consult Note Location tag).
 //
 // Conditions in the form, from documentation inventory (outpatientConsult.inv.md):
-//   includeIf deathCertificate component :6    adds RedirectToDeathNoteIfMissing post-submission action
-//   ifMode EDIT                          :12   CSS for #disposition and .check-inline (EDIT only, see V2)
-//   ifMode VIEW include=false            :69, :117   heading, who/when/where subform, buttons (ENTER and EDIT); VIEW tested in its own test, test.fixme: HAI-1278
-//   toggle PIH:20580 (checkbox)          :82   shows #non-coded-diagnosis-div (textarea PIH:7416)
-// Scripts: :33-67 validateForm(), run on load and on every document click/change: Save (#buttons .submitButton) is
+//   ifMode EDIT                          :8    CSS for #disposition and .check-inline (EDIT only, see V2)
+//   ifMode VIEW include=false            :65, :113   heading, who/when/where subform, buttons (ENTER and EDIT); VIEW tested in its own test, test.fixme: HAI-1278
+//   toggle PIH:20580 (checkbox)          :78   shows #non-coded-diagnosis-div (textarea PIH:7416)
+// Scripts: :29-63 validateForm(), run on load and on every document click/change: Save (#buttons .submitButton) is
 //   disabled unless (a diagnosis chip `.diagnosis` exists OR the non-coded text has a value) AND no visible select or
 //   input inside #disposition is empty. needsDisposition is hard-coded true, so a disposition is always required.
 //   The disposition widget (coreapps, not this file) shows a location select for Admission / Transfer within hospital /
@@ -24,13 +23,13 @@ import { EntryFormPage, ViewFormPage, viewMismatches, VISIT_PAGE_URL, visitPageP
 //   haiti.json); the tests use "ED Observation" (no actions, keeps the visit open) and assert the visit stays open and
 //   the patient is not marked dead. The coded diagnosis is saved as a Visit Diagnoses obs group. Nothing creates an order.
 //   Not saved by any test: Admission, Transfer, Discharge, Death (these change visits/locations/patient).
-// Not covered here: the Procedure autocomplete (:90), the deathCertificate redirect (needs a Death disposition), VIEW of the Procedure obs
+// Not covered here: the Procedure autocomplete (:86), VIEW of the Procedure obs
 //   (never filled), provider/location/date behaviour (see _shared.e2e.md), the other dispositions' actions.
 //
 // Findings:
-//   V1 Low    :12-28 the disposition/checkbox CSS sits in ifMode EDIT, so it is not applied on first entry (ENTER).
+//   V1 Low    :8-24 the disposition/checkbox CSS sits in ifMode EDIT, so it is not applied on first entry (ENTER).
 //                    Fix: ifMode VIEW include="false". (unconfirmed visually)
-//   V2 Low    :34-40 hasDisposition is computed and unused; needsDisposition is always true (dead code).
+//   V2 Low    :30-36 hasDisposition is computed and unused; needsDisposition is always true (dead code).
 
 const FORM = 'outpatientConsult.xml';
 // the VIEW shows the disposition under its configured label (pih-dispositions-haiti.json), not the concept's name
@@ -48,7 +47,7 @@ const pickDiagnosis = async (page: Page) => {
 
 test.describe('outpatientConsult', () => {
   test('Save stays disabled until a diagnosis and a disposition are given', async ({ page, createEntryContext }) => {
-    // validateForm :33-67
+    // validateForm :29-63
     await EntryFormPage.open(page, FORM, await newPatient(createEntryContext));
     await expect(save(page)).toBeDisabled();
     await pickDiagnosis(page);
@@ -60,7 +59,7 @@ test.describe('outpatientConsult', () => {
   });
 
   test('a non-coded diagnosis alone satisfies the diagnosis rule', async ({ page, createEntryContext }) => {
-    // toggle :82 shows #non-coded-diagnosis-div; validateForm accepts getValue('non-coded-diagnosis.value')
+    // toggle :78 shows #non-coded-diagnosis-div; validateForm accepts getValue('non-coded-diagnosis.value')
     await EntryFormPage.open(page, FORM, await newPatient(createEntryContext));
     const div = page.locator('#non-coded-diagnosis-div');
     await expect(div).toBeHidden();
@@ -147,7 +146,7 @@ test.describe('outpatientConsult', () => {
   }) => {
     test.fixme(); // HAI-1278: validateForm calls getValue, which the visit page does not define
     const { encounters, displays } = await saveConsult(page, api, createEntryContext);
-    // VIEW :69-122: the diagnosis tag :78 prints the diagnosis as plain text in #data-collection (no span.value, so the generic check
+    // VIEW :65-118: the diagnosis tag :74 prints the diagnosis as plain text in #data-collection (no span.value, so the generic check
     // skips the Diagnosis obs); everything else must be a span.value
     const view = await ViewFormPage.open(page, FORM, encounters[0].uuid);
     expect((await viewMismatches(api, view, encounters[0].uuid, VIEW_LABELS)).filter((m) => !m.startsWith('Diagnosis'))).toEqual([]);
@@ -159,7 +158,7 @@ test.describe('outpatientConsult', () => {
     // not filled in: the non-coded diagnosis, the return visit date, and the extra field of the other dispositions
     await expect(view.page.locator('#non-coded-diagnosis .value, #non-coded-diagnosis-toggle .value, #apptDate .value')).toHaveCount(0);
     await expect(view.page.locator('#admissionLocation .value, #transferExternalLocation .value, #transferInternalLocation .value, #dateOfDeath .value')).toHaveCount(0);
-    // ifMode VIEW include=false :69, :117: heading, entry widgets and the Save / Cancel buttons are not in the VIEW
+    // ifMode VIEW include=false :65, :113: heading, entry widgets and the Save / Cancel buttons are not in the VIEW
     await expect(view.page.locator('h2, #buttons, button.submitButton, #diagnosis-search, textarea')).toHaveCount(0);
   });
 
