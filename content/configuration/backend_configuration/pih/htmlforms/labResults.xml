@@ -1,0 +1,2097 @@
+<htmlform formUuid="b437d585-132f-4e71-a812-70471b7474c7" formName="Lab results"
+          formEncounterType="4d77916a-0620-11e5-a6c0-1697f925ec7b" formVersion="2.1">
+
+    <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.SetObsDatesToSpecimenCollectionDateAction"/>
+
+    <style type="text/css">
+
+        p.radio > * {
+            display: inline;
+            float: none !important;
+            min-width: initial;
+        }
+
+        form input[type="radio"], .form input[type="radio"] {
+            float: none;
+            display: inline-block;
+        }
+
+        #viral-load > * {
+            display: inline !important;
+            float: none !important;
+            min-width: initial;
+        }
+
+        #hiv-rapid-test > * {
+            display: inline !important;
+            float: none !important;
+            min-width: initial;
+        }
+
+        #tb-skin-test-qual > * {
+            display: inline !important;
+            float: none !important;
+            min-width: initial;
+        }
+
+        @media (max-width: 991px) { /* Bootstrap "lg" */
+
+            ul#formBreadcrumb.options {
+                display: flex;
+                float: inherit;
+                width: inherit;
+                vertical-align: inherit;
+                background: #fff;
+                border-right: 3px solid #f9f9f9;
+            }
+
+            ul#formBreadcrumb li:first-child {
+                flex-basis: 85%;
+            }
+
+            ul#formBreadcrumb li:first-child ul {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            ul#formBreadcrumb li:first-child ul li {
+                flex-basis: 160px;
+            }
+
+            ul#formBreadcrumb > li:last-child {
+                display: flex;
+                align-items: center;
+                align-self: center;
+                height: 45px;
+                color: #444;
+                border: 1px solid #CCC;
+                background: #DDD;
+                box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+                vertical-align: middle;
+                padding: 5px;
+                text-align: center;
+            }
+
+            ul#formBreadcrumb > li:last-child:active {
+                color: blue;
+                box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+            }
+        }
+
+    </style>
+
+    <ifMode mode="VIEW" include="false">
+        <script type="text/javascript">
+
+            var toggleViralLoadFields = function() {
+                if (getValue('viral-load.value') === '<lookup expression="fn.getConcept('CIEL:1301').id" />') {
+                    NavigatorController.getFieldById(getField('viral-load-numeric.value').attr('id')).enable();
+                    NavigatorController.getFieldById(getField('detected-lower-limit.value').attr('id')).disable();
+                }
+                else if (getValue('viral-load.value') === '<lookup expression="fn.getConcept('CIEL:1306').id" />') {
+                    NavigatorController.getFieldById(getField('viral-load-numeric.value').attr('id')).disable();
+                    NavigatorController.getFieldById(getField('detected-lower-limit.value').attr('id')).enable();
+                }
+                else {
+                    NavigatorController.getFieldById(getField('viral-load-numeric.value').attr('id')).disable();
+                    NavigatorController.getFieldById(getField('detected-lower-limit.value').attr('id')).disable();
+                }
+            }
+
+            jq(function() {
+             
+                getField('encounter-date.value').change(function(evt) {
+                    getField('test-date.value').datepicker('option', 'minDate', evt.target.value);
+                });
+                getField('test-date.value').change(function(evt) {
+                    getField('encounter-date.value').datepicker('option', 'maxDate', evt.target.value);
+                })
+                const encounterDate = getDatePart(new Date(getValue('encounter-date.value'))) || new Date();
+                getField('encounter-date.value').datepicker('option', 'maxDate', new Date());
+                getField('test-date.value').datepicker('option', 'maxDate', new Date());
+               
+                getField('viral-load.value').change(toggleViralLoadFields);
+                toggleViralLoadFields();
+            });
+
+            function getDatePart(date) {
+                return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+            }
+
+        </script>
+    </ifMode>
+
+    <ifMode mode="ENTER">
+        <script type="text/javascript">
+            jq(function() {
+                // when below detectable limit is selected, set default value to 839 copies / ml since this is the standard for the Haiti national
+                getField('viral-load.value').change(function() {
+                    if (getValue('viral-load.value') === '<lookup expression="fn.getConcept('CIEL:1306').id" />') {
+                        setValue('detected-lower-limit.value', 839);
+                    }
+                });
+            });
+        </script>
+    </ifMode>
+
+    <section id="labResults" sectionTag="section" headerStyle="title" headerCode="pihcore.lab.lab_results.title">
+
+        <fieldset class="multi-line-confirmation" field-separator=" ">
+            <!-- field separator is set as a workaround for the super-hack, see below -->
+
+            <legend>
+                <uimessage code="pihcore.lab.overview"/>
+            </legend>
+            <h3>
+                <uimessage code="pihcore.lab.overview"/>
+            </h3>
+
+            <!-- this is a super-hack to get around the fact that if the date is first field in a form, the
+                 datepicker opens immediately, AND in this case we are getting some odd interactions between this
+                 first datepicker and the hidden datepicker at the bottom form for encounter date -->
+            <field>
+                <span class="ui-helper-hidden-accessible"><input type="text"/></span>
+            </field>
+            <div>
+                <label for="location">
+                    <uimessage code="emr.locationRequired"/>
+                </label>
+                <div class="required">
+                    <field class="required">
+                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Lab Results Location" restrictToSessionVisitLocation="true" required="true"/>
+                    </field>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <label for="sample-id">
+                    <uimessage code="pihcore.lab.sample_id"/>
+                </label>
+                <span class="small">
+                    <field>
+                        <obs  id="sample-id" conceptId="CIEL:162086"
+                              placeholder="pihcore.lab.sample_id.placeholder" size="30"/>
+                    </field>
+                </span>
+            </div>
+            <br/>
+            <div>
+                <label for="specimen-collection-date">
+                    <uimessage code="pihcore.lab.specimen_collection_date"/><font style="color:red">*</font>
+                </label>
+                <div class="small required">
+                    <!-- The sputum collection date is stored as the encounter date. -->
+                    <field class="required">
+                        <encounterDate id="encounter-date" default="now" />
+                    </field>
+                </div>
+                <div>
+                    <obs conceptId="PIH:11781" answerConceptId="PIH:YES"
+                         style="checkbox" answerCode="pihcore.date_estimated"/>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <label for="test-date">
+                    <uimessage code="pihcore.lab.test_date"/>
+                </label>
+                <div class="small">
+                    <field class="required">
+                        <obs id="test-date" conceptId="PIH:Date of test results"  required="true" allowFutureDates="true"/>
+                    </field>
+                </div>
+            </div>
+            
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+            <legend>
+                <uimessage code="pihcore.lab.hematology.title"/>
+            </legend>
+            <h3>
+                <uimessage code="pihcore.lab.hematology.title"/>
+            </h3>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{tag}" conceptId="{concept}" showUnits="true"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:679" message="pihcore.lab.red_blood_cell" tag="red-blood-cell-count"/>
+                <render concept="CIEL:21" message="pihcore.lab.hemoglobin" tag="hemoglobin"/>
+                <render concept="CIEL:1015" message="pihcore.lab.hematocrit" tag="hematocrit"/>
+                <render concept="CIEL:851" message="pihcore.lab.mcv" tag="mcv"/>
+                <render concept="CIEL:1018" message="pihcore.lab.mch" tag="mch"/>
+                <render concept="CIEL:1017" message="pihcore.lab.mchc" tag="mchc"/>
+                <render concept="CIEL:678" message="pihcore.lab.white_blood_cell" tag="white-blood-cell"/>
+            </repeat>
+
+            <label for="neutrophil">
+                <uimessage code="pihcore.lab.neutrophil"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="neutrophil" conceptId="PIH:Absolute Neutrophil Count" showUnits="true"/>
+                </field>
+                <field>
+                    (<obs conceptId="PIH:NEUTROPHILS" showUnits="true"/>)
+                </field>
+            </span>
+
+            <!-- Not on lab result form
+            <label for="mxd">
+                <uimessage code="pihcore.lab.mxd"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="mxd" conceptId="CIEL:165578" showUnits="true"/>
+                </field>
+            </span> -->
+
+            <label for="eos-pcent">
+                <uimessage code="pihcore.lab.eosinophil"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="eos-pcent" conceptId="CIEL:1024" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="bas-pcent">
+                <uimessage code="pihcore.lab.basophil"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="bas-pcent" conceptId="CIEL:1025" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="lymphocyte">
+                <uimessage code="pihcore.lab.lymphocyte"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="lymphocyte" conceptId="PIH:ABSOLUTE LYMPHOCYTE COUNT" showUnits="true"/>
+                </field>
+                <field>
+                    (<obs conceptId="PIH:LYMPHOCYTES" showUnits="true"/>)
+                </field>
+            </span>
+
+            <label for="mxd">
+                <uimessage code="pihcore.lab.mxd"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="mxd" conceptId="CIEL:163426" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="mono-pcent">
+                <uimessage code="pihcore.lab.monocyte"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="mono-pcent" conceptId="CIEL:1023" showUnits="true"/>
+                </field>
+            </span>
+
+            <!-- Not on lab result form
+            <label for="rdw-sd">
+                <uimessage code="pihcore.lab.rdwSd"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="rdw-sd" conceptId="CIEL:165580" showUnits="true"/>
+                </field>
+            </span>
+            <label for="rdw-cv">
+                <uimessage code="pihcore.lab.rdwCv"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="rdw-cv" conceptId="CIEL:165579" showUnits="true"/>
+                </field>
+            </span> -->
+
+            <label for="cd4-count-test">
+                <uimessage code="pihcore.lab.cd4"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="cd4-count-test" conceptId="CIEL:5497" showUnits="true"/>
+                </field>
+                <field>
+                    (<obs id="cd4-percent-test" conceptId="CIEL:730" showUnits="true" />)
+                </field>
+            </span>
+
+            <label for="esr">
+                <uimessage code="pihcore.lab.esr"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="esr" conceptId="PIH:ERYTHROCYTE SEDIMENTATION RATE"
+                         showUnits="emr.units.mmPerHour" unitsCssClass="append-to-value" />
+                </field>
+            </span>
+
+            <label for="sickle-screen">
+                <uimessage code="pihcore.lab.Sickling.exam"/>
+            </label>
+            <p class="side-by-side small">
+                <obs id="sickle-screen" style="radio"
+                     conceptId="CIEL:160225"
+                     answerConceptIds="CIEL:703,CIEL:664"/>
+            </p>
+
+            <label for="sickleScan">
+                <uimessage code="SickleScan RDT"/>
+            </label>
+            <p class="side-by-side small">
+                <obs id="sickleScan" style="radio"
+                     conceptId="CIEL:168105"
+                     answerConceptIds="CIEL:168106,CIEL:126513,CIEL:117703,CIEL:168107,CIEL:165547"
+                     answerCodes="AA,AS,SS,SC,AC"/>
+            </p>
+
+            <label for="sickle-hg-elec">
+                <uimessage code="pihcore.lab.hgElectro"/>
+            </label>
+            <p class="side-by-side small">
+                    <obs id="sickle-hg-elec" conceptId="CIEL:165544" />
+            </p>
+
+            <label for="reticul">
+                <uimessage code="pihcore.lab.reticul"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="reticul" conceptId="CIEL:1327" showUnits="true"/>
+                </field>
+                <field>
+                    (<obs id="arc" conceptId="CIEL:166395" showUnits="true"/>)
+                </field>
+            </span>
+
+            <hr/>
+            <h4>
+                <uimessage code="pihcore.lab.blood_type"/>
+            </h4>
+
+            <!-- Removed (HAI-1249)
+            <span class="side-by-side">
+                <obs id="blood-type" style="radio"
+                     conceptId="PIH:BLOOD TYPING"/>
+            </span>
+            <br/> -->
+
+            <span class="side-by-side">
+                <label for="blood-type-group">
+                    <uimessage code="pihcore.lab.bloodTypeGroup" />:
+                </label>
+                <obs id="blood-type-group" style="radio"
+                     conceptId="CIEL:163126"
+                     answerConceptIds="CIEL:163115,CIEL:163116,CIEL:163117,CIEL:163118"
+                     answerCodes="A,B,AB,O"/>
+            </span>
+            <br/>
+
+            <span class="side-by-side">
+                <label for="blood-rh">
+                    <uimessage code="pihcore.lab.bloodRh" />:
+                </label>
+                <obs id="blood-rh" style="radio"
+                     conceptId="CIEL:160232"
+                     answerConceptIds="CIEL:703,CIEL:664,PIH:21808" />
+            </span>
+
+            <hr/>
+            <h4>
+                <uimessage code="pihcore.lab.hemostatis"/>
+            </h4>
+
+            <label for="bleed-t">
+                <uimessage code="pihcore.lab.bleedTime"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="bleed-t" conceptId="CIEL:161433" showUnits="true"/>
+                </field>
+                <field>
+                    <obs id="bleed-t-sec" conceptId="PIH:20042" showUnits="pihcore.units.seconds"/>
+                </field>
+            </span>
+
+            <label for="coag">
+                <uimessage code="pihcore.lab.coagTime"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="coag" conceptId="CIEL:161435" showUnits="true"/>
+                </field>
+                <field>
+                    <obs id="coag-sec" conceptId="PIH:20043" showUnits="pihcore.units.seconds"/>
+                </field>
+            </span>
+
+            <label for="platelets">
+                <uimessage code="pihcore.lab.platelets"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="platelets" conceptId="PIH:PLATELETS" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="pt">
+                <uimessage code="pihcore.lab.pt"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="pt" conceptId="CIEL:161481" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="ptt">
+                <uimessage code="pihcore.lab.ptt"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="ptt" conceptId="CIEL:161153" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="inr">
+                <uimessage code="pihcore.lab.inr"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="inr" conceptId="PIH:INTERNATIONAL NORMALIZED RATIO"
+                         placeholder="Enter value"/>
+                </field>
+            </span>
+
+            <label for="fibrinogen">
+                <uimessage code="pihcore.lab.fibrinogen"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="fibrinogen" conceptId="CIEL:166377" showUnits="true"/>
+                </field>
+            </span>
+
+            <label for="d-dimer">
+                <uimessage code="pihcore.lab.ddimer"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="d-dimer" conceptId="PIH:20041" showUnits="true"/>
+                </field>
+            </span>
+
+            <hr/>
+
+            <h4>
+                <uimessage code="pihcore.other" />
+            </h4>
+
+            <!-- Not on paper form -->
+            <label for="hemoglobin-a1c">
+                HbA1c
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="hemoglobin-a1c" conceptId="PIH:HbA1c" showUnits="true"/>
+                </field>
+            </span>
+
+            <!-- Free-text -->
+            <label for="hematology-comment">
+                <uimessage code="pihcore.lab.hematology.comment" />
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="hematology-comment" conceptId="PIH:20055"
+                         style="textarea" rows="2" cols="70"/>
+                </field>
+            </span>
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+
+            <legend>
+                <uimessage code="pihcore.lab.biochemistry.title"/>
+            </legend>
+            <h3>
+                <uimessage code="pihcore.lab.biochemistry.title"/>
+            </h3>
+
+            <ifMode mode="VIEW" include="false">
+                <div class="shortcuts">
+                    |
+                    <a href="#glucose">
+                        <uimessage code="pihcore.lab.glucose"/>
+                    </a>
+                    |
+                    <a href="#iStat8">
+                        <uimessage code="pihcore.lab.ionogram"/>
+                    </a>
+                    |
+                    <a href="#renal-panel">
+                        <uimessage code="pihcore.lab.renal.panel"/>
+                    </a>
+                    |
+                    <a href="#liver">
+                        <uimessage code="pihcore.lab.liver.panel"/>
+                    </a>
+                    |
+                    <a href="#lipids">
+                        <uimessage code="pihcore.lab.lipids.title"/>
+                    </a>
+                    |
+                    <a href="#protein">
+                        <uimessage code="pihcore.lab.protein.panel"/>
+                    </a>
+                    |
+                    <a href="#hormone">
+                        <uimessage code="pihcore.lab.hormone.panel"/>
+                    </a>
+                    |
+                    <a href="#enzyme">
+                        <uimessage code="pihcore.lab.enzyme.panel"/>
+                    </a>
+                    |
+                    <a href="#other-biochem">
+                        <uimessage code="pihcore.exam.other_exam"/>
+                    </a>
+                    |
+                </div>
+            </ifMode>
+
+
+            <hr/>
+            <h4 id="glucose">
+                <uimessage code="pihcore.lab.glucose" />
+            </h4>
+
+            <!-- Not on lab form
+            <label for="glucose">
+                <uimessage code="pihcore.lab.glucose"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="glucose" conceptId="PIH:SERUM GLUCOSE" showUnits="true"/>
+                </field>
+            </span> -->
+
+            <label for="glucose-fasting">
+                <uimessage code="pihcore.lab.glucose-fasting"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="glucose-fasting" conceptId="CIEL:160912" showUnits="true"/>
+                </field>
+            </span>
+
+
+            <label for="glucose-prandial">
+                <uimessage code="pihcore.lab.glucose-prandial"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="glucose-prandial" conceptId="CIEL:160914" showUnits="true"/>
+                </field>
+                <!--  Add 2hr -->
+                <field>
+                    T1<obs id="gp-1" conceptId="PIH:14230" />
+                </field>
+                <field>
+                    T2<obs id="gp-2" conceptId="PIH:14231" />
+                </field>
+                <field>
+                    T3<obs id="gp-3" conceptId="CIEL:167176" />
+                </field>
+                <field>
+                    T4<obs id="gp-4" conceptId="PIH:14233" />
+                </field>
+            </span>
+
+            <label for="glucose-tolerance">
+                <uimessage code="pihcore.lab.glucoseTolerance"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="glucose-tolerance" conceptId="CIEL:163594" showUnits="true"/>
+                </field>
+                <field>
+                    T1<obs id="gtt-1" conceptId="CIEL:163703" />
+                </field>
+                <field>
+                    T2<obs id="gtt-2" conceptId="CIEL:163704" />
+                </field>
+                <field>
+                    T3<obs id="gtt-3" conceptId="CIEL:167173" />
+                </field>
+                <field>
+                    T4<obs id="gtt-4" conceptId="CIEL:163705" />
+                </field>
+            </span>
+
+            <p id="iStat8">
+                <h4>
+                    <uimessage code="pihcore.lab.ionogram"/>
+                </h4>
+
+                <repeat>
+                    <template>
+                        <label for="{tag}">
+                            <uimessage code="{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="{tag}" conceptId="{concept}" showUnits="true" />
+                            </field>
+                        </span>
+                    </template>
+                    <render concept="CIEL:1132"   message="pihcore.lab.sodium" tag="sodium" />
+                    <render concept="CIEL:1133"   message="pihcore.lab.potassium" tag="potassium" />
+                    <render concept="CIEL:166038" message="pihcore.lab.calcium" tag="calcium" />
+                    <render concept="CIEL:1134"   message="pihcore.lab.chloride" tag="chloride" />
+                    <render concept="CIEL:1135"   message="pihcore.lab.co2" tag="co2" />
+                    <render concept="CIEL:166397" message="pihcore.lab.magnesium" tag="magnes" />
+                    <render concept="CIEL:163592" message="pihcore.lab.lithium" tag="lithium" />
+                    <render concept="CIEL:161154" message="pihcore.lab.phosphorus" tag="phosphorus" />
+                </repeat>
+            </p>
+
+            <hr/>
+            <p id="renal-panel">
+                <h4>
+                    <uimessage code="pihcore.lab.renal.panel"/>
+                </h4>
+
+                <repeat>
+                    <template>
+                        <label for="{tag}">
+                            <uimessage code="{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="{tag}" conceptId="{concept}" showUnits="true" />
+                            </field>
+                        </span>
+                    </template>
+                    <render concept="PIH:12653" message="pihcore.lab.urea" tag="urea" />
+                    <render concept="PIH:Creatinine mg per dL" message="pihcore.lab.creatinine" tag="creatinine" />
+                    <render concept="CIEL:159825" message="pihcore.lab.uricAcid" tag="uric-acid" />
+                    <render concept="PIH:BLOOD UREA NITROGEN" message="pihcore.lab.ureaBUN" tag="urea-bun" />
+
+                </repeat>
+            </p>
+
+            <hr/>
+            <h4 id="liver">
+                <uimessage code="pihcore.lab.liver.panel"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:653" message="SGOT" tag="sgot" units="true"/>
+                <render concept="CIEL:654" message="SGPT" tag="sgpt" units="true"/>
+                <render concept="CIEL:785" message="pihcore.lab.alk_phos" tag="alk-phos" units="false" />
+                <render concept="CIEL:655" message="pihcore.lab.bilirubin" tag="tBilirubin" units="false" />
+                <render concept="CIEL:1297" message="pihcore.lab.dBili" tag="dBili" units="false" />
+                <render concept="CIEL:163001" message="pihcore.lab.iBili" tag="iBili" units="false" />
+                <render concept="CIEL:168288" message="APRI" tag="apri" units="false" />
+            </repeat>
+
+            <hr/>
+            <h4 id="lipids">
+                <uimessage code="pihcore.lab.lipids.title"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="PIH:12991"   message="total_chol" tag="total-chol" units="true"/>
+                <render concept="PIH:12990"   message="trigly" tag="trigly" units="true"/>
+                <render concept="PIH:12993"   message="hdl" tag="hdl" units="true"/>
+                <render concept="PIH:12992"   message="ldl" tag="ldl" units="true"/>
+                <render concept="CIEL:166047" message="vldl" tag="vldl" units="true"/>
+                <render concept="PIH:14235"   message="totalLipid" tag="t-lipid" units="true" />
+            </repeat>
+
+            <hr/>
+            <h4 id="protein">
+                <uimessage code="pihcore.lab.protein.panel"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="PIH:14226" message="totalProtein" tag="total-protein" units="true"/>
+                <render concept="PIH:14238" message="albumin" tag="serum-albumin" units="true" />
+                <render concept="PIH:20046" message="globulin" tag="globulin" units="true" />
+            </repeat>
+            <hr/>
+
+            <h4 id="hormone">
+                <uimessage code="pihcore.lab.hormone.panel"/>
+            </h4>
+
+            <!-- T3 and T4 -->
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}1" conceptId="{concept1}" showUnits="{units}"/>
+                        </field>
+                        <field>
+                            <label>
+                                <uimessages code="mirebalais.vitals.or" />
+                            </label>
+                        </field>
+                        <field>
+                            <obs id="{message}2" conceptId="{concept2}" showUnits="{units2}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept1="CIEL:168214" concept2="PIH:20111" message="T3" tag="t3" units="true" units2="ng/dL"/>
+                <render concept1="CIEL:168215" concept2="PIH:20112" message="T4" tag="t4" units="true" units2="emr.units.ugPerdL"/>
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:168213" message="tsh" tag="tsh" units="true" />
+                <render concept="CIEL:160913" message="psaQuant" tag="psa-quant" units="true"/>
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="side-by-side small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" style="radio"
+                                 answerConceptIds="CIEL:664,CIEL:703" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:166423" message="psaQual" tag="psa-qual"  />
+            </repeat>
+
+            <includeIf velocityTest="$patient.gender == 'F' || $patient.age &lt; 2 ">
+                <label for="b-hcg">
+                    <uimessage code="pihcore.lab.pregnancy"/>
+                </label>
+                <span class="small side-by-side">
+                    <field>
+                        <obs id="b-hcg" style="radio"
+                             conceptId="CIEL:1945"
+                             answerConceptIds="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE"/>
+                    </field>
+                </span>
+
+                <repeat>
+                    <template>
+                        <label for="{message}">
+                            <uimessage code="pihcore.lab.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                            </field>
+                        </span>
+                    </template>
+                    <render concept="CIEL:160922" message="bhCGnum" tag="bhCGnum" units="true" />
+                </repeat>
+            </includeIf>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:160919" message="ca125" tag="ca-125" units="true" />
+                <render concept="CIEL:160917" message="afp" tag="afp" units="true" />
+            </repeat>
+            <hr/>
+
+            <h4 id="enzyme">
+                <uimessage code="pihcore.lab.enzyme.panel"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:1014" message="ldh" tag="ldh" units="true" />
+                <render concept="CIEL:1012" message="lacticAcid" tag="lactic-acid" units="true" />
+                <render concept="CIEL:1299" message="amylase" tag="amylase" units="emr.units.iuPerL" />
+                <render concept="CIEL:1013" message="lipase" tag="lipase" units="emr.units.iuPerL" />
+                <render concept="CIEL:1011" message="ck" tag="ck" units="emr.units.iuPerL" />
+                <render concept="CIEL:159829" message="ggt" tag="ggt" units="true" />
+            </repeat>
+            <br/><br/>
+
+            <h4 id="other-biochem">
+                <uimessage code="pihcore.exam.other_exam"/>
+            </h4>
+            <repeat>
+                <template>
+                    <label for="{message}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{message}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:166396" message="Fe" tag="iron" units="true" />
+                <render concept="CIEL:159654" message="pihcore.lab.troponinI" tag="troponinI" units="true" />
+                <render concept="CIEL:159655" message="pihcore.lab.troponinT" tag="troponinT" units="true" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" conceptId="{concept}" style="radio"
+                                 answerConceptIds="CIEL:703,CIEL:664"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="PIH:20052" message="pihcore.lab.troponinIrt" tag="troponinIrt" />
+                <render concept="CIEL:169499" message="pihcore.lab.troponinTrt" tag="troponinTrt" />
+            </repeat>
+
+            <!-- Free-text -->
+            <label for="biochemistry-comment">
+                <uimessage code="pihcore.lab.biochemistry.comment" />
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="biochemistry-comment" conceptId="PIH:20056"
+                         style="textarea" rows="2" cols="70"/>
+                </field>
+            </span>
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+            <legend>
+                <uimessage code="pihcore.lab.iDisease"/>
+            </legend>
+            <h3>
+                <uimessage code="pihcore.lab.iDisease"/>
+            </h3>
+
+            <ifMode mode="VIEW" include="false">
+                <div class="shortcuts">
+                    |
+                    <a href="#hiv-section">
+                        <uimessage code="pihcore.lab.hiv.title"/>
+                    </a>
+                    |
+                    <a href="#tb-section">
+                        <uimessage code="TB"/>
+                    </a>
+                    |
+                    <a href="#hep-section">
+                        <uimessage code="pihcore.lab.hep"/>
+                    </a>
+                    |
+                    <a href="#malaria-section">
+                        <uimessage code="pihcore.malaria"/>
+                    </a>
+                    |
+                    <a href="#syph-section">
+                        <uimessage code="pihcore.syphilis"/>
+                    </a>
+                    |
+                    <a href="#typhoid-section">
+                        <uimessage code="pihcore.typhoid"/>
+                    </a>
+                    |
+                    <a href="#covid-section">
+                        <uimessage code="COVID"/>
+                    </a>
+                    |
+                    <a href="#id-other-section">
+                        <uimessage code="pihcore.other"/>
+                    </a>
+                    |
+                </div>
+            </ifMode>
+
+            <h4 id="hiv-section">
+                <uimessage code="pihcore.lab.hiv.title"/>
+            </h4>
+
+            <label for="hiv-rapid-test">
+                <uimessage code="pihcore.lab.hivRapid"/>
+            </label>
+            <obsgroup groupingConceptId="PIH:13135">
+                <span class="small">
+                    <field>
+                        <obs id="hiv-rapid-test" conceptId="CIEL:163722" style="radio"
+                             answerConceptIds="CIEL:703,CIEL:664,CIEL:1138" />
+                    </field>
+                </span>
+                <div class="small">
+                    <field>
+                        <obs id="hiv-rapid-control"
+                             conceptId="CIEL:164860" style="checkbox"
+                             answerConceptId="CIEL:1065"
+                             answerCode="pihcore.lab.controlTest"/>
+                    </field>
+                </div>
+            </obsgroup>
+
+            <!-- For children only -->
+            <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 5">
+                <label for="hiv-pcr">
+                    <uimessage code="pihcore.lab.hivpcr"/>
+                </label>
+                <span>
+                    <field>
+                        <obs id="hiv-pcr" conceptId="CIEL:1030"
+                             answerConceptIds="CIEL:703,CIEL:664,CIEL:1138"
+                             showCommentField="true" commentFieldLabel="Comments:"/>
+                    </field>
+                </span>
+            </includeIf>
+
+            <label for="viral-load">
+                <uimessage code="pihcore.lab.hivVL"/>
+            </label>
+            <obsgroup groupingConceptId="PIH:HIV viral load construct">
+                <span class="small side-by-side">
+                    <field>
+                        <obs id="viral-load" conceptId="CIEL:1305" style="radio"
+                             answerConceptIds="CIEL:1301,CIEL:1306" answerCodes="pihcore.lab.detected,pihcore.lab.undetected" />
+                    </field>
+                </span>
+                <br/>
+                <div class="small">
+                    <label for="viral-load-numeric">
+                        <uimessage code="pihcore.lab.viral_load"/>
+                    </label>
+                    <field>
+                        <obs
+                            id="viral-load-numeric"
+                            conceptId="CIEL:856"
+                            showUnits="false"
+                            placeholder="Enter value"
+                        />
+                    </field>
+                    <uimessage code="pihcore.lab.viralLoad.units"/>
+                </div>
+
+                <div class="small" >
+                    <label for="detected-lower-limit">
+                        <uimessage code="pihcore.lab.viralLoadLowerLimitOfDetection"/>
+                    </label>
+                    <field>
+                        <obs id="detected-lower-limit"
+                             conceptId="PIH:11548"
+                             showUnits="false"
+                             placeholder="Enter value"/>
+                    </field>
+                    &lt; <uimessage code="pihcore.lab.viralLoad.units"/>
+                </div>
+
+                <div class="small side-by-side">
+                    <label for="hiv-test-reason">
+                        <uimessage code="pihcore.reason"/>
+                    </label>
+                    <field>
+                    <obs id="hiv-test-reason" style="radio"
+                         conceptId="CIEL:164126"
+                         answerConceptIds="PIH:20671,CIEL:166058,CIEL:167388,CIEL:166059"
+                         answerCodes="pihcore.baseline.test,pihcore.routine,pihcore.confirmation.test,pihcore.targeted" />
+                    </field>
+                </div>
+            </obsgroup>
+
+            <hr/>
+            <h4 id="tb-section">TB</h4>
+
+            <label for="tb-skin-test">
+                <uimessage code="pihcore.lab.tbSkin"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="tb-skin-test-qual" conceptId="PIH:1435" style="radio"
+                         answerConceptIds="CIEL:703,CIEL:664" />
+                </field>
+                <field>
+                    (<obs id="tb-skin-test-quant" conceptId="CIEL:5475"
+                          showUnits="true"/>)
+                </field>
+            </span>
+
+            <label for="tb-smear-test">
+                <uimessage code="pihcore.lab.tbSmear"/>
+            </label>
+            <span class="small side-by-side">
+                <field>
+                    <obs id="tb-smear-test" style="radio"
+                         conceptId="CIEL:307"
+                         answerConceptIds="CIEL:1364,CIEL:1363,CIEL:1362,PIH:SCANTY,CIEL:664"
+                         answerCodes="+++,++,1+,pihcore.scanty,pihcore.negative">
+                        <controls>
+                            <when value="PIH:SCANTY" thenDisplay="#tb-scanty"/>
+                        </controls>
+                    </obs>
+
+                    <div id="tb-scanty">
+                        <label>
+                            <uimessage code="pihcore.afbNumber" />
+                        </label>
+                        <obs conceptId="PIH:20123" showUnits="false" />
+                    </div>
+                </field>
+            </span>
+
+            <label for="tb-culture-test">
+                <uimessage code="pihcore.lab.tbCulture"/>
+            </label>
+            <span class="small side-by-side">
+                <field>
+                    <obs id="tb-culture-test" style="radio"
+                         conceptId="CIEL:159982"
+                         answerConceptIds="CIEL:1364,CIEL:1363,CIEL:1362,PIH:SCANTY,CIEL:664" />
+                </field>
+            </span>
+
+            <label for="tb-xpert">
+                <uimessage code="pihcore.lab.genexpert"/>
+            </label>
+            <span class="small side-by-side">
+                <field>
+                    <obs id="tb-xpert" style="radio"
+                         conceptId="CIEL:164937"
+                         answerConceptIds="CIEL:162203,CIEL:162204,CIEL:164104,CIEL:1302,CIEL:163611"
+                         answerSeparator="&lt;br /&gt;"/>
+                </field>
+            </span>
+
+            <hr/>
+            <h4 id="hep-section">
+                <uimessage code="pihcore.lab.hep" />
+            </h4>
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <!-- <render concept="CIEL:1322"   message="pihcore.lab.hepB" tag="hep-b"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE,PIH:POOR SAMPLE QUALITY" /> -->
+                <render concept="PIH:20065" message="pihcore.lab.hepBsAb" tag="hep-b-s-ab"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <!-- Not requested by SL, Liberia and Neil Gupta (April 2024)
+                <render concept="CIEL:161472" message="pihcore.lab.hepBSurfaceSpot" tag="hep-b-ag-spot"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" /> -->
+                <render concept="CIEL:159430" message="pihcore.lab.hepBsAg" tag="hep-b-s-ag"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="CIEL:167785" message="pihcore.lab.hepBeAg" tag="hep-b-e-ag"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="PIH:20064" message="pihcore.lab.hepBeAb" tag="hep-b-e-ab"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="CIEL:168968" message="pihcore.lab.hepBcAb" tag="hep-b-c-ab"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+            </repeat>
+            <br/>
+
+            <obsgroup groupingConceptId="PIH:20048">
+                <label for="hepb-viral-load">
+                    <uimessage code="pihcore.lab.hepBvl"/>
+                </label>
+                <span class="side-by-side small">
+                    <field>
+                        <obs id="hepb-viral-load" conceptId="PIH:20049" style="radio"
+                             answerConceptIds="CIEL:1301,CIEL:1306"
+                             answerCodes="pihcore.lab.detected,pihcore.lab.undetected" />
+                    </field>
+                </span>
+                <br/>
+                <div class="small">
+                    <label for="hepb-viral-load-numeric">
+                        <uimessage code="pihcore.lab.viral_load"/>
+                    </label>
+                    <field>
+                        <obs
+                                id="hepb-viral-load-numeric"
+                                conceptId="CIEL:168323"
+                                showUnits="emr.units.iuPermL"
+                                placeholder="Enter value" />
+                    </field>
+                </div>
+
+                <!-- Lower detection level always 10 IU/mL (according to Marta)
+                <div class="small" >
+                    <label for="hepb-detected-lower-limit">
+                        <uimessage code="pihcore.lab.viralLoadLowerLimitOfDetection"/>
+                    </label>
+                    <field>
+                        <obs id="hepb-detected-lower-limit"
+                             conceptId="PIH:11548"
+                             showUnits="emr.units.iuPermL"
+                             placeholder="Enter value" />
+                    </field>
+                </div>
+                -->
+            </obsgroup>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:1325"   message="pihcore.lab.hepCAb" tag="hep-c"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE,PIH:POOR SAMPLE QUALITY" />
+            </repeat>
+
+            <obsgroup groupingConceptId="PIH:20062">
+                <label for="hepc-viral-load">
+                    <uimessage code="pihcore.lab.hepCvl"/>
+                </label>
+                <span class="side-by-side small">
+                    <field>
+                        <obs id="hepc-viral-load" conceptId="PIH:20063" style="radio"
+                             answerConceptIds="CIEL:1301,CIEL:1306"
+                             answerCodes="pihcore.lab.detected,pihcore.lab.undetected" />
+                    </field>
+                </span>
+                <br/>
+                <div class="small">
+                    <label for="hepc-viral-load-numeric">
+                        <uimessage code="pihcore.lab.viral_load"/>
+                    </label>
+                    <field>
+                        <obs
+                                id="hepc-viral-load-numeric"
+                                conceptId="PIH:20005"
+                                showUnits="emr.units.iuPermL"
+                                placeholder="Enter value" />
+                    </field>
+                </div>
+
+                <!-- Lower detection level always 10 IU/mL?
+                <div class="small" >
+                    <label for="hepc-detected-lower-limit">
+                        <uimessage code="pihcore.lab.viralLoadLowerLimitOfDetection"/>
+                    </label>
+                    <field>
+                        <obs id="hepc-detected-lower-limit"
+                             conceptId="PIH:11548"
+                             showUnits="emr.units.iuPermL"
+                             placeholder="Enter value" />
+                    </field>
+                </div>
+                -->
+            </obsgroup>
+
+            <hr/>
+            <h4 id="malaria-section">
+                <uimessage code="pihcore.malaria" />
+            </h4>
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:1643" message="pihcore.lab.malariaRDT" tag="malarial-rdt"
+                        answers="CIEL:703,CIEL:664" />
+            </repeat>
+
+            <h5>
+                <uimessage code="pihcore.lab.malarial_smear" />
+            </h5>
+
+            <!-- TdDo: Add obsgroup for malaria smear -->
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:32" message="pihcore.lab.malarial_smear" tag="malarial-32"
+                        answers="CIEL:703,CIEL:664" />
+                <!-- Removed and replaced +/- with ++++/+++/++/+/- -->
+                <render concept="PIH:20081"   message="pihcore.lab.malaria_density" tag="malarial-smear"
+                        answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:664" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}"
+                                 answerConceptIds="{answers}" answerCodes="{aNames}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="PIH:20079" message="pihcore.lab.malaria_species" tag="malaria-species"
+                        answers="CIEL:161246,CIEL:161247,CIEL:161248,PIH:20082,PIH:20083"
+                        aNames="Falciparum,Vivax,Falciparum + Vivax,Malariae,Ovale"/>
+                <render concept="PIH:20085" message="pihcore.lab.malaria_form" tag="malaria-form"
+                        answers="CIEL:168989,CIEL:168990,CIEL:168991"
+                        aNames="pihcore.lab.trophozoite,pihcore.lab.gametocyte,pihcore.lab.schizont"/>
+            </repeat>
+
+            <label for="parasitemia">
+                <uimessage code="pihcore.lab.parasitemia"/>
+            </label>
+            <obs conceptId="PIH:20080" style="text" cols="70"/>
+
+            <hr/>
+            <h4 id="syph-section">
+                <uimessage code="pihcore.syphilis" />
+            </h4>
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}" />
+                        </field>
+                    </span>
+                </template>
+                <!-- Swapped answers for RT syphilis and RPR per ZL request -->
+                <render concept="CIEL:165303" message="pihcore.lab.syphilisRT" tag="syphilis-rt" answers="CIEL:1229,CIEL:1228" />
+                <render concept="CIEL:1619"   message="pihcore.lab.syphilis" tag="rpr-syphilis" answers="CIEL:703,CIEL:664" />
+                <render concept="CIEL:299"    message="VDRL" tag="syphilis-vdrl" answers="CIEL:1229,CIEL:1228" />
+            </repeat>
+
+            <label for="auto-syph">
+                <uimessage code="pihcore.lab.autoSyphilisRPR" />
+            </label>
+            <span class="small side-by-side">
+                <field>
+                    <obs id="auto-syph" style="radio"
+                         conceptId="PIH:20076"
+                         answers="2,4,6,8" answerCodes="2,4,6,pihcore.lab.8units"/>
+                </field>
+            </span>
+
+            <hr/>
+            <h4 id="typhoid-section">
+                <uimessage code="pihcore.typhoid"/>
+            </h4>
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:306"    message="pihcore.lab.typhoid" tag="widal"
+                        answers="CIEL:1229,CIEL:1228" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answers="20,40,80,160,320"
+                                 answerCodes="1/20,1/40,1/80,1/160,1/320"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="PIH:20077" message="pihcore.lab.widalO" tag="widalO" />
+                <render concept="PIH:20078" message="pihcore.lab.widalH" tag="widalH" />
+            </repeat>
+
+            <hr/>
+            <h4 id="covid-section">
+                <uimessage code="COVID-19"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="covid-{tag}">
+                        <uimessage code="pihcore.{code}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="covid-{tag}" style="radio"
+                                 conceptId="{id}"
+                                 answerConceptIds="{answers}" />
+                        </field>
+                    </span>
+
+                </template>
+                <render id="CIEL:165853" code="antibodyTest" tag="ab"
+                        answers="CIEL:165857,CIEL:165855,CIEL:165856,CIEL:664" />
+                <render id="CIEL:165852" code="antigenTest" tag="ag"
+                        answers="CIEL:703,CIEL:664" />
+                <render id="CIEL:165840" code="rtPCR" tag="pcr"
+                        answers="CIEL:703,CIEL:664" />
+                <render id="CIEL:165865" code="lab.genexpert" tag="xpert"
+                        answers="CIEL:703,CIEL:664" />
+            </repeat>
+
+            <hr/>
+            <h4 id="id-other-section">
+                <uimessage code="pihcore.other"/>
+            </h4>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:163654" message="pihcore.lab.choleraRT" tag="cholera-rt" answers="CIEL:1229,CIEL:1228"/>
+            </repeat>
+
+            <label for="crag">
+                <uimessage code="pihcore.lab.CrAg.long"/>
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="crag" conceptId="CIEL:163613" style="text"
+                         cols="60" rows="2"/>
+                </field>
+            </span>
+
+            <label for="c-neo">
+                <uimessage code="pihcore.lab.cFormans"/>
+            </label>
+            <span class="small side-by-side">
+                <field>
+                    <obs id="c-neo" conceptId="PIH:14240" style="radio"
+                         answerConceptIds="CIEL:703,CIEL:664,CIEL:1138" />
+                </field>
+            </span>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="{tag}" conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:161469" message="ASO" tag="aso-titer" units="false"/>
+                <render concept="CIEL:161500" message="pihcore.lab.crp" tag="crp" units="true"/>
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}"
+                                 answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:164924" message="pihcore.lab.chik_pcr" tag="chik-pcr"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="CIEL:164926" message="pihcore.lab.dengue_pcr" tag="dengue-pcr"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="CIEL:164920" message="pihcore.lab.zika_pcr" tag="zika-pcr"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="CIEL:164934" message="pihcore.lab.zika_igg" tag="zika-igg"
+                        answers="CIEL:164931,CIEL:164932,CIEL:164933,PIH:NEGATIVE" />
+                <render concept="CIEL:164930" message="pihcore.lab.zika_igm" tag="zika-igm"
+                        answers="CIEL:164931,CIEL:164932,CIEL:164933,PIH:NEGATIVE" />
+             </repeat>
+
+            <!-- Free-text -->
+            <label for="iDisease-comment">
+                <uimessage code="pihcore.lab.iDisease.comment" />
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="iDisease-comment" conceptId="PIH:20057"
+                         style="textarea" rows="2" cols="70"/>
+                </field>
+            </span>
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+            <legend>
+                <uimessage code="pihcore.lab.urine"/>
+            </legend>
+            <h3>
+                <uimessage code="pihcore.lab.urine"/>
+            </h3>
+
+            <ifMode mode="VIEW" include="false">
+                <div class="shortcuts">
+                    |
+                    <a href="#urine-macro">
+                        <uimessage code="pihcore.lab.urine.dipstickMacro"/>
+                    </a>
+                    |
+                    <a href="#urine-micro">
+                        <uimessage code="pihcore.lab.microsc"/>
+                    </a>
+                    [
+                    <a href="#urine-casts">
+                        <uimessage code="pihcore.lab.casts"/>
+                    </a>,
+                    <a href="#urine-crystal">
+                        <uimessage code="pihcore.lab.urine.crystal"/>
+                    </a>
+                    ] |
+                </div>
+            </ifMode>
+
+            <includeIf velocityTest="$patient.gender == 'F' ">
+                <repeat>
+                    <template>
+                        <p class="small side-by-side">
+                            <label for="urine-{message}">
+                                <uimessage code="pihcore.lab.urine.{message}"/>
+                            </label>
+                            <field>
+                                <obs id="urine-{message}" style="{style}"
+                                     conceptId="{concept}" answerConceptIds="{answers}" />
+                            </field>
+                        </p>
+                    </template>
+                    <render concept="CIEL:45" message="pregnancy" style="radio" answers="CIEL:703,CIEL:664,CIEL:1138"/>
+                </repeat>
+            </includeIf>
+
+            <repeat>
+                <template>
+                    <p class="small side-by-side">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <field>
+                            <obs id="urine-{message}" style="{style}"
+                                 conceptId="{concept}"
+                                 showUnits="{units}"/>
+                        </field>
+                    </p>
+                </template>
+                <render concept="PIH:14241" message="protein24H" units="true" />
+            </repeat>
+
+            <hr/>
+
+            <!-- Add creatinine result to hematology section -->
+            <label>
+                <i>
+                    <uimessage code="pihcore.lab.creatinineMsg" />
+                </i>
+            </label>
+
+            <!-- MACRO -->
+            <h4 id="urine-macro">
+                <uimessage code="pihcore.lab.urine.dipstickMacro" />
+            </h4>
+            <repeat>
+                <template>
+                    <p class="small list-inline">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}"
+                                     answerCodes="{codes}"/>
+
+                            </field>
+                        </span>
+                    </p>
+                </template>
+
+                <render concept="162106" message="color" selector="radio"
+                        answers="CIEL:160910,CIEL:162097,PIH:20148,CIEL:162098,CIEL:127778"
+                        codes="pihcore.brightYellow,pihcore.paleYellow,pihcore.yellowOrange,pihcore.amberYellow,pihcore.reddish" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="small list-inline">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}" answerCodes="{aLabels}"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="162101" message="aspect" selector="radio"
+                        answers="CIEL:162102,PIH:20147,CIEL:162103,CIEL:162104"
+                        aLabels="pihcore.clear,pihcore.slightCloudy,pihcore.cloudy,pihcore.turbid"/>
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="small list-inline">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="161441" message="leuko" answers="CIEL:703,CIEL:664,CIEL:1138" selector="radio" />
+                <render concept="161440" message="nitrite" answers="CIEL:703,CIEL:664,CIEL:1138" selector="radio" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="small side-by-side">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <field>
+                            <obs id="urine-{message}"
+                                 conceptId="CIEL:{concept}"/>
+                        </field>
+                    </p>
+                </template>
+                <render concept="161438" message="pH" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="1875"   message="protein" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" selector="radio" />
+                <render concept="159734" message="glucoseQual" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:664" selector="radio" />
+            </repeat>
+
+            <repeat>
+                    <template>
+                        <p class="list-inline small">
+                            <label for="urine-{message}">
+                                <uimessage code="pihcore.lab.urine.{message}"/>
+                            </label>
+                            <span class="small side-by-side">
+                                <field>
+                                    <obs id="urine-{message}"
+                                         conceptId="CIEL:{concept}" showUnits="true"/>
+                                </field>
+                            </span>
+                        </p>
+                    </template>
+                <render concept="159733" message="glucose" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="161442" message="ketones" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" selector="radio" />
+                <render concept="163682" message="urobili" answers="CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" selector="radio" />
+                <render concept="163680" message="bili" answers="CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" selector="radio" />
+                <!-- <render concept="163681" message="ascorbic" /> -->
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{selector}"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="{answers}" answerCodes="{aCodes}" />
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="162096" message="blood" selector="radio"
+                        answers="CIEL:1364,CIEL:1363,CIEL:1362,CIEL:1874,CIEL:664"
+                        aCodes="+++,++,1+,Trace,pihcore.negative" />
+            </repeat>
+
+            <!-- NOTE: ZL wanted to record without the decimal (ie. 1030 instead of 1.03) -->
+            <repeat>
+                <template>
+                    <p class="small side-by-side">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}"
+                                     conceptId="{concept}" showUnits="normal: 1000 - 1030"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="PIH:14422" message="density" />
+            </repeat>
+            <hr/>
+
+            <!-- MICRO -->
+            <h4 id="urine-micro">
+                <uimessage code="pihcore.lab.microsc" />
+            </h4>
+
+            <repeat>
+                <template>
+                    <p class="side-by-side small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <field>
+                            <obs id="urine-{message}"
+                                 conceptId="{concept}" showUnits="{units}"/>
+                        </field>
+                    </p>
+                </template>
+                <render concept="PIH:14284" message="leuko" units="emr.units.countPerHPF"/>
+                <render concept="PIH:14285" message="eryth" units="emr.units.countPerHPF"/>
+            </repeat>
+            <!-- Use count (quantatative) not qualitative
+            <render concept="CIEL:163684" message="leuko" answers="CIEL:1408,CIEL:1499,CIEL:1160,CIEL:1107" fad="radio"/>
+            <render concept="CIEL:163683" message="eryth" answers="CIEL:1408,CIEL:1499,CIEL:1160,CIEL:1107" fad="radio"/>
+            -->
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="{fad}"
+                                     conceptId="{concept}"
+                                     answerConceptIds="{answers}"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="CIEL:163685" message="epi"   answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                <render concept="PIH:14237"   message="renal" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                <render concept="CIEL:160735" message="bact"  answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                <render concept="PIH:14236"   message="pus"   answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                <render concept="PIH:20142"   message="mucus" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                <render concept="CIEL:163689" message="tricho" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" fad="radio"/>
+                        <!-- Alternative answers="CIEL:1408,CIEL:1499,CIEL:1160,CIEL:1107" -->
+            </repeat>
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="small">
+                            <field>
+                                <obs id="urine-{message}" style="radio"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="163686" message="yeast" />
+                <render concept="163687" message="yeastHyphae" />
+                <!--
+                    <render concept="163688" message="spore" />
+                    <render concept="163689" message="tricho" />
+                -->
+            </repeat>
+
+            <h5 id="urine-crystal" >
+                <uimessage code="pihcore.lab.urine.crystal" />
+            </h5>
+
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-crystal-{message}" class="small">
+                            <uimessage code="pihcore.lab.urine.crystal{message}"/>
+                        </label>
+                        <span class="list-inline small">
+                            <field>
+                                <obs id="urine-crystal-{message}"
+                                     conceptId="{concept}" style="radio"
+                                     answerConceptIds="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664" />
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="PIH:20145"   message="CaOxalate" />
+                <render concept="PIH:20146"   message="UricAcid" />
+                <render concept="PIH:20143"   message="MgPhosphate" />
+                <render concept="CIEL:163642" message="AmmonUrate" />
+                <render concept="CIEL:163643" message="AmorphUrate" />
+                <render concept="CIEL:722"    message="AmorphPhosphate" />
+            </repeat>
+
+            <p class="small">
+                <label>
+                    <uimessage code="pihcore.lab.urine.crystalOther" />
+                </label>
+                <obs conceptId="PIH:20144" />
+            </p>
+
+            <h5 id="urine-casts" >
+                <uimessage code="pihcore.lab.casts" />
+            </h5>
+            <repeat>
+                <template>
+                    <p class="list-inline small">
+                        <label for="urine-{message}">
+                            <uimessage code="pihcore.lab.urine.{message}"/>
+                        </label>
+                        <span class="list-inline small">
+                            <field>
+                                <obs id="urine-{message}" style="radio"
+                                     conceptId="CIEL:{concept}"
+                                     answerConceptIds="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:159416,CIEL:664"/>
+                            </field>
+                        </span>
+                    </p>
+                </template>
+                <render concept="165540" message="hyalineCasts" />
+                <render concept="163690" message="granularCasts" />
+                <render concept="163693" message="leukocyteCasts" />
+                <render concept="165541" message="erythrocyteCasts" />
+                <render concept="165542" message="renalEpiCasts" />
+                <render concept="163692" message="epiCasts" />
+                <render concept="163691" message="fattyCasts" />
+                <render concept="163694" message="waxyCasts" />
+            </repeat>
+
+            <p class="small">
+                <label>
+                    <uimessage code="pihcore.lab.urine.otherCasts" />
+                </label>
+                <obs conceptId="PIH:20141" />
+            </p>
+
+            <!-- Free-text -->
+            <p class="small">
+                <label for="urinalysis-comment">
+                    <uimessage code="pihcore.lab.urinalysis.comment" />
+                </label>
+                <span class="small">
+                    <field>
+                        <obs id="urinalysis-comment" conceptId="PIH:20058"
+                             style="textarea" rows="2" cols="70"/>
+                    </field>
+                </span>
+            </p>
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+            <legend>
+                <uimessage code="pihcore.lab.microbiology.title"/>
+            </legend>
+
+            <h3>
+                <uimessage code="pihcore.lab.microbiology.title"/>
+            </h3>
+
+            <h4>Wet mount</h4>
+            <repeat>
+                <template>
+                    <label for="micro-{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="micro-{message}" style="radio"
+                                 conceptId="CIEL:{concept}"
+                                 answerConceptIds="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:664"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="163648" message="urine.tricho" />
+                <render concept="163650" message="urine.epi" />
+                <render concept="163605" message="urine.leuko" />
+                <render concept="163646" message="urine.yeast" />
+                <render concept="163649" message="hyphae" />
+                <render concept="163645" message="urine.bact" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="micro-{message}">
+                        <uimessage code="pihcore.lab.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="micro-{message}"
+                                 conceptId="CIEL:{concept}" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="161454" message="gramStain" />
+            </repeat>
+
+            <!-- Free-text -->
+            <label for="microbiology-comment">
+                <uimessage code="pihcore.lab.microbiology.comment" />
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="microbiology-comment" conceptId="PIH:20059"
+                         style="textarea" rows="2" cols="70"/>
+                </field>
+            </span>
+        </fieldset>
+
+        <fieldset class="multi-line-confirmation">
+            <legend>
+                <uimessage code="pihcore.lab.parasitology.title"/>
+            </legend>
+
+            <h3>
+                <uimessage code="pihcore.lab.parasitology.title"/>
+            </h3>
+
+            <repeat>
+                <template>
+                    <label for="stool-{message}">
+                        <uimessage code="pihcore.lab.stool.{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="stool-{message}" style="radio"
+                                 conceptId="CIEL:{concept}" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="304"    message="exam" />
+                <render concept="163641" message="color" />
+                <render concept="163640" message="appear" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="stool-{message}">
+                        <uimessage code="pihcore.lab.stool.{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="stool-{message}" style="radio"
+                                 conceptId="CIEL:{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="159362" message="occult"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                <render concept="166401" message="rbc" tag="rbc-stool"
+                        answers="CIEL:1301,CIEL:1302"/>
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="stool-{message}">
+                        <uimessage code="pihcore.lab.stool.{message}"/>
+                    </label>
+                    <span class="small">
+                        <field>
+                            <obs id="stool-{message}"
+                                 conceptId="CIEL:{concept}" />
+                        </field>
+                    </span>
+                </template>
+                <render concept="163634" message="leukocytes" />
+            </repeat>
+
+            <repeat>
+                <template>
+                    <label for="{tag}">
+                        <uimessage code="{message}"/>
+                    </label>
+                    <span class="small side-by-side">
+                        <field>
+                            <obs id="{tag}" style="radio"
+                                 conceptId="{concept}" answerConceptIds="{answers}"/>
+                        </field>
+                    </span>
+                </template>
+                <render concept="CIEL:163620" message="H. Pylori" tag="h-pylori"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE" />
+                <render concept="CIEL:165539" message="pihcore.lab.filaria" tag="filaria"
+                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+
+            </repeat>
+
+            <!-- Free-text -->
+            <label for="parasitology-comment">
+                <uimessage code="pihcore.lab.parasitology.comment" />
+            </label>
+            <span class="small">
+                <field>
+                    <obs id="parasitology-comment" conceptId="PIH:20060"
+                         style="textarea" rows="2" cols="70"/>
+                </field>
+            </span>
+        </fieldset>
+
+    </section>
+
+    <!-- To Do: What to do about retrospective entry?  Check the who? when? where? -->
+    <div class="hidden" id="encounter-details" sectionTag="section" headerStyle="title" headerLabel="Encounter Details">
+        <fieldset>
+            <legend>Who?</legend>
+            <label>Who?</label>
+
+            <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
+                                      required="true"/>
+        </fieldset>
+    </div>
+
+    <submit/>
+</htmlform>
