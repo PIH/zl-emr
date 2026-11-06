@@ -1,3 +1,7 @@
 {
-  "localZlIdentifierGeneratorPrefix": "Y"
+  "localZlIdentifierGeneratorPrefix": "Y",
+
+  "globalProperties": {
+    "htmlformentryui.sessionExpiryWarningSeconds": "1500"
+  }
 }
