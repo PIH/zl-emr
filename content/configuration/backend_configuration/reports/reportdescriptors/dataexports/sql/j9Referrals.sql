@@ -131,8 +131,10 @@ CASE
   WHEN t.referral_concept_id = @mh_referral_question then concept_name(t.referral_value_coded, @locale)
   WHEN t.referral_concept_id = @malnutrition_referral_question then date(t.referral_value_datetime)
 END separator ', ') "details",
-concept_name(t.referral_status_coded, @locale) 'fulfillment_status'
+concept_name(t.referral_status_coded, @locale) 'fulfillment_status',
+-- the status name above is translated, so the referrals queue uses this uuid to tell which statuses are pending
+(select c.uuid from concept c where c.concept_id = t.referral_status_coded) 'fulfillment_status_uuid'
 from temp_referrals t
-group by t.encounter_id, person_uuid, encounter_uuid, visit_uuid, zl_emr_id, patient_name, referral_date, referral_type, fulfillment_status
+group by t.encounter_id, person_uuid, encounter_uuid, visit_uuid, zl_emr_id, patient_name, referral_date, referral_type, fulfillment_status, fulfillment_status_uuid
 order by referral_date desc, zl_emr_id, referral_type
 ;
