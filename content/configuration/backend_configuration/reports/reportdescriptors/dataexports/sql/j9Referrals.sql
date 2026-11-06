@@ -113,7 +113,7 @@ CASE
   WHEN t.referral_concept_id = @tetanus_vaccine_question and @locale not in ('fr','ht') THEN  "Tetanus Vaccination"
   WHEN t.referral_concept_id = @tetanus_vaccine_question and @locale = 'fr' THEN  "Vaccination contre le tétanos"
   WHEN t.referral_concept_id = @tetanus_vaccine_question and @locale = 'ht' THEN  "Vaksinasyon kont tetanò"
-  WHEN t.referral_concept_id = @malnutrition_referral_question and @localenot in ('fr','ht') THEN  "Malnutrition"
+  WHEN t.referral_concept_id = @malnutrition_referral_question and @locale not in ('fr','ht') THEN  "Malnutrition"
   WHEN t.referral_concept_id = @malnutrition_referral_question and @locale = 'fr' THEN  "Malnutrition"
   WHEN t.referral_concept_id = @malnutrition_referral_question and @locale = 'ht' THEN  "Malnitrisyon"  
   WHEN t.referral_concept_id = @ped_vaccine_question and @locale not in ('fr','ht') THEN  "Pediatric Vaccination"
