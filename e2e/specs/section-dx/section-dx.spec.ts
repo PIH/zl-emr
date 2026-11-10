@@ -1,7 +1,7 @@
-import { type APIRequestContext } from '@playwright/test';
+import { type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import { test, expect, type SectionEncounter } from '../../core';
 import { HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID } from '../../core/constants';
-import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
+import { SectionFormPage, VisitPage } from '../../pages';
 
 // section-dx.xml (top level of htmlforms/, not hiv/): "Diagnostic" section: coded diagnoses (encounterDiagnosesByObs,
 // allowNonCoded=false), a non-coded diagnosis checkbox + text, and free-text comments. On the visit page it is the
@@ -16,8 +16,11 @@ import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
 // Scripts: :7 setUpNextAndSubmitButtons() only (see _shared.e2e.md). No validation, message, default or derived value.
 // Side effects on save: none from the form itself (no postSubmissionAction here).
 // The non-coded text hidden by unticking the checkbox is not submitted (tested).
-// VIEW (getAsHtml.action on the saved encounter): the non-coded diagnosis and the comments are shown as values, the Save/Cancel
-// row (ifMode VIEW include=false :36) is absent, and an unticked/untouched field is not shown as a value.
+// Visit-page display: the visit page does NOT show this form's VIEW, although the `pihcore-diagnosis` entry of encounterTypeConfig.js
+//   (:115) has an active templateModelUrl naming section-dx.xml: its `longTemplate` is templates/sections/dxLong.page, which never binds
+//   the fetched HTML and renders the encounter's obs itself (rows Diagnoses, Non-Coded Diagnoses, Clinical Note; short card:
+//   dxSectionShort.page). So the VIEW tests below assert those rows (VisitPage), and the form's own VIEW (ifMode VIEW :4, :36)
+//   is therefore not tested.
 // Not covered here: picking a coded diagnosis in the diagnosis widget (autocomplete backed by concept search and an
 // Angular widget, shared), #next (needs the visit page).
 
@@ -25,8 +28,6 @@ const FORM = 'section-dx.xml';
 // Delivery encounter type (j9CaseRegistration.sql names it @delEncId); :38 hides Next for it.
 const DELIVERY_ENCOUNTER_TYPE_UUID = '00e5ebb2-90ec-11e8-9eb6-529269fb1459';
 
-// The checkbox answer is labelled by its answerCode (message mirebalaisreports.noncodeddiagnoses.name), not by the concept answer (obs display -> text shown).
-const VIEW_LABELS: Record<string, string> = { 'Add non-coded: Yes': 'Non-Coded Diagnoses' };
 
 // Local helper: display and text value of each obs on the (synthetic) encounter.
 const obsOf = async (api: APIRequestContext, encounterUuid: string) => {
@@ -102,31 +103,34 @@ test.describe('section-dx', () => {
     expect((await obsOf(api, section.encounter.uuid)).some((d) => d.includes('Typed then hidden'))).toBeFalsy();
   });
 
-  // VIEW: the saved non-coded diagnosis and comments are shown; the Save/Cancel row (ifMode VIEW include=false) is not.
-  test('VIEW: shows the non-coded diagnosis and the comments, and no buttons', async ({ page, api }) => {
+  // Visit-page display (dxLong.page): one row per heading, the saved values in its right column.
+  const dxRow = (long: Locator, heading: string) =>
+    long.locator(`div:has(> .left-column > h3:text-is("${heading}")) > .right-column`);
+  const openLong = async (page: Page) => {
+    const visit = await VisitPage.open(page, section.encounter.visitUuid);
+    return visit.expand(visit.section('pihcore-diagnosis'));
+  };
+
+  test('the visit page shows the saved non-coded diagnosis and the comments in the diagnosis section', async ({ page }) => {
     await page.locator('#w4').check();
     await page.locator('#w6').fill('Chronic cough');
     await page.locator('#w8').fill('Reviewed in clinic');
     await new SectionFormPage(page, FORM).save();
     await new SectionFormPage(page, FORM).expectSaved();
 
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid, VIEW_LABELS);
-    const shown = await view.valueTexts();
-    expect(shown).toContain('Chronic cough');
-    expect(shown).toContain('Reviewed in clinic');
-    expect(shown).toContain('[X] Non-Coded Diagnoses');
-    await expect(view.page.locator('#nonCodedDiagnosis .value')).toHaveText('Chronic cough');
-    await expect(view.page.locator('#buttons, #submit, #next, #cancel')).toHaveCount(0);
+    const long = await openLong(page);
+    await expect(dxRow(long, 'Non-Coded Diagnoses')).toHaveText('Chronic cough');
+    await expect(dxRow(long, 'Clinical Note')).toHaveText('Reviewed in clinic');
+    await expect(dxRow(long, 'Diagnoses').locator('p.diagnosis')).toHaveCount(0); // no coded diagnosis was picked
   });
 
-  // VIEW: only the comments are saved; the non-coded diagnosis box shows no value.
-  test('VIEW: an unfilled non-coded diagnosis is not shown as a value', async ({ page, api }) => {
+  test('the visit page shows no non-coded diagnosis when only the comments were saved', async ({ page }) => {
     await page.locator('#w8').fill('Only a comment');
     await new SectionFormPage(page, FORM).save();
     await new SectionFormPage(page, FORM).expectSaved();
 
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid, VIEW_LABELS);
-    expect(await view.valueTexts()).toContain('Only a comment');
-    await expect(view.page.locator('#nonCodedDiagnosis .value')).toHaveCount(0);
+    const long = await openLong(page);
+    await expect(dxRow(long, 'Clinical Note')).toHaveText('Only a comment');
+    await expect(dxRow(long, 'Non-Coded Diagnoses')).toHaveText('');
   });
 });

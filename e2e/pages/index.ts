@@ -4,3 +4,4 @@ export * from './registration-page';
 export * from './view-form-page';
 export * from './provider';
 export * from './visit-page';
+export * from './registration-summary-page';

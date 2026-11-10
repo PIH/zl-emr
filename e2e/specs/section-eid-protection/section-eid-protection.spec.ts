@@ -22,8 +22,8 @@ import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
 //   drug-formulation (`drug`) list, #next.
 // VIEW (getAsHtml.action on the saved encounter): the feeding answers (with the form's own labels), the vaccination answer and
 //   the presenting history are shown, the unfilled ones are not, and the #buttons row (ifMode VIEW include=false :314) is
-//   absent. The saved order is not checked: in the test page (HTML loaded with setContent) the
-//   prophylaxis section is an empty order template with no value, so the order is not visible there.
+//   absent. The saved order is not asserted in the VIEW (the prophylaxis section is an order widget, not an obs value); it is
+//   asserted through REST.
 //
 // Findings:
 //   V1 Low :17-113  both scripts are dead code (see above): nothing is hidden, disabled or cleared, and the feeding
@@ -49,7 +49,7 @@ const save = async (page: Page) => {
   await page.locator('#submit').click();
 };
 
-test.describe('section-eid-protection', () => {
+test.describe('section-eid-protection @hiv-ci', () => {
   let section: SectionEncounter;
 
   test.beforeEach(async ({ page, createSectionEncounter }) => {

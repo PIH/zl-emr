@@ -115,7 +115,7 @@ const fillRequired = async (page: Page) => {
   }
 };
 
-test.describe('section-pmtct-history', () => {
+test.describe('section-pmtct-history @hiv-ci', () => {
   let section: SectionEncounter;
 
   const open = async (page: Page) => {

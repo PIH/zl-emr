@@ -2,13 +2,17 @@ import { type APIRequestContext, expect } from '@playwright/test';
 import {
   CLINIC_OR_HOSPITAL_VISIT_TYPE_UUID,
   MIREBALAIS_VISIT_LOCATION_UUID,
-  KLINIK_EKSTEN_LOCATION_UUID,
+  SESSION_LOCATION_UUID,
 } from '../core/constants';
 
 export interface TestEncounter {
   uuid: string;
   visitUuid: string;
 }
+
+// Every datetime the harness sends is 60 seconds in the past. The server rejects an encounter (and a visit start, and an obs)
+// dated after its own clock ("Encounter.datetimeShouldBeBeforeCurrent", HTTP 400), and a developer machine's clock that leads the
+// server's by even 200 ms made about one create in ten fail at random. Do not use a bare new Date() for these.
 
 // Starts a visit for the patient. Entry forms (the ones that create the encounter) open inside a visit.
 export const createVisit = async (api: APIRequestContext, patientUuid: string): Promise<string> => {
@@ -17,7 +21,7 @@ export const createVisit = async (api: APIRequestContext, patientUuid: string): 
       patient: patientUuid,
       visitType: CLINIC_OR_HOSPITAL_VISIT_TYPE_UUID,
       location: MIREBALAIS_VISIT_LOCATION_UUID,
-      startDatetime: new Date().toISOString(),
+      startDatetime: new Date(Date.now() - 60_000).toISOString(),
     },
   });
   expect(res.ok(), `create visit: ${res.status()}`).toBeTruthy();
@@ -43,7 +47,7 @@ export const createVisitWithEncounter = async (
   patientUuid: string,
   encounterTypeUuid: string,
 ): Promise<TestEncounter> => {
-  const now = new Date().toISOString();
+  const now = new Date(Date.now() - 60_000).toISOString();
 
   const visitRes = await api.post('visit', {
     data: {
@@ -60,7 +64,7 @@ export const createVisitWithEncounter = async (
     data: {
       patient: patientUuid,
       encounterType: encounterTypeUuid,
-      location: KLINIK_EKSTEN_LOCATION_UUID,
+      location: SESSION_LOCATION_UUID,
       encounterDatetime: now,
       visit: visit.uuid,
     },
@@ -78,8 +82,9 @@ export interface EncounterObs {
 }
 
 // Obs recorded on one encounter (the encounter belongs to a patient this test created).
-export const getEncounterObs = async (api: APIRequestContext, encounterUuid: string): Promise<EncounterObs[]> => {
-  const res = await api.get(`obs?encounter=${encounterUuid}&v=custom:(display,concept:(uuid,display),value)&limit=200`);
+// `limit` (default 200) is the most obs it reads: a form with more answers than that (labResults.xml, ~210 in the full-form test) needs a larger one.
+export const getEncounterObs = async (api: APIRequestContext, encounterUuid: string, limit = 200): Promise<EncounterObs[]> => {
+  const res = await api.get(`obs?encounter=${encounterUuid}&v=custom:(display,concept:(uuid,display),value)&limit=${limit}`);
   expect(res.ok(), `get obs: ${res.status()}`).toBeTruthy();
   return (await res.json()).results;
 };
@@ -101,4 +106,65 @@ export const voidClinicalDataForPatient = async (api: APIRequestContext, patient
     const res = await api.delete(`visit/${visit.uuid}`);
     expect(res.ok(), `void visit ${visit.uuid}: ${res.status()} ${await res.text()}`).toBeTruthy();
   }
+};
+
+// The value of an obs added over REST: text or a number as they are, `{ coded: 'CIEL:1912' }` for a coded answer (any concept
+// reference the REST concept resource accepts: `source:code` or a uuid), `{ date: '2026-09-07' }` for a date.
+export type ObsValue = string | number | { coded: string } | { date: string };
+
+const conceptUuid = async (api: APIRequestContext, reference: string): Promise<string> => {
+  const res = await api.get(`concept/${encodeURIComponent(reference)}?v=custom:(uuid)`);
+  expect(res.ok(), `get concept ${reference}: ${res.status()}`).toBeTruthy();
+  return (await res.json()).uuid;
+};
+
+// Records one obs on a test encounter the way an app outside the form (the community-health app) would. Several calls with the same
+// concept add several obs (a multi-answer checkbox question). Dated 60 seconds in the past (see above).
+export const addObs = async (
+  api: APIRequestContext,
+  section: { patient: { uuid: string }; encounter: { uuid: string } },
+  concept: string,
+  value: ObsValue,
+): Promise<void> => {
+  let sent: string | number;
+  if (typeof value === 'string' || typeof value === 'number') {
+    sent = value;
+  } else if ('coded' in value) {
+    sent = await conceptUuid(api, value.coded);
+  } else {
+    // noon UTC: the same calendar day in the server's and the browser's time zones
+    sent = `${value.date}T12:00:00.000+0000`;
+  }
+  const res = await api.post('obs', {
+    data: {
+      person: section.patient.uuid,
+      concept: await conceptUuid(api, concept),
+      encounter: section.encounter.uuid,
+      // the encounter's location, as an obs saved by a form has it: an obs without one makes an HTML form that re-saves the encounter fail
+      // with "Editing the fields [location] on Obs is not allowed"
+      location: SESSION_LOCATION_UUID,
+      obsDatetime: new Date(Date.now() - 60_000).toISOString(),
+      value: sent,
+    },
+  });
+  expect(res.ok(), `create obs ${concept}: ${res.status()}`).toBeTruthy();
+};
+
+export interface EncounterHeader {
+  form: { uuid: string; name: string } | null;
+  location: { uuid: string };
+  visit: { uuid: string } | null;
+  encounterDatetime: string;
+  encounterType: { uuid: string };
+  encounterProviders: Array<{ encounterRole: { uuid: string } }>;
+}
+
+// The encounter's own fields as the server stored them (the encounter belongs to a patient this test created): the form HFE linked, the
+// location, visit and datetime, and the roles of its providers (no provider names).
+export const getEncounterHeader = async (api: APIRequestContext, encounterUuid: string): Promise<EncounterHeader> => {
+  const res = await api.get(
+    `encounter/${encounterUuid}?v=custom:(form:(uuid,name),location:(uuid),visit:(uuid),encounterDatetime,encounterType:(uuid),encounterProviders:(encounterRole:(uuid)))`,
+  );
+  expect(res.ok(), `get encounter: ${res.status()}`).toBeTruthy();
+  return res.json();
 };

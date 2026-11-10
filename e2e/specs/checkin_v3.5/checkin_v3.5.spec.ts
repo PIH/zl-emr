@@ -2,7 +2,7 @@ import { type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type EntryContext } from '../../core';
 import { CHECKIN_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
-import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL, visitPagePath } from '../../pages';
+import { EntryFormPage, VisitPage, VISIT_PAGE_URL, visitPagePath } from '../../pages';
 
 // checkin_v3.5.xml: "Checkin" (Check-In encounter: type of visit, payment amount, receipt number). This is the version
 // the ZL site runs at CEN (enableCheckIn opens it for every Haiti site except HSN, which gets checkin.xml v4.0).
@@ -18,12 +18,18 @@ import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL, visitPagePath }
 //   includeIf currentAppId == 'mirebalais.liveCheckin' :19  redirectOnSave to the check-in app (archives :21 / :25 pick the target)
 //   ifMode VIEW include=false :36  the whole entry form (details, visit type, payment, receipt, script, <submit/>)
 //   ifMode ENTER :129 + includeIf wristband printer configured :132  "print wristband" question
-//   ifMode VIEW :160  read-only display (typeOfVisit repeated 12x, payment, receipt): tested through getAsHtml.action
+//   ifMode VIEW :160  read-only display (typeOfVisit repeated 12x, payment, receipt): NOT tested, nobody sees it (see Visit-page display)
 // Script (:38-50, page load): getField('encounterDate.value').datepicker('show') opens the date picker when the form
 //   opens; restrictInputOnlyNumber("receiptNumber") (zl.js, see _shared) makes the receipt input type=number.
 // Validation: fieldset#payment-amount-question has class="required" (:96); the payment amount obs is a whole number >= 0.
 // Side effects on save: one Check-In encounter (type 55a0d3ea-...) with Type of HUM visit (0 or 1) and a Payment construct
 //   group (payment amount + receipt number); no program, order or disposition.
+// Visit-page display: the visit page does NOT show this form's VIEW. The Check-In entry of encounterTypeConfig.js (`// checkIn`,
+//   :818) has `shortTemplate: templates/encounters/checkInShort.page`, `longTemplate: defaultHtmlFormEncounterLong.page` and
+//   `templateModelUrl: /module/htmlformentry/encounter.json?...` (HFE's field list, not getAsHtml.action): the encounter is a
+//   collapsed card with the type of visit (typeOfVisit obs), date, provider and location, and expanding it lists one
+//   label + .obs-value row per saved field (type of visit, payment amount, receipt number). So the VIEW tests below assert that card
+//   and those rows (VisitPage), and the form's own VIEW (ifMode VIEW :160) is therefore not tested.
 // Not covered here: the check-in-app redirect (:19-27, needs the session attribute set by the circular app), the
 //   wristband question (:132, needs a configured wristband printer),
 //   an encounter saved with several type-of-visit obs (v4.0 checkboxes) edited here (unverified), the provider /
@@ -54,6 +60,12 @@ const save = async (page: Page) => {
 };
 const newPatient = (createEntryContext: CustomTestFixtures['createEntryContext'], gender: 'M' | 'F', age: number) =>
   createEntryContext({ givenName: 'AutoCheckinThreeFive', familyName: 'Tester', gender, birthdate: birthdateYearsAgo(age) });
+// The collapsed Check-In card on the visit page (checkInShort.page): the type-of-visit line is the row `div.row.col-12`. The header is
+// rendered once per state (not expandable / expandable / expanded); only the one of the current state is visible.
+const CARD_VISIT_TYPE = '.row.col-12 .encounter-card-summary:visible';
+const checkInCard = async (page: Page, visitUuid: string) =>
+  (await VisitPage.open(page, visitUuid)).encounterOfType(CHECKIN_ENCOUNTER_TYPE_UUID);
+
 const displaysOf = async (api: Parameters<typeof getEncounterObs>[0], encounterUuid: string) =>
   (await getEncounterObs(api, encounterUuid)).map((o) => o.display);
 
@@ -171,14 +183,16 @@ test.describe('checkin_v3.5', () => {
     expect(displays.filter((d) => d.startsWith('Type of outpatient visit'))).toHaveLength(1);
     expect(displays.filter((d) => d.startsWith('Payment information'))).toHaveLength(1); // the construct group
 
-    // VIEW :159-226 (read-only display; the 12 repeated typeOfVisit obs share one id, so they are read through their fieldset)
-    const view = (await expectViewShowsSavedObs(page, api, FORM, encounters[0].uuid)).page;
-    await expect(view.locator('#type-of-visit-question .value')).toHaveCount(1);
-    await expect(view.locator('#type-of-visit-question .value')).toContainText(label.trim());
-    await expect(view.locator('#paymentAmount .value')).toContainText('50');
-    await expect(view.locator('#receiptNumber .value')).toContainText('12345');
-    // ifMode VIEW include=false :36: the entry form (dropdown, inputs, Save) is not in the VIEW
-    await expect(view.locator('select, #paymentAmount input, #save-form, input.submitButton')).toHaveCount(0);
+    // Visit-page display (header): the card shows the visit type, once; the payment and receipt number are not on it
+    const card = await checkInCard(page, context.visitUuid);
+    await expect(card.locator(CARD_VISIT_TYPE)).toContainText(label.trim());
+    await expect(card).not.toContainText('12345');
+    // expanded (defaultHtmlFormEncounterLong.page): the visit type once, the payment and the receipt number
+    const long = await (await VisitPage.open(page, context.visitUuid)).expand(card);
+    const shown = (text: string) => long.locator(`p:visible:has(> label:text-is("${text}")) > .obs-value`);
+    await expect(shown('Type of outpatient visit')).toHaveText(label.trim());
+    await expect(shown('Amount patient paid')).toHaveText(/^50(\.0)?$/);
+    await expect(shown('Receipt number (text)')).toHaveText('12345');
   });
 
   test('the visit type is optional: payment alone saves with no visit-type obs', async ({ page, api, createEntryContext }) => {
@@ -194,10 +208,9 @@ test.describe('checkin_v3.5', () => {
     expect(displays.filter((d) => d.startsWith('Type of outpatient visit'))).toHaveLength(0);
     expect(displays.filter((d) => d.startsWith('Receipt number'))).toHaveLength(0);
 
-    // VIEW: only the payment is shown; the visit type and receipt number that were not entered are not shown as values
-    const view = (await expectViewShowsSavedObs(page, api, FORM, encounter.uuid)).page;
-    await expect(view.locator('#paymentAmount .value')).toContainText('25');
-    await expect(view.locator('#type-of-visit-question .value, #receiptNumber .value')).toHaveCount(0);
+    // Visit-page display: no visit type was entered, so the card has no visit-type line
+    const card = await checkInCard(page, context.visitUuid);
+    await expect(card).not.toContainText('Type of outpatient visit');
   });
 
   test('EDIT starts from the saved values; changing and clearing them replaces the obs', async ({ page, api, createEntryContext }) => {
@@ -248,9 +261,8 @@ test.describe('checkin_v3.5', () => {
       .poll(async () => (await displaysOf(api, encounter.uuid)).filter((d) => !d.startsWith('Payment information')).sort())
       .toEqual(['Amount patient paid: 75']);
 
-    // VIEW after the re-save: the new payment replaces the 50, and the cleared visit type and receipt number show no value
-    const view = (await expectViewShowsSavedObs(page, api, FORM, encounter.uuid)).page;
-    await expect(view.locator('#paymentAmount .value')).toHaveText(/^75\b/);
-    await expect(view.locator('#type-of-visit-question .value, #receiptNumber .value')).toHaveCount(0);
+    // Visit-page display after the re-save: the cleared visit type is gone from the card
+    const card = await checkInCard(page, context.visitUuid);
+    await expect(card).not.toContainText('Type of outpatient visit');
   });
 });

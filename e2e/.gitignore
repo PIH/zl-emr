@@ -1,6 +1,6 @@
 .env
 node_modules/
-storageState.json
+storageState*.json
 test-results/
 playwright-report/
 results.xml

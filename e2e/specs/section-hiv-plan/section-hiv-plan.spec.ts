@@ -80,7 +80,7 @@ const enrollments = async (api: APIRequestContext, patientUuid: string): Promise
   return ((await res.json()).results as Array<{ program: { name: string } }>).map((e) => e.program.name);
 };
 
-test.describe('section-hiv-plan', () => {
+test.describe('section-hiv-plan @hiv-ci', () => {
   let section: SectionEncounter;
 
   // The conditions depend on the parent encounter type and the patient, so each test builds its own fixture.

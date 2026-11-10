@@ -1,6 +1,6 @@
 import { type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type EntryContext } from '../../core';
-import { HIV_DISPENSING_ENCOUNTER_TYPE_UUID, HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID, KLINIK_EKSTEN_LOCATION_UUID } from '../../core/constants';
+import { HIV_DISPENSING_ENCOUNTER_TYPE_UUID, HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID, SESSION_LOCATION_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { EntryFormPage, SectionFormPage, ViewFormPage, viewMismatches, VISIT_PAGE_URL } from '../../pages';
 
@@ -116,7 +116,7 @@ const createPriorRegimen = async (api: APIRequestContext, context: EntryContext)
     data: {
       patient: context.patient.uuid,
       encounterType: HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID,
-      location: KLINIK_EKSTEN_LOCATION_UUID,
+      location: SESSION_LOCATION_UUID,
       encounterDatetime: when,
       visit: context.visitUuid,
       obs: [{ concept: ART_TREATMENT_LINE_UUID, value: 'CIEL:166074', obsDatetime: when }],
@@ -134,7 +134,7 @@ const openEdit = async (page: Page, context: EntryContext, encounterUuid: string
   await expect(page.locator('#buttons input.submitButton')).toBeVisible();
 };
 
-test.describe('hiv-dispensing', () => {
+test.describe('hiv-dispensing @hiv-ci', () => {
   let context: EntryContext;
 
   test.beforeEach(async ({ page, createEntryContext }) => {

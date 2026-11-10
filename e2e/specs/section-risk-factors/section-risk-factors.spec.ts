@@ -1,7 +1,7 @@
 import { type APIRequestContext } from '@playwright/test';
 import { test, expect, type SectionEncounter } from '../../core';
 import { HIV_INTAKE_ENCOUNTER_TYPE_UUID } from '../../core/constants';
-import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
+import { SectionFormPage } from '../../pages';
 
 // hiv/section-risk-factors.xml: HIV risk factors, nine No/Yes/Unknown radio questions (syphilis, other STI, sexual
 // aggression, multiple partners, sex without condom, anal sex, sex with a sex worker, sex worker, other + "specify")
@@ -12,8 +12,13 @@ import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
 //   ifMode VIEW include=false  :5, :18, :158   CSS, heading + script, and the #buttons row in ENTER/EDIT only
 // Scripts: :31 setUpNextAndSubmitButtons() only (see _shared.e2e.md). No validation, message, default or derived value.
 // Side effects on save: none. No required field.
-// VIEW (getAsHtml.action on the saved encounter): the answered radios, the "specify" comment and the remark are shown;
-// unanswered questions are not shown as values; the button row (ifMode VIEW include=false :158) is absent.
+// Visit-page display: none. No entry of encounterTypeConfig.js names this form, and the VIEW of the one form that reads the same
+//   concepts, section-hiv-history.xml (the `hiv-history` section of the HIV Intake entry, :1505), shows them only inside its own
+//   obs group (CIEL:163292), while this form saves them as top-level obs: the answers saved here are not shown on the visit page
+//   (checked: that section's VIEW has no value after saving them). No VIEW of this form is shown to users anywhere: none is tested.
+// UNREACHABLE: no profile of this repo offers this form (documentation/_availability.e2e.md "Not reachable": not in
+//   encounterTypeConfig.js, no <subform>). Tests open it by direct URL on an HIV intake encounter.
+// Search scope: no reference found by name, formUuid or encounter type in pihcore, coreapps, htmlformentry(ui), registrationapp, pihemr and the zl/sl/liberia config repos; NOT searched: openmrs-module-mirebalais, the ADT/O2 modules, and the deployed server's app definitions / global properties. "Unreachable" here means not found, not proven.
 // Not covered here: #next (needs the visit page).
 //
 // Findings:
@@ -22,14 +27,6 @@ import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
 //   V2 Info (form) the section is not offered anywhere (see _availability), so these radios cannot be reached from the UI.
 
 const FORM = 'hiv/section-risk-factors.xml';
-// The answers are labelled by answerCodes pihcore.{yes,no,unknown}.oneChar ("y", "n", "u"), not by the concept names (obs display -> text shown).
-const VIEW_LABELS: Record<string, string> = {
-  'History of syphilis: Yes': 'y',
-  'Patient with multiple sexual partners: No': 'n',
-  'Client of sex worker: Unknown': 'u',
-  'Other risk factor: Yes': 'y',
-};
-
 // Local helper: display, comment and text value of each obs on the (synthetic) encounter.
 const obsOf = async (api: APIRequestContext, encounterUuid: string) => {
   const res = await api.get(`obs?encounter=${encounterUuid}&v=custom:(display,comment,value:(display))&limit=100`);
@@ -37,7 +34,7 @@ const obsOf = async (api: APIRequestContext, encounterUuid: string) => {
   return (await res.json()).results as Array<{ display: string; comment: string | null }>;
 };
 
-test.describe('section-risk-factors', () => {
+test.describe('section-risk-factors @unreachable', () => {
   let section: SectionEncounter;
 
   test.beforeEach(async ({ page, createSectionEncounter }) => {
@@ -89,24 +86,5 @@ test.describe('section-risk-factors', () => {
     await expect(page.locator('#w14_2')).toBeChecked();
     await expect(page.locator('#w18_1')).toBeChecked();
     await expect(page.locator('#w21')).toHaveValue('Counselled');
-  });
-
-  // VIEW: answered questions show their answer, the other five show none, and no button row.
-  test('VIEW: shows the answers, the specify text and the remark, and no buttons', async ({ page, api }) => {
-    await page.locator('#w2_1').check(); // syphilis: yes
-    await page.locator('#w8_0').check(); // multiple partners: no
-    await page.locator('#w14_2').check(); // sex with a sex worker: unknown
-    await page.locator('#w18_1').check(); // other risk factor: yes
-    await page.locator('#w19').fill('Shared needles');
-    await page.locator('#w21').fill('Counselled');
-    await new SectionFormPage(page, FORM).save();
-    await new SectionFormPage(page, FORM).expectSaved();
-
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid, VIEW_LABELS);
-    const shown = await view.valueTexts();
-    expect(shown).toContain('Counselled');
-    expect(shown.filter((t) => t.startsWith('[X]')).sort()).toEqual(['[X] n', '[X] u', '[X] y', '[X] y']);
-    expect(shown.some((t) => t.includes('Shared needles'))).toBeTruthy(); // the specify comment
-    await expect(view.page.locator('#buttons, #submit, #next, #cancel')).toHaveCount(0);
   });
 });

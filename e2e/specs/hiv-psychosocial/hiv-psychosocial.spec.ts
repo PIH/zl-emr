@@ -1,6 +1,6 @@
 import { type Page, type Locator } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type EntryContext } from '../../core';
-import { HIV_PSYCHOSOCIAL_ENCOUNTER_TYPE_UUID, KLINIK_EKSTEN_LOCATION_UUID } from '../../core/constants';
+import { HIV_PSYCHOSOCIAL_ENCOUNTER_TYPE_UUID, SESSION_LOCATION_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { EntryFormPage, SectionFormPage, ViewFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../pages';
 
@@ -66,8 +66,8 @@ const createEncounter = async (api: import('@playwright/test').APIRequestContext
     data: {
       patient: context.patient.uuid,
       encounterType: HIV_PSYCHOSOCIAL_ENCOUNTER_TYPE_UUID,
-      location: KLINIK_EKSTEN_LOCATION_UUID,
-      encounterDatetime: new Date().toISOString(),
+      location: SESSION_LOCATION_UUID,
+      encounterDatetime: new Date(Date.now() - 60_000).toISOString(),
       visit: context.visitUuid,
       obs: chwName ? [{ concept: CHW_CONCEPT_UUID, value: chwName }] : [],
     },
@@ -81,7 +81,7 @@ const savedObs = async (api: import('@playwright/test').APIRequestContext, patie
   return { encounterType: encounters[0].encounterType.uuid, displays: (await getEncounterObs(api, encounters[0].uuid)).map((o) => o.display) };
 };
 
-test.describe('hiv-psychosocial', () => {
+test.describe('hiv-psychosocial @hiv-ci', () => {
   let context: EntryContext;
 
   test.beforeEach(async ({ createEntryContext }) => {

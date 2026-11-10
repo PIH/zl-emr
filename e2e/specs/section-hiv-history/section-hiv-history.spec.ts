@@ -120,7 +120,7 @@ const fillRequired = async (page: Page, age: number) => {
 };
 const dimTargetInputs = (page: Page, target: string) => page.locator(`[id="${target}"] input, .${target} input`);
 
-test.describe('section-hiv-history', () => {
+test.describe('section-hiv-history @hiv-ci', () => {
   let section: SectionEncounter;
 
   const url = () => SectionFormPage.editUrl(FORM, section);
