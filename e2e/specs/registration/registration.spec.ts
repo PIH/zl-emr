@@ -34,7 +34,7 @@ import { QUESTION, REQUIRED_ADDRESS_LEVELS, RegistrationPage } from '../../pages
 // printIdCard.page (Print ID card = Yes) prints on load and saves an obs, so the second register test stubs it.
 // Not covered: unidentified-patient registration (it would create an `UNKNOWN` patient, not an Auto... one), Tablet Entry
 //   Location simplification (needs another session location), biometrics / ID card section / HIV identifiers (components
-//   and specialty off here), the possible-duplicates question (pihcore working copy only, not in the running server: see Findings),
+//   and specialty off here),
 //   retrospective-date registration beyond one encounter date check, edit of a registered patient.
 //
 // Findings (see pihcore apploader/apps/patientregistration/SectionsHaiti.java):
@@ -46,10 +46,11 @@ import { QUESTION, REQUIRED_ADDRESS_LEVELS, RegistrationPage } from '../../pages
 //                                   unless the clerk changes it (tested).
 //   V3 Info (observed, not tested) typing nothing in the identifier box with "Automatically assign" turned off still generates an ID, while the
 //                                   confirmation shows "ZL EMR ID: --". Not tested (would register a patient).
-//   Differences, running server vs pihcore working copy: the working copy adds a "Possible duplicates" question after
-//   Phone Number (showDuplicatePatientSection, default true); the running server has none. The order test ignores it, but
-//   once it ships it gates the form after the phone number, which will break `through()` and both register tests (they never
-//   fill the phone number before moving on).
+//   The "Possible duplicates" question is OPTIONAL here: pihcore's working copy adds it after Phone Number (showDuplicatePatientSection,
+//   default true) but servers that do not have the feature yet (zl-ci at the time of writing) do not. The spec detects it
+//   (RegistrationPage.hasDuplicateCheck): the order test expects it only where it is, the phone-number tests expect the focus to
+//   go to it or, without it, to the insurance, `through()` and the register tests pass it only where it is, and the two tests of the
+//   question itself skip where it is absent.
 
 const REGISTRATION_ENCOUNTER_TYPE_UUID = '873f968a-73a8-4f9c-ac78-9f4778b751b6';
 const NAME_FAMILY = 'Tester';
@@ -78,6 +79,9 @@ const manualEmrId = () => {
 // on the first invalid question), so a test of a later question first fills the required questions in front of it.
 // `through(registration, 'address')` fills everything before the address. Country is preset to Haiti; the other three
 // required levels of every address are picked from the first suggestions.
+// The "Possible duplicates" question is optional: servers without pihcore's showDuplicatePatientSection (not released everywhere yet) do not have it, and
+// the tests of the question skip there. RegistrationPage.passDuplicateCheck does nothing on such a wizard.
+const NO_DUPLICATE_CHECK = 'this wizard has no "Possible duplicates" question (pihcore showDuplicatePatientSection)';
 const REQUIRED_STEPS: Array<[string, (r: RegistrationPage) => Promise<unknown>]> = [
   ['name', (r) => r.fillName('Autoreg', NAME_FAMILY)],
   ['gender', (r) => r.fillGender('F')],
@@ -165,9 +169,11 @@ test.describe('registration wizard', () => {
       expect(await registration.sectionLabels()).toEqual([
         'Registration Date', 'Demographics', 'Contact Info', 'Insurance', 'Social', 'Contact Person', 'Identifiers', 'Print ID card',
       ]);
+      // "Possible duplicates" (after the phone number) is there only on a server that has the feature (see the header)
       expect(await registration.questionLabels()).toEqual([
-        'Registration Date', 'Name', 'Gender', 'Birthdate', "Mother's First Name", 'Address', 'Phone Number', 'Possible duplicates', 'Company Name',
-        'Place of Birth', 'Civil Status', 'Occupation', 'Religion', 'Contact Name', 'Contact Address', 'Contact Phone Number',
+        'Registration Date', 'Name', 'Gender', 'Birthdate', "Mother's First Name", 'Address', 'Phone Number',
+        ...((await registration.hasDuplicateCheck()) ? ['Possible duplicates'] : []),
+        'Company Name', 'Place of Birth', 'Civil Status', 'Occupation', 'Religion', 'Contact Name', 'Contact Address', 'Contact Phone Number',
         'ZL EMR ID', 'Print ID card',
       ]);
       await registration.expectFocused(QUESTION.registrationDate);
@@ -327,7 +333,7 @@ test.describe('registration wizard', () => {
         await through(registration, 'duplicates');
         await registration.fillPhoneNumber(phone);
         if (valid) {
-          await registration.expectFocused(QUESTION.duplicates); // the phone number is the last entry before the check
+          await registration.expectFocused(await registration.questionAfterPhone()); // the phone number is the last entry before the check (or the insurance, without it)
         } else {
           await registration.expectErrors(QUESTION.phone, ['Invalid.']);
           await registration.expectFocused(QUESTION.phone);
@@ -341,6 +347,7 @@ test.describe('registration wizard', () => {
     // does not let the clerk past it until that has finished and any matches have been reviewed.
     test('is checked after the phone number, and continuing goes to the insurance', async ({ page }) => {
       const registration = await RegistrationPage.open(page);
+      test.skip(!(await registration.hasDuplicateCheck()), NO_DUPLICATE_CHECK);
       await through(registration, 'duplicates');
       await registration.fillPhoneNumber('12345678');
       await registration.expectFocused(QUESTION.duplicates);
@@ -350,6 +357,7 @@ test.describe('registration wizard', () => {
 
     test('does not let the clerk skip it', async ({ page }) => {
       const registration = await RegistrationPage.open(page);
+      test.skip(!(await registration.hasDuplicateCheck()), NO_DUPLICATE_CHECK);
       await through(registration, 'duplicates');
       await registration.goTo('Possible duplicates');
       await registration.goTo('Company Name');

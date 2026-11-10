@@ -19,12 +19,15 @@ import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../pa
 //   includeIf age < 3               :336, :787   MUAC/HC ratio script, head circumference and ratio questions
 //   includeIf !visit.open and a retro privilege :413 / :422 / :432 / :458: provider+date "Details" fieldset for a closed visit;
 //     the open-visit branch (:458) is its exact complement. The fixture visit is open, so only :458 renders.
-//   ifMode VIEW (include true/false) :28-:776  view-only vs entry-only blocks (VIEW: getAsHtml.action, see the save test)
+//   ifMode VIEW (include true/false) :28-:776  view-only vs entry-only blocks (VIEW: on the visit page, see the save test)
 // Scripts (all ExitHandlers, i.e. Simple UI only, :103-176, :273-296): inches -> cm (x2.54), lbs -> kg (/2.2), Fahrenheit -> Celsius
 //   ((F-32)*5/9), mg/dL -> mmol/L (/18), each one decimal and clearing the source field on exit; cm -> mm (x10, no rounding) and
 //   mm -> cm (/10); BMI = kg/(cm/100)^2 :196-222; ratio = (mm/10)/HC :347-373; the "expected" BP class :224.
 // Side effects on save: none. Encounter type 4fb47712-... (Vitals).
-// Not covered: the VIEW scripts' output (BMI :231, MUAC in cm :308, ratio :375 are not asserted: the VIEW harness does run the form's scripts), EDIT mode, the closed-visit "Details" branch (needs a retro privilege), required-field gating.
+// UNREACHABLE: no profile of this repo offers this form (documentation/_availability.e2e.md "Not reachable": unreferenced, nothing
+//   launches it). Tests open it by direct URL.
+// Search scope: no reference found by name, formUuid or encounter type in pihcore, coreapps, htmlformentry(ui), registrationapp, pihemr and the zl/sl/liberia config repos; NOT searched: openmrs-module-mirebalais, the ADT/O2 modules, and the deployed server's app definitions / global properties. "Unreachable" here means not found, not proven.
+// Not covered: the VIEW scripts' output (BMI :231, MUAC in cm :308, ratio :375: they run on the visit page, not asserted), EDIT mode, the closed-visit "Details" branch (needs a retro privilege), required-field gating.
 //
 // Findings:
 //   V1 High   :673,:685    MUAC (mm) is bound to CIEL:163187 = Mean arterial pressure (vitals.xml uses PIH:7956) and the MAP
@@ -86,7 +89,7 @@ const savedEncounter = async (api: APIRequestContext, patientUuid: string) => {
 };
 const savedDisplays = async (api: APIRequestContext, patientUuid: string) => (await savedEncounter(api, patientUuid)).displays;
 
-test.describe('vitalsInpatient', () => {
+test.describe('vitalsInpatient @unreachable', () => {
   test('V3: the location select has no option on this server (Vitals Inpatient Location tag)', async ({ page, createEntryContext }) => {
     test.fixme(); // HAI-1277: "ExitHandlers is not defined" when the form opens in the Standard UI. Remove test.fixme() when fixed.
     // encounterLocation tags="Vitals Inpatient Location" :377 / :409 (open visit: :458 branch renders)
@@ -212,7 +215,7 @@ test.describe('vitalsInpatient', () => {
     );
     expect(displays.some((d) => /glucose.*5\.0/i.test(d))).toBe(true); // 90 mg/dL -> 5.0 mmol/L
 
-    // VIEW :42-101 template; the BMI / ratio / MUAC-in-cm VIEW scripts need jq and do not run in the test page
+    // VIEW :42-101 template, shown on the visit page (the form's VIEW scripts, BMI :231 and others, run there as for a user)
     const view = (await expectViewShowsSavedObs(page, api, FORM, encounterUuid)).page;
     await expect(view.locator('#height_cm .value')).toContainText('170');
     await expect(view.locator('#weight_kg .value')).toContainText('70');

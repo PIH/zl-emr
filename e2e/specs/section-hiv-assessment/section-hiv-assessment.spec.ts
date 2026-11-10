@@ -16,12 +16,13 @@ import { SectionFormPage, expectViewShowsSavedObs } from '../../pages';
 //   toggle symptom checkbox :181 -> the symptom's radio, duration and unit (dim = disabled)
 //   includeIf age >= 15 (or unknown) :274,:328,:385 / age < 15 :295,:350,:419   adult / paediatric WHO stage 2, 3, 4 lists
 //   ifMode VIEW include=false :7,:37,:255,:279,:300,:333,:355,:390,:424,:460,:535 style, heading, <br>s, OI list, buttons;
-//     VIEW include=true :50,:262,:316,:373 hideIfEmpty('.who-stage') and spacing (a script: it does not run in the VIEW tests)
+//     VIEW include=true :50,:262,:316,:373 hideIfEmpty('.who-stage') and spacing (a script: runs on the visit page)
 // Scripts: :43-46 setUpNextAndSubmitButtons (#next/#submit, see _shared); :52-54 (VIEW) hideIfEmpty(".who-stage").
 // Side effects on save: enrollInProgram HIV (:63, age > 1, tested); postSubmissionAction CleanDiagnosisConstructAction (:4,
 //   works on the diagnosis obs; not exercised). No drug or lab order. No required field.
-// VIEW (getAsHtml.action on the saved encounter, end of the save test): every saved obs is shown, the adverse event, symptom and
-//   WHO stage blocks carry values, untouched symptom rows are not rendered, and the #buttons row (:535) is absent.
+// VIEW (on the visit page, HIV intake encounter; the save test's HIV followup encounter has no hiv-assessment section there, V1): every saved
+//   obs is shown, the symptom and WHO stage blocks carry values, untouched symptom rows are not rendered, and the #buttons row (:535)
+//   is absent. The adverse-event and health-condition blocks (followup only) are never shown to users, so their VIEW is not tested.
 // Not covered here: the diagnoses widget (encounterDiagnosesByObs :523) and CleanDiagnosisConstructAction, #next.
 //
 // Findings:
@@ -53,7 +54,7 @@ const enrollments = async (api: APIRequestContext, patientUuid: string): Promise
   return ((await res.json()).results as Array<{ program: { name: string } }>).map((e) => e.program.name);
 };
 
-test.describe('section-hiv-assessment', () => {
+test.describe('section-hiv-assessment @hiv-ci', () => {
   let section: SectionEncounter;
 
   const open = async (
@@ -183,18 +184,34 @@ test.describe('section-hiv-assessment', () => {
     await expect(saved.locator('input[type=text]')).toHaveValue('3');
     const untouched = page.locator('#hiv-symptoms table tr', { has: page.locator('td[id]') }).nth(2);
     await expect(untouched.locator('input[type=text]')).toBeDisabled();
+  });
 
-    // VIEW: the saved answers appear under their blocks; the untouched symptom rows (showIfEmpty=false) and the button row do not
+  // VIEW on the visit page: the HIV followup type the save test needs for the adverse-event blocks has no hiv-assessment section on
+  // the visit page (V1), so this test saves the rest on an HIV intake encounter, whose entry lists the section.
+  test('the visit page shows the saved symptom, WHO stage and comment of an HIV intake encounter, and no button row', async ({ page, api, createSectionEncounter }) => {
+    await open(page, createSectionEncounter, HIV_INTAKE_ENCOUNTER_TYPE_UUID);
+    const nausea = page.locator('#hiv-symptoms table tr', { has: page.locator('td[id]') }).nth(1);
+    await nausea.locator('input[type=checkbox]').first().check();
+    await nausea.locator('input[type=radio]').first().check(); // answers are listed No, Yes: first = No
+    await nausea.locator('input[type=text]').fill('3');
+    await nausea.locator('select').selectOption({ index: 2 });
+    await page.locator('#hiv-who-stages p.radio input[type=radio]').nth(2).check(); // stage 3
+    await page.locator('#hiv-who-stages .who-stage input[type=checkbox]').first().check();
+    await page.locator('#hiv-dx input[type=checkbox]').first().check();
+    await page.locator('#data-collection textarea:not([name=encounterDiagnoses])').first().fill('Clinically stable');
+    await save(page);
+
+    // the saved answers appear under their blocks; the untouched symptom rows (showIfEmpty=false) and the button row do not
     const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid, VIEW_LABELS);
-    await expect(view.page.locator('#hiv-adverse-event .value')).not.toHaveCount(0);
-    await expect(view.page.locator('#hiv-health-condition .value')).toHaveCount(1);
-    await expect(view.page.locator('#hiv-symptoms .value')).not.toHaveCount(0);
-    await expect(view.page.locator('#hiv-who-stages .value')).not.toHaveCount(0);
+    await expect(view.root.locator('#hiv-symptoms .value')).not.toHaveCount(0);
+    await expect(view.root.locator('#hiv-who-stages .value')).not.toHaveCount(0);
     // the symptom rows are obsgroups with showIfEmpty=false: only nausea (3 values: answer, duration, unit) is rendered
-    await expect(view.page.locator('#hiv-symptoms td[id="Nausea"] .value')).toHaveCount(3);
-    await expect(view.page.locator('#hiv-symptoms td[id="Nausea"] .value').filter({ hasText: /^3$/ })).toHaveCount(1);
-    await expect(view.page.locator('#hiv-symptoms td[id="Vomiting"]')).toHaveCount(0);
-    await expect(view.page.locator('#buttons, #submit, #next, #cancel')).toHaveCount(0);
+    await expect(view.root.locator('#hiv-symptoms td[id="Nausea"] .value')).toHaveCount(3);
+    await expect(view.root.locator('#hiv-symptoms td[id="Nausea"] .value').filter({ hasText: /^3$/ })).toHaveCount(1);
+    await expect(view.root.locator('#hiv-symptoms td[id="Vomiting"]')).toHaveCount(0);
+    await expect(view.root.locator('#buttons, #submit, #next, #cancel')).toHaveCount(0);
+    // an intake encounter has no adverse-event or health-condition block (includeIf :67)
+    await expect(view.root.locator('#hiv-adverse-event, #hiv-health-condition')).toHaveCount(0);
   });
 
   test('a one-year-old is not enrolled in the HIV program', async ({ page, api, createSectionEncounter }) => {

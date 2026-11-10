@@ -18,14 +18,16 @@ import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL, visitPagePath }
 //   includeIf age < 3                :321, :661  ratio script / head circumference + MUAC/HC ratio questions
 //   includeIf !visit.open + retro privilege :402-:452  provider/date fieldset for a closed visit; the open-visit branch (:452)
 //     is its exact complement (the duplicate #encounterDate is a false positive). The fixture visit is open: only :452 renders.
-//   ifMode VIEW (include true/false) :27-:638  view-only vs entry-only blocks (VIEW: getAsHtml.action, see the two save tests)
+//   ifMode VIEW (include true/false) :27-:638  view-only vs entry-only blocks (VIEW: on the visit page, see the two save tests)
 // Scripts: ExitHandlers :90-150 inches -> cm (x2.54), lbs -> kg (/2.2), Fahrenheit -> Celsius ((F-32)*5/9), one decimal, the
 //   source field is cleared on exit; BMI :155-195 = kg/(cm/100)^2, one decimal, shown on its question, hidden when a value is
 //   missing; cm -> mm (x10, :240-264) and mm -> cm (/10, :266-273) on leaving the MUAC question, cm shown again from the saved mm
 //   on load (EDIT, :279-284); ratio :322-362 = (mm/10)/HC, one decimal. Free converter inputs carry min/max (cm 5-50, F 77-109,
 //   inches 4-89, lbs 0.3-550): a violation shows "Minimum: n"/"Maximum: n" and blocks moving forward.
 // Side effects on save: one Vitals encounter (4fb47712-...); no program, order or disposition. Converter inputs are not saved.
-// Not covered: the VIEW scripts' output (BMI :155, ratio :363, MUAC in cm :204 are not asserted: the VIEW harness does run the form's scripts), the visit-page launch and retro-entry gating, the closed-visit provider/date fieldset (needs a retro
+// LEGACY VERSION (not tagged @unreachable: a versioned copy is outside the reachability count; whether the visit page's edit pencil opens it for old encounters is unverified): legacy form, no profile offers it (documentation/_availability.e2e.md "Not reachable": Haiti enters vitals.xml, v3.0; v2.2 is
+//   reached only when editing an encounter saved with it). Tests open it by direct URL.
+// Not covered: the VIEW scripts' output other than the BMI (ratio :363, MUAC in cm :204; they do run on the visit page), the visit-page launch and retro-entry gating, the closed-visit provider/date fieldset (needs a retro
 //   privilege), the VIEW-only scripts, EPLD behaviour (_shared.e2e.md), the Standard UI beyond V3.
 //
 // Differences from the siblings (vitalsInpatient / vitalsPregnant), each verified here: MUAC (mm) is bound to the MUAC concept
@@ -268,8 +270,9 @@ test.describe('vitals_v2.2', () => {
       ].sort(),
     );
 
-    // VIEW :27-86 template (legends hidden, one h3 per question); the BMI / ratio / MUAC-in-cm VIEW scripts need jq and do not run here
+    // VIEW :27-86 template (legends hidden, one h3 per question); the VIEW script :155 computes the BMI on the visit page (170 cm, 70 kg)
     const view = (await expectViewShowsSavedObs(page, api, FORM, encounterUuid)).page;
+    await expect(view.locator('#calculated-bmi')).toHaveText('24.2');
     await expect(view.locator('#height_cm .value')).toContainText('170');
     await expect(view.locator('#bp_systolic .value')).toContainText('120');
     await expect(view.locator('#bp_diastolic .value')).toContainText('80');

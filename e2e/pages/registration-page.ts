@@ -166,16 +166,32 @@ export class RegistrationPage {
     await this.fillInput('phoneNumber', phone);
   }
   /**
+   * Whether this wizard has the "Possible duplicates" question (pihcore `showDuplicatePatientSection`: a server that does not have the feature yet
+   * lacks it, and then the phone number is followed directly by the insurance).
+   */
+  async hasDuplicateCheck(): Promise<boolean> {
+    return (await this.question(QUESTION.duplicates).count()) > 0;
+  }
+  /** The question that has the focus after a valid phone number: "Possible duplicates" where the wizard has it, else the insurance. */
+  async questionAfterPhone(): Promise<string> {
+    return (await this.hasDuplicateCheck()) ? QUESTION.duplicates : QUESTION.insurance;
+  }
+  /**
    * Gets past "Possible duplicates": waits for the search to finish, then presses the button of the question, which is
    * "Continue" when nothing similar was found and "None of these is the patient" when something was (the test server's
    * patients decide which, so both are handled). It moves on to Company Name. Call it again after changing an entry the
-   * search compares (see the header), which makes the question fail validation until it is passed again.
+   * search compares (see the header), which makes the question fail validation until it is passed again. Does nothing on a wizard
+   * without the question; returns whether it passed one.
    */
-  async passDuplicateCheck() {
+  async passDuplicateCheck(): Promise<boolean> {
+    if (!(await this.hasDuplicateCheck())) {
+      return false;
+    }
     await this.goTo('Possible duplicates');
     const button = this.page.locator('#duplicates-none');
     await expect(button).not.toHaveText(/checking/i);
     await button.click();
+    return true;
   }
 
   async fillInsurance(company: string, policyNumber: string) {

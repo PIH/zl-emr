@@ -2,7 +2,7 @@ import { type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type EntryContext } from '../../core';
 import { HIV_DRUG_ORDER_DOCUMENTATION_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getPatientEncounters } from '../../commands';
-import { EntryFormPage, SectionFormPage, ViewFormPage, VISIT_PAGE_URL } from '../../pages';
+import { EntryFormPage, SectionFormPage, VISIT_PAGE_URL, VisitPage } from '../../pages';
 
 // hiv/hiv-drug-order-documentation.xml: "HIV Drug Order Documentation" (encounter date and one <drugOrder format="select">:
 // drug concept, formulation, order reason ART/PTME/Prophylaxis/TB/STI, dose, frequency, route, duration, quantity, refills;
@@ -13,12 +13,15 @@ import { EntryFormPage, SectionFormPage, ViewFormPage, VISIT_PAGE_URL } from '..
 // or location widget: the encounter takes the session's.
 //
 // Conditions in the form, from documentation inventory (hiv-drug-order-documentation.inv.md):
-//   ifMode VIEW include=false  :132  Save/Cancel buttons (absent in the VIEW, tested)
+//   ifMode VIEW include=false  :132  Save/Cancel buttons (absent in the VIEW; not tested, see Visit-page display)
 // Scripts: none. The order widget is HFE's: NEW, and in EDIT REVISE_0 / DISCONTINUE_0 per order of the encounter.
 // Side effects on save: a drug order (action NEW, outpatient, routine) on the encounter. The cleanup voids the encounter, and the
 //   order with it.
-// VIEW (getAsHtml.action with this form's file; end of the order-save test): the encounter date and the saved order (drug, formulation,
-//   route, quantity) are listed, with no order-action buttons. The form has no obs, so the generic obs check does not apply.
+// Visit-page display: no VIEW of this form. The entry of encounterTypeConfig.js for this encounter type (:2685, 0b242b71-...) has
+//   `defaultEncounterShort` / `defaultEncounterLong` and no templateModelUrl, so the visit page renders the encounter itself: its long view
+//   (defaultEncounterLong) lists each obs and each order as `p.aligned` rows (order number, the order's display, timing); the form saves no
+//   obs, so the order-save test asserts the order row (the drug) on the visit page. Written from the templates; NOT yet run
+//   (the hiv-ci server was down). The ifMode VIEW include=false :132 blocks stay untested: the form's own VIEW is shown nowhere.
 // Not covered here: saving a revision or a discontinuation (another order save), the other concepts/formulations.
 //
 // Findings:
@@ -32,7 +35,7 @@ const FORM = 'hiv/hiv-drug-order-documentation.xml';
 // <submit/> renders input.submitButton (no #submit).
 const clickSave = (page: Page) => page.locator('#buttons input.submitButton').click();
 
-test.describe('hiv-drug-order-documentation', () => {
+test.describe('hiv-drug-order-documentation @hiv-ci', () => {
   let context: EntryContext;
 
   test.beforeEach(async ({ page, createEntryContext }) => {
@@ -97,6 +100,13 @@ test.describe('hiv-drug-order-documentation', () => {
       encounter: { uuid: encounter.uuid },
     });
 
+    // Visit page (the save lands there): the encounter is listed and its long view shows the order, with the drug
+    const visit = await VisitPage.open(page, context.visitUuid);
+    const long = await visit.expand(visit.encounterOfType(HIV_DRUG_ORDER_DOCUMENTATION_ENCOUNTER_TYPE_UUID));
+    const orderRow = long.locator('p.aligned').filter({ hasText: 'Abacavir' });
+    await expect(orderRow).toHaveCount(1);
+    await expect(orderRow).toContainText('Lamivudine');
+
     // EDIT (the app's entry): the order of the encounter is listed with the revise and discontinue actions
     await page.goto(SectionFormPage.editUrl(FORM, { patient: context.patient, encounter: { uuid: encounter.uuid, visitUuid: context.visitUuid } }));
     const history = page.locator('.orderwidget-history-section .order-view-current-encounter');
@@ -104,17 +114,5 @@ test.describe('hiv-drug-order-documentation', () => {
     await expect(history).toContainText('ABC + 3TC');
     await expect(page.locator('#order-action-button-REVISE_0')).toBeVisible();
     await expect(page.locator('#order-action-button-DISCONTINUE_0')).toBeVisible();
-
-    // VIEW of the saved encounter: the encounter date is the one value, the order is listed (no new-order form or action buttons),
-    // and the Save/Cancel buttons (ifMode VIEW include=false :132) are not rendered
-    const view = await ViewFormPage.open(page, FORM, encounter.uuid);
-    expect(await view.valueTexts()).toHaveLength(1);
-    await expect(page.locator('#encounterDate .value')).toHaveText(/^\d{2} \w{3} \d{4}$/); // "dd MMM yyyy"
-    const item = page.locator('.orderwidget-history-section .order-view-current-encounter');
-    await expect(item).toHaveCount(1);
-    for (const expected of ['ABC + 3TC', 'Abacavir', 'Oral', '30']) {
-      await expect(item).toContainText(expected);
-    }
-    await expect(page.locator('[id^=order-action-button], .orderwidget-new-order-section select, #buttons, input.submitButton')).toHaveCount(0);
   });
 });

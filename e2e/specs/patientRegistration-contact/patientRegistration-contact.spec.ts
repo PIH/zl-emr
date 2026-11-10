@@ -1,6 +1,6 @@
 import { type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import { test, expect, type SectionEncounter } from '../../core';
-import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithButtonsSubmit } from '../../pages';
+import { RegistrationSummaryPage, SectionFormPage, VisitPage, buttonsSubmit, openEditWithButtonsSubmit } from '../../pages';
 
 // patientRegistration-contact.xml: the contact person of the patient (name, relationship, address, phone), one
 // obs group "PATIENT CONTACTS CONSTRUCT". It is not a wizard fragment: the registration summary page shows it as
@@ -10,7 +10,7 @@ import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithBu
 //
 // Conditions in the form, from documentation inventory (patientRegistration-contact.inv.md):
 //   ifMode VIEW include=false  :3, :39, :53, :87, :151   script, h2, edit fields, address widget, Save/Cancel (ENTER/EDIT only)
-//   ifMode VIEW include=true   :70, :124                 read-only copies of the same obs (VIEW only: cannot be opened here)
+//   ifMode VIEW include=true   :70, :124                 read-only copies of the same obs (VIEW only: checked on the registration summary page, see below)
 //   The ifMode pairs reuse ids (contactRelationship, contactAddress-*) but never render together: no duplicate ids.
 // Required (HFE): name, relationship, country, department, commune, section communale, phone. Address1/address2 optional.
 // Scripts (:6-35, :8-18 / :21-26 / :28 / :30-32): (1) registrationapp PersonAddressWithHierarchy on #contactAddress-container: each level is an
@@ -20,10 +20,15 @@ import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithBu
 //   first span of the wrapper (the hidden `span.required`) shows the "invalid phone number" message unless the value
 //   matches ^\d{8}$, ^\d{4}[)-\s]?\s*\d{4}$ or ^\+?(\d ?){6,14}\d$. (4) beforeSubmit blocks Save while the phone does not match.
 // Side effects on save: none (one obs group of 8 text obs). Encounter type Patient Registration.
-// VIEW (getAsHtml.action with this form, see expectViewShowsSavedObs): every saved text obs is shown in its own id (the name
-//   as #contactFirstName, :74), the unfilled address1 is not shown as a value, and the h2, the quick-search input and #buttons
-//   (ifMode VIEW include=false) are absent.
-// Not covered here: the summary-page widget, the cancel button,
+// Visit-page display: the Patient Registration entry of encounterTypeConfig.js (:743) has no templateModelUrl, so the visit page shows no
+//   VIEW of this form; `showOnVisitList: false` only keeps the type out of the visit list's type summary, the encounter itself is
+//   shown with defaultEncounterLong: one `p.aligned` row for the contact group (label, the group's values).
+//   The test asserts that row.
+// Registration summary page: the "CONTACT PERSON" widget (coreapps-mostRecentRegistrationContact, every site but Liberia) renders this form
+//   in VIEW (getAsHtml): name, relationship, the address levels and the phone each in span.value under their own ids (the VIEW ids,
+//   :74 ff.), the unfilled address1 as span.emptyValue, no h2 or #buttons (ifMode VIEW include=false), and an edit pencil to this form.
+//   The tests read it through RegistrationSummaryPage.
+// Not covered here: the cancel button,
 //   hierarchy contents (server data), the other two phone patterns' edge cases (zl.js:145-153, shared).
 //
 // Findings:
@@ -279,9 +284,18 @@ test.describe('patientRegistration-contact', () => {
     }
     await expect(input(page, 'contactAddress-address2')).toHaveValue('Behind the church');
 
-    // VIEW: each value under its own id (the name has another id in VIEW, :74); address1 was not filled; ENTER/EDIT-only parts are absent
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid);
-    const shown = (id: string) => view.page.locator(`#${id} .value`);
+    // Visit page: the encounter's default long template lists the contact group as one row with its values
+    const visit = await VisitPage.open(page, section.encounter.visitUuid);
+    const long = await visit.expand(visit.encounterOfType(PATIENT_REGISTRATION_ENCOUNTER_TYPE_UUID));
+    await expect(long.locator('p.aligned')).toHaveCount(1);
+    for (const text of ['AutoContact Person', 'Sister', 'Behind the church', '1234-5678', ...chosen]) {
+      await expect(long.locator('p.aligned')).toContainText(text);
+    }
+
+    // Registration summary page: the widget shows each saved value under its own id; address1 (not filled) is not shown as a value;
+    // ENTER/EDIT-only parts are absent; the pencil leads to this form's edit page
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    const shown = (id: string) => summary.value('contact', id);
     await expect(shown('contactFirstName')).toHaveText('AutoContact Person');
     await expect(shown('contactRelationship')).toHaveText('Sister');
     await expect(shown('contactPhoneNumber')).toHaveText('1234-5678');
@@ -290,9 +304,11 @@ test.describe('patientRegistration-contact', () => {
       await expect(shown(`contactAddress-${LEVELS[i]}`)).toHaveText(chosen[i]);
     }
     await expect(shown('contactAddress-address1')).toHaveCount(0);
+    expect((await summary.rows('contact'))['Contact Address']).toContain('Behind the church');
     for (const gone of ['h2', 'input.address-hierarchy-shortcut', '#buttons', 'button.submitButton']) {
-      await expect(view.page.locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
+      await expect(summary.widget('contact').locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
     }
+    await summary.expectEditLink('contact');
   });
 
   test('EDIT: changing the relationship and re-saving replaces the group', async ({ page, api }) => {
@@ -310,9 +326,9 @@ test.describe('patientRegistration-contact', () => {
     expect(Object.values(groups[0])).toContain('Brother');
     expect(Object.values(groups[0])).not.toContain('Sister');
 
-    // VIEW shows the second save: the new relationship and nothing of the replaced one
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid);
-    await expect(view.page.locator('#contactRelationship .value')).toHaveText('Brother');
-    expect(await view.valueTexts()).not.toContain('Sister');
+    // Registration summary page: the second save's relationship and nothing of the replaced one
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    await expect(summary.value('contact', 'contactRelationship')).toHaveText('Brother');
+    expect(Object.values(await summary.rows('contact'))).not.toContain('Sister');
   });
 });

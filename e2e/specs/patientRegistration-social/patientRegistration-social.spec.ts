@@ -1,6 +1,6 @@
 import { type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import { test, expect, type SectionEncounter } from '../../core';
-import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithButtonsSubmit } from '../../pages';
+import { RegistrationSummaryPage, SectionFormPage, VisitPage, buttonsSubmit, openEditWithButtonsSubmit } from '../../pages';
 
 // patientRegistration-social.xml: social details of the patient: place of birth (address hierarchy, one obs group
 // "Birthplace address construct"), civil status, occupation ("Main activity") and religion (three coded dropdowns).
@@ -10,7 +10,7 @@ import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithBu
 //
 // Conditions in the form, from documentation inventory (patientRegistration-social.inv.md):
 //   ifMode VIEW include=false  :3, :32, :43, :98, :158   script, h2, edit widgets, Save/Cancel (ENTER/EDIT only)
-//   ifMode VIEW include=true   :80, :132                 read-only copies of the same obs (VIEW only: cannot be opened here)
+//   ifMode VIEW include=true   :80, :132                 read-only copies of the same obs (VIEW only: checked on the registration summary page, see below)
 //   The ifMode pairs reuse ids (placeOfBirth-*, civilStatus, occupation, religion) but never render together: no duplicate ids.
 // Required (HFE): country, department, commune, section communale of the birthplace. Address1/address2 and the three
 //   dropdowns are optional. Dropdown answers are selected by label (the English labels).
@@ -18,10 +18,15 @@ import { SectionFormPage, buttonsSubmit, expectViewShowsSavedObs, openEditWithBu
 //   address hierarchy, free text is cleared on blur; the quick-search input, shortcutFor address1, picks a locality and fills
 //   the levels above it; address2 is free text), removal of the generated title span (:21-23), `.required` "*" hidden (:26).
 // Side effects on save: none. Encounter type Patient Registration.
-// VIEW (getAsHtml.action with this form, see expectViewShowsSavedObs): the birthplace levels and the three coded answers each
-//   under their ids (:80-93, :132-152), an unfilled field is not shown as a value, and the h2, the quick-search input and
-//   #buttons (ifMode VIEW include=false) are absent.
-// Not covered here: the summary-page widget, Cancel, the
+// Visit-page display: the Patient Registration entry of encounterTypeConfig.js (:743) has no templateModelUrl, so the visit page shows no
+//   VIEW of this form; `showOnVisitList: false` only keeps the type out of the visit list's type summary, the encounter itself is
+//   shown with defaultEncounterLong: one `p.aligned` row per obs (civil status, main activity,
+//   religion) and one for the birthplace group (label, the group's values). The test asserts those rows.
+// Registration summary page: the "SOCIAL" widget (coreapps-mostRecentRegistrationSocial, every site) renders this form in VIEW (getAsHtml):
+//   the birthplace levels, address2 and the three coded answers each in span.value under their VIEW ids (#placeOfBirth-*, #civilStatus,
+//   #occupation, #religion; :80-93, :132-152), an unfilled one as span.emptyValue, no h2, quick-search input or #buttons (ifMode VIEW
+//   include=false), and an edit pencil to this form. The tests read it through RegistrationSummaryPage.
+// Not covered here: Cancel, the
 //   85 occupation answers one by one (only the count and a sample), hierarchy contents (server data).
 //
 // Findings:
@@ -193,9 +198,21 @@ test.describe('patientRegistration-social', () => {
     await expect(occupation(page).locator('option:checked')).toHaveText('Teacher');
     await expect(religion(page).locator('option:checked')).toHaveText('Catholic');
 
-    // VIEW: the birthplace levels, address2 and the three answers under their ids; address1 (not filled) is not shown; ENTER/EDIT-only parts are absent
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid);
-    const shown = (id: string) => view.page.locator(`#${id} .value`);
+    // Visit page: the encounter's default long template lists each obs as a row, the birthplace group as one row with its values
+    const visit = await VisitPage.open(page, section.encounter.visitUuid);
+    const long = await visit.expand(visit.encounterOfType(PATIENT_REGISTRATION_ENCOUNTER_TYPE_UUID));
+    const row = (label: string) => long.locator('p.aligned').filter({ hasText: label });
+    await expect(row('Civil status')).toContainText('Married');
+    await expect(row('Main activity')).toContainText('Teacher');
+    await expect(row('Religion')).toContainText('Catholic');
+        for (const text of [...chosen, 'Behind the church']) {
+      await expect(row('Birthplace address construct')).toContainText(text);
+    }
+
+    // Registration summary page: the birthplace levels, address2 and the three answers under their ids; address1 (not filled) is not shown;
+    // ENTER/EDIT-only parts are absent; the pencil leads to this form's edit page
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    const shown = (id: string) => summary.value('social', id);
     for (let i = 0; i < LEVELS.length; i++) {
       await expect(shown(`placeOfBirth-${LEVELS[i]}`)).toHaveText(chosen[i]);
     }
@@ -205,8 +222,9 @@ test.describe('patientRegistration-social', () => {
     await expect(shown('occupation')).toHaveText('Teacher');
     await expect(shown('religion')).toHaveText('Catholic');
     for (const gone of ['h2', 'input.address-hierarchy-shortcut', '#buttons', 'button.submitButton', 'select']) {
-      await expect(view.page.locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
+      await expect(summary.widget('social').locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
     }
+    await summary.expectEditLink('social');
   });
 
   test('EDIT: changing the answers and re-saving replaces them; the birthplace is kept', async ({ page, api }) => {
@@ -225,11 +243,14 @@ test.describe('patientRegistration-social', () => {
     expect(answers).toEqual({ 'Civil status': 'Widowed', 'Main activity': 'Retired' });
     expect(groups).toHaveLength(1);
 
-    // VIEW of the second save: the new answers, the cleared religion not shown, the birthplace kept
-    const view = await expectViewShowsSavedObs(page, api, FORM, section.encounter.uuid);
-    await expect(view.page.locator('#civilStatus .value')).toHaveText('Widowed');
-    await expect(view.page.locator('#occupation .value')).toHaveText('Retired');
-    await expect(view.page.locator('#religion .value')).toHaveCount(0);
-    await expect(view.page.locator('#placeOfBirth-country .value')).toHaveCount(1);
+    // Registration summary page for the second save: the new answers, the cleared religion not shown, the birthplace kept
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    await expect(summary.value('social', 'civilStatus')).toHaveText('Widowed');
+    await expect(summary.value('social', 'occupation')).toHaveText('Retired');
+    await expect(summary.value('social', 'religion')).toHaveCount(0);
+    await expect(summary.value('social', 'placeOfBirth-country')).toHaveCount(1);
+    // the pencil opens the form again, with the saved answers
+    await summary.clickEdit('social');
+    await expect(civilStatus(page).locator('option:checked')).toHaveText('Widowed');
   });
 });

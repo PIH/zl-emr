@@ -1,6 +1,6 @@
 import { type APIRequestContext, type Page } from '@playwright/test';
 import { test, expect, type SectionEncounter } from '../../core';
-import { SectionFormPage, ViewFormPage, buttonsSubmit, openEditWithButtonsSubmit } from '../../pages';
+import { RegistrationSummaryPage, SectionFormPage, buttonsSubmit, openEditWithButtonsSubmit } from '../../pages';
 
 // patientRegistration-healthCenter.xml: one question, "Patient's Primary Health Center", a dropdown of the
 // Visit Location locations that writes the patient's Health Center person attribute. Not a wizard fragment: the
@@ -13,9 +13,14 @@ import { SectionFormPage, ViewFormPage, buttonsSubmit, openEditWithButtonsSubmit
 // Scripts: none.
 // Side effects on save: <personAttribute attributeType="8d87236c-c2cc-11de-8d13-0010c6dffd0f" tags="Visit Location">
 //   (:16) saves the Health Center person attribute; the form has no obs, so the encounter stays empty.
-// VIEW (getAsHtml.action with this form): the encounter has no obs, so the generic expectViewShowsSavedObs does not apply;
-//   the test asserts the saved location in #healthCenter and the absence of the h2 and #buttons (ifMode VIEW include=false).
-// Not covered here: the summary-page widget, which locations
+// Visit-page display: the Patient Registration entry of encounterTypeConfig.js (:743) has no templateModelUrl, so the visit page shows no
+//   VIEW of this form; the encounter is listed with defaultEncounterLong, which has no row here (the form saves no obs), and the person
+//   attribute is not part of it. Nothing to assert there.
+// Registration summary page: the "HEALTH CENTER" widget (coreapps-mostRecentRegistrationHealthCenter; only Haiti at the CENTRAL site, :1774,
+//   so zl-ci shows it and the other profiles never do) renders this form in VIEW (getAsHtml): the question with the saved location in a
+//   span.value (the VIEW has no id on it; the encounter has no obs, the value is the person attribute), or an empty placeholder when none
+//   is saved, no h2 or #buttons (ifMode VIEW include=false), and an edit pencil to this form. The tests read it through RegistrationSummaryPage.
+// Not covered here: which locations
 //   the dropdown lists (server data: the specs only use the first options), Cancel.
 //
 // No findings.
@@ -80,21 +85,18 @@ test.describe('patientRegistration-healthCenter', () => {
     expect(await healthCenterAttributes(api, section.patient.uuid)).toEqual([chosen]);
     expect(await encounterObsCount(api, section.encounter.uuid)).toBe(0);
 
+    // Registration summary page: the "HEALTH CENTER" widget shows the chosen location (the person attribute, as the form's VIEW prints it
+    // with no id) and no ENTER/EDIT parts; the pencil leads to this form's edit page
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    expect(Object.values(await summary.rows('healthCenter'))).toEqual([chosen]);
+    await expect(summary.widget('healthCenter').locator('span.value')).toHaveText(chosen);
+    for (const gone of ['h2', '#buttons', 'button.submitButton', 'select']) {
+      await expect(summary.widget('healthCenter').locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
+    }
+    await summary.expectEditLink('healthCenter');
+
     await openForm(page, section);
     await expect(select(page).locator('option:checked')).toHaveText(chosen);
-  });
-
-  test('VIEW: shows the saved Health Center without the heading and the buttons', async ({ page, api }) => {
-    await select(page).selectOption({ index: 1 });
-    const chosen = await optionText(page, 1);
-    await saveAndWait(page);
-    expect(await healthCenterAttributes(api, section.patient.uuid)).toEqual([chosen]);
-
-    const view = await ViewFormPage.open(page, FORM, section.encounter.uuid);
-    await expect(view.page.locator('#healthCenter .value')).toHaveText(chosen);
-    for (const gone of ['h2', '#buttons', 'button.submitButton', 'select']) {
-      await expect(view.page.locator(gone), `${gone} is ENTER/EDIT only`).toHaveCount(0);
-    }
   });
 
   test('EDIT: choosing another location replaces the attribute', async ({ page, api }) => {
@@ -108,11 +110,20 @@ test.describe('patientRegistration-healthCenter', () => {
     await saveAndWait(page);
 
     expect(await healthCenterAttributes(api, section.patient.uuid)).toEqual([second]);
+
+    // Registration summary page: the second location, not the first
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    expect(Object.values(await summary.rows('healthCenter'))).toEqual([second]);
   });
 
   test('saving with the placeholder selected adds no attribute', async ({ page, api }) => {
     await saveAndWait(page);
     expect(await healthCenterAttributes(api, section.patient.uuid)).toHaveLength(0);
     expect(await encounterObsCount(api, section.encounter.uuid)).toBe(0);
+
+    // Registration summary page: nothing recorded, so the widget shows the question with no value
+    const summary = await RegistrationSummaryPage.open(page, section.patient.uuid);
+    expect(Object.values(await summary.rows('healthCenter'))).toEqual(['']);
+    await expect(summary.widget('healthCenter').locator('span.value')).toHaveCount(0);
   });
 });

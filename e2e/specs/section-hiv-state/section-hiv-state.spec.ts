@@ -1,6 +1,6 @@
 import { type APIRequestContext, type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type SectionEncounter } from '../../core';
-import { HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID, PMTCT_FOLLOWUP_ENCOUNTER_TYPE_UUID, KLINIK_EKSTEN_LOCATION_UUID } from '../../core/constants';
+import { HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID, PMTCT_FOLLOWUP_ENCOUNTER_TYPE_UUID, SESSION_LOCATION_UUID } from '../../core/constants';
 import { getEncounterObs } from '../../commands';
 import { SectionFormPage, ViewFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../pages';
 
@@ -99,7 +99,7 @@ const priorEncounter = async (api: APIRequestContext, section: SectionEncounter,
     data: {
       patient: section.patient.uuid,
       encounterType: HIV_FOLLOWUP_ENCOUNTER_TYPE_UUID,
-      location: KLINIK_EKSTEN_LOCATION_UUID,
+      location: SESSION_LOCATION_UUID,
       encounterDatetime: new Date(Date.now() - 86400000).toISOString(),
       obs,
     },
@@ -117,7 +117,7 @@ const settle = async (page: Page) => {
   await page.waitForLoadState('networkidle');
 };
 
-test.describe('section-hiv-state', () => {
+test.describe('section-hiv-state @hiv-ci', () => {
   const start = async (
     page: Page,
     createSectionEncounter: (o: { encounterTypeUuid: string; patient: { givenName: string; familyName: string; gender: 'M' | 'F'; birthdate: string } }) => Promise<SectionEncounter>,
@@ -476,7 +476,7 @@ test.describe('section-hiv-state', () => {
         encounter: section.encounter.uuid,
         concept: await conceptUuid(api, 'CIEL', '160108'),
         value: await conceptUuid(api, 'CIEL', '703'),
-        obsDatetime: new Date().toISOString(),
+        obsDatetime: new Date(Date.now() - 60_000).toISOString(),
       },
     });
     expect(res.ok(), `create obs: ${res.status()}`).toBeTruthy();
@@ -496,7 +496,7 @@ test.describe('section-hiv-state', () => {
         encounter: section.encounter.uuid,
         concept: await conceptUuid(api, 'CIEL', '160108'),
         value: await conceptUuid(api, 'CIEL', '703'),
-        obsDatetime: new Date().toISOString(),
+        obsDatetime: new Date(Date.now() - 60_000).toISOString(),
       },
     });
     expect(res.ok(), `create obs: ${res.status()}`).toBeTruthy();

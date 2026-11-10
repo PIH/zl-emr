@@ -46,7 +46,7 @@ const obsDisplays = async (api: APIRequestContext, encounterUuid: string): Promi
   return ((await res.json()).results as Array<{ display: string }>).map((o) => o.display.toLowerCase());
 };
 
-test.describe('section-eid-plan', () => {
+test.describe('section-eid-plan @hiv-ci', () => {
   let section: SectionEncounter;
 
   const open = async (page: Page) => {
@@ -149,7 +149,7 @@ test.describe('section-eid-plan', () => {
         encounter: section.encounter.uuid,
         concept: await uuidOf('1030'),
         value: await uuidOf('664'), // negative
-        obsDatetime: new Date().toISOString(),
+        obsDatetime: new Date(Date.now() - 60_000).toISOString(),
       },
     });
     expect(res.ok(), `create obs: ${res.status()} ${(await res.text()).slice(0, 300)}`).toBeTruthy();

@@ -1,4 +1,5 @@
 import { type Page } from '@playwright/test';
+import { targetEnv } from '../core/target';
 
 // <encounterProviderAndRole> renders a select inside #who. It defaults to the logged-in user only when that
 // user has a Provider account, so with any other user it starts blank and the form refuses to save.
@@ -6,7 +7,7 @@ import { type Page } from '@playwright/test';
 // Each form lists the providers allowed by its own providerRoles, so when that name is not in this form's list
 // the first provider is chosen instead (selectOption would wait for the missing option until the test times out).
 export const selectDefaultProvider = async (page: Page): Promise<void> => {
-  const providerName = process.env.E2E_DEFAULT_PROVIDER_NAME;
+  const providerName = targetEnv('DEFAULT_PROVIDER_NAME');
   if (!providerName) {
     throw new Error('E2E_DEFAULT_PROVIDER_NAME is not set (see .env.example): the form needs a provider to save');
   }

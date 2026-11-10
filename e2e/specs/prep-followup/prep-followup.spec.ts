@@ -60,7 +60,7 @@ const pickDate = async (input: Locator, isoDate: string) => {
   }, isoDate);
 };
 
-test.describe('prep-followup', () => {
+test.describe('prep-followup @hiv-ci', () => {
   let context: EntryContext;
 
   const open = async (page: Page, createEntryContext: (p: { givenName: string; familyName: string; gender: 'M' | 'F'; birthdate: string }) => Promise<EntryContext>, gender: 'M' | 'F') => {

@@ -17,12 +17,12 @@ import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL, visitPagePath }
 //   includeIf age < 3                 :309         head circumference
 //   includeIf female and age > 10     :465         prenatal fieldset (fetal heart rate)
 //   when air = supplemental oxygen    :379         shows #oxy2 (flow rate)
-//   ifMode VIEW / not VIEW            :40-:505     view-only vs entry-only blocks (VIEW: getAsHtml.action, see the save test)
+//   ifMode VIEW / not VIEW            :40-:505     view-only vs entry-only blocks (VIEW: on the visit page, see the save test)
 // Scripts: :29-67 glucose mg/dL <-> mmol/L (/18, x18, one decimal) on change of #milligram / millimole;
 //   :72-111 BMI = kg/(cm/100)^2, one decimal, on change of weight/height; :148-180 MUAC cm -> mm (x10) and mm -> cm (/10),
-//   and cm shown again when the mm obs has a value on load (EDIT); the VIEW scripts (:113 BMI, :183 MUAC in cm) are page scripts that need jq, so they do not run in the VIEW test.
+//   and cm shown again when the mm obs has a value on load (EDIT); the VIEW scripts (:113 BMI, :183 MUAC in cm) run on the visit page as for a user.
 // Side effects on save: none (no program, order or disposition). Encounter type 4fb47712-... (Vitals).
-// Not covered: the VIEW scripts' output (BMI and MUAC cm in the VIEW), the visit-page launch and retro-entry gating, EPLD behaviour (_shared.e2e.md).
+// Not covered: the MUAC cm shown by the VIEW script (:183), the visit-page launch and retro-entry gating, EPLD behaviour (_shared.e2e.md).
 //
 // Findings:
 //   V1 Low  :148-155,:301  convertCmToMm = cm*10 without rounding: 15.35 cm writes 153.5 into the integer-only mm obs, and Save then
@@ -202,8 +202,9 @@ test.describe('vitals', () => {
     await expect(page.locator('#calculated-bmi')).toHaveText('24.2');
 
     const view = await expectViewShowsSavedObs(page, api, FORM, saved.encounterUuid);
-    // VIEW :113-142, :183-208 compute BMI and the MUAC in cm with page scripts that need jq: not run here.
+    // VIEW :113-142 computes the BMI on the visit page (170 cm, 70 kg), :183-208 the MUAC in cm (not asserted)
     const shown = view.page;
+    await expect(shown.locator('#calculated-bmi')).toHaveText('24.2');
     await expect(shown.locator('#height_cm .value')).toContainText('170');
     await expect(shown.locator('#muac_mm .value')).toContainText('150'); // the mm obs is what is saved; the cm display is script-filled
     await expect(shown.locator('#air .value')).toHaveText(/^\[X\]\s+Supplemental oxygen/i);

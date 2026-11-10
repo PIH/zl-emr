@@ -18,11 +18,14 @@ import { EntryFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../pa
 //   includeIf age >= 10             :697         fetal heart rate; no gender condition (V4)
 //   includeIf !visit.open and a retro privilege :395 / :404 / :414 / :440: provider+date "Details" fieldset for a closed visit;
 //     the open-visit branch (:440) is its exact complement. The fixture visit is open, so only :440 renders.
-//   ifMode VIEW (include true/false) :19-:677  view-only vs entry-only blocks (VIEW: getAsHtml.action, see the save test)
+//   ifMode VIEW (include true/false) :19-:677  view-only vs entry-only blocks (VIEW: on the visit page, see the save test)
 // Scripts: same ExitHandlers as vitalsInpatient.xml (:80-151 inches, lbs, Fahrenheit, mg/dL converters; :251-274 cm <-> mm),
 //   BMI :172-198, ratio :328-354.
 // Side effects on save: none. Encounter type 4fb47712-... (Vitals).
-// Not covered: the VIEW scripts' output (BMI :207, MUAC in cm :287, ratio :357 are not asserted: the VIEW harness does run the form's scripts), EDIT mode, the closed-visit "Details" branch (needs a retro privilege), the converters' own
+// UNREACHABLE: no profile of this repo offers this form (documentation/_availability.e2e.md "Not reachable": unreferenced, nothing
+//   launches it). Tests open it by direct URL.
+// Search scope: no reference found by name, formUuid or encounter type in pihcore, coreapps, htmlformentry(ui), registrationapp, pihemr and the zl/sl/liberia config repos; NOT searched: openmrs-module-mirebalais, the ADT/O2 modules, and the deployed server's app definitions / global properties. "Unreachable" here means not found, not proven.
+// Not covered: the VIEW scripts' output (BMI :207, MUAC in cm :287, ratio :357: they run on the visit page, not asserted), EDIT mode, the closed-visit "Details" branch (needs a retro privilege), the converters' own
 //   arithmetic (identical to vitalsInpatient.spec.ts, which tests them).
 //
 // Findings:
@@ -69,7 +72,7 @@ const savedEncounter = async (api: APIRequestContext, patientUuid: string) => {
 };
 const savedDisplays = async (api: APIRequestContext, patientUuid: string) => (await savedEncounter(api, patientUuid)).displays;
 
-test.describe('vitalsPregnant', () => {
+test.describe('vitalsPregnant @unreachable', () => {
   test('saving without a location does not save (required encounter location)', async ({ page, api, createEntryContext }) => {
     test.fixme(); // HAI-1277: "ExitHandlers is not defined" when the form opens in the Standard UI. Remove test.fixme() when fixed.
     // encounterLocation :358 / :390 (open visit: :440 branch): preselected with the session location; blank it
@@ -180,7 +183,7 @@ test.describe('vitalsPregnant', () => {
     expect(displays.some((d) => /glucose.*5\.0/i.test(d))).toBe(true); // 90 mg/dL -> 5.0 mmol/L
     expect(displays.some((d) => /fetal heart rate.*140/i.test(d))).toBe(true);
 
-    // VIEW :19-77 template; the BMI / ratio / MUAC-in-cm VIEW scripts need jq and do not run in the test page
+    // VIEW :19-77 template, shown on the visit page (the form's VIEW scripts, BMI :207 and others, run there as for a user)
     const view = (await expectViewShowsSavedObs(page, api, FORM, encounterUuid)).page;
     await expect(view.locator('#height_cm .value')).toContainText('165');
     await expect(view.locator('#bp_diastolic .value')).toContainText('70');
