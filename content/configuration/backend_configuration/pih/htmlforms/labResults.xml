@@ -1152,7 +1152,7 @@
                 <field>
                     <obs id="tb-xpert" style="radio"
                          conceptId="CIEL:164937"
-                         answerConceptIds="CIEL:162203,CIEL:162204,CIEL:164104,CIEL:1302,CIEL:163611,CIEL:162203,CIEL:164937"
+                         answerConceptIds="CIEL:162203,CIEL:162204,CIEL:164104,CIEL:1302,CIEL:163611"
                          answerSeparator="&lt;br /&gt;"/>
                 </field>
             </span>
