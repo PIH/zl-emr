@@ -4,6 +4,12 @@
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.SetObsDatesToSpecimenCollectionDateAction"/>
 
     <style type="text/css">
+       
+       #auto-syph-section{
+         border: 1px solid #ccc;
+         padding: 10px;
+         width: 50%;
+       }
 
         p.radio > * {
             display: inline;
@@ -98,6 +104,15 @@
                 }
             }
 
+               var toggleAutoSyphilisRPR = function() {
+                if (getValue('rpr-syphilis.value') === '<lookup expression="fn.getConcept('CIEL:703').id" />') {
+                    jq('#auto-syph-section').show();
+                }
+                else {
+                    jq('#auto-syph-section input[type=radio]').prop('checked', false);
+                    jq('#auto-syph-section').hide();
+                }
+            }
             jq(function() {
              
                 getField('encounter-date.value').change(function(evt) {
@@ -112,6 +127,9 @@
                
                 getField('viral-load.value').change(toggleViralLoadFields);
                 toggleViralLoadFields();
+
+                 getField('rpr-syphilis.value').change(toggleAutoSyphilisRPR);
+                toggleAutoSyphilisRPR();
             });
 
             function getDatePart(date) {
@@ -1127,6 +1145,7 @@
             </span>
 
             <label for="tb-xpert">
+          
                 <uimessage code="pihcore.lab.genexpert"/>
             </label>
             <span class="small side-by-side">
@@ -1162,7 +1181,7 @@
                 <render concept="CIEL:161472" message="pihcore.lab.hepBSurfaceSpot" tag="hep-b-ag-spot"
                         answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" /> -->
                 <render concept="CIEL:159430" message="pihcore.lab.hepBsAg" tag="hep-b-s-ag"
-                        answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
+                        answers="PIH:POSITIVE,PIH:NEGATIVE" />
                 <render concept="CIEL:167785" message="pihcore.lab.hepBeAg" tag="hep-b-e-ag"
                         answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE" />
                 <render concept="PIH:20064" message="pihcore.lab.hepBeAb" tag="hep-b-e-ab"
@@ -1360,16 +1379,19 @@
                 <render concept="CIEL:299"    message="VDRL" tag="syphilis-vdrl" answers="CIEL:1229,CIEL:1228" />
             </repeat>
 
-            <label for="auto-syph">
-                <uimessage code="pihcore.lab.autoSyphilisRPR" />
-            </label>
-            <span class="small side-by-side">
-                <field>
-                    <obs id="auto-syph" style="radio"
-                         conceptId="PIH:20076"
-                         answers="2,4,6,8" answerCodes="2,4,6,pihcore.lab.8units"/>
-                </field>
-            </span>
+            
+            <div id="auto-syph-section">
+                <label for="auto-syph">
+                    <uimessage code="pihcore.lab.autoSyphilisRPR" />
+                </label>
+                <span class="small side-by-side">
+                    <field>
+                        <obs id="auto-syph" style="radio"
+                             conceptId="PIH:20076"
+                             answers="2,4,6,8" answerCodes="2,4,6,pihcore.lab.8units"/>
+                    </field>
+                </span>
+            </div>
 
             <hr/>
             <h4 id="typhoid-section">
@@ -1460,10 +1482,15 @@
             <label for="crag">
                 <uimessage code="pihcore.lab.CrAg.long"/>
             </label>
+            <span class="small side-by-side">
+            <field>
+                <obs style="radio"  conceptId="CIEL:169216"/>
+            </field>
+            </span>
+           <br/>
             <span class="small">
                 <field>
-                    <obs id="crag" conceptId="CIEL:163613" style="text"
-                         cols="60" rows="2"/>
+                    <obs id="crag" conceptId="PIH:11423" style="text"/>
                 </field>
             </span>
 
@@ -1473,7 +1500,7 @@
             <span class="small side-by-side">
                 <field>
                     <obs id="c-neo" conceptId="PIH:14240" style="radio"
-                         answerConceptIds="CIEL:703,CIEL:664,CIEL:1138" />
+                         answerConceptIds="CIEL:703,CIEL:664" />
                 </field>
             </span>
 
