@@ -1010,7 +1010,7 @@
             <label for="hiv-rapid-test">
                 <uimessage code="pihcore.lab.hivRapid"/>
             </label>
-            <obsgroup groupingConceptId="PIH:13135">
+            <obsgroup groupingConceptId="PIH:13135" showIfEmpty="false">
                 <span class="small">
                     <field>
                         <obs id="hiv-rapid-test" conceptId="CIEL:163722" style="radio"
@@ -1044,7 +1044,7 @@
             <label for="viral-load">
                 <uimessage code="pihcore.lab.hivVL"/>
             </label>
-            <obsgroup groupingConceptId="PIH:HIV viral load construct">
+            <obsgroup groupingConceptId="PIH:HIV viral load construct" showIfEmpty="false">
                 <span class="small side-by-side">
                     <field>
                         <obs id="viral-load" conceptId="CIEL:1305" style="radio"
@@ -1148,14 +1148,50 @@
           
                 <uimessage code="pihcore.lab.genexpert"/>
             </label>
-            <span class="small side-by-side">
-                <field>
-                    <obs id="tb-xpert" style="radio"
-                         conceptId="CIEL:164937"
-                         answerConceptIds="CIEL:162203,CIEL:162204,CIEL:164104,CIEL:1302,CIEL:163611"
-                         answerSeparator="&lt;br /&gt;"/>
-                </field>
-            </span>
+            <obsgroup groupingConceptId="CIEL:164945" showIfEmpty="false">
+                <span class="small side-by-side">
+                    <field>
+                        <label>
+                            <!-- MTB détecté? -->
+                            <uimessage code="pihcore.mTBdetected" />
+                        </label>
+                        <obs id="tb-xpert-detect" style="radio"
+                             conceptId="CIEL:162202"
+                             answerConceptIds="CIEL:1301,CIEL:1302,CIEL:1138,CIEL:163611"
+                             answerCodes="pihcore.yes,pihcore.no,pihcore.indeterminate,pihcore.invalid">
+                            <controls>
+                                <when value="CIEL:1301" thenDisplay="#genexpert-more" />
+                            </controls>
+                        </obs>
+                    </field>
+                </span>
+                <div id="genexpert-more">
+                    <span class="small side-by-side">
+                        <field>
+                            <label>
+                                <uimessage code="pihcore.resultIntensity" />
+                            </label>
+                            <obs id="tb-xpert-burden" style="radio"
+                                 conceptId="CIEL:164942"
+                                 answerConceptIds="CIEL:1874,PIH:11995,CIEL:1407,CIEL:164944,CIEL:1408"/>
+                        </field>
+                    </span>
+                    <br/>
+
+                    <span class="small side-by-side">
+                        <label>
+                            <!-- Détecté resistance a RIF -->
+                            <uimessage code="pihcore.detectedResistanceToRIF" />
+                        </label>
+                        <field>
+                            <obs id="tb-xpert-detection" style="radio"
+                                 conceptId="CIEL:164937"
+                                 answerConceptIds="CIEL:162203,CIEL:162204,CIEL:164104"
+                                 answerCodes="pihcore.yes,pihcore.no,pihcore.indeterminate" />
+                        </field>
+                    </span>
+                </div>
+            </obsgroup>
 
             <hr/>
             <h4 id="hep-section">
@@ -1191,7 +1227,7 @@
             </repeat>
             <br/>
 
-            <obsgroup groupingConceptId="PIH:20048">
+            <obsgroup groupingConceptId="PIH:20048" showIfEmpty="false">
                 <label for="hepb-viral-load">
                     <uimessage code="pihcore.lab.hepBvl"/>
                 </label>
@@ -1247,7 +1283,7 @@
                         answers="PIH:POSITIVE,PIH:NEGATIVE,PIH:INDETERMINATE,PIH:POOR SAMPLE QUALITY" />
             </repeat>
 
-            <obsgroup groupingConceptId="PIH:20062">
+            <obsgroup groupingConceptId="PIH:20062" showIfEmpty="false">
                 <label for="hepc-viral-load">
                     <uimessage code="pihcore.lab.hepCvl"/>
                 </label>
