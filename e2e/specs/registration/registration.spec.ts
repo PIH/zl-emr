@@ -47,10 +47,11 @@ import { QUESTION, REQUIRED_ADDRESS_LEVELS, RegistrationPage } from '../../pages
 //   V3 Info (observed, not tested) typing nothing in the identifier box with "Automatically assign" turned off still generates an ID, while the
 //                                   confirmation shows "ZL EMR ID: --". Not tested (would register a patient).
 //   The "Possible duplicates" question is OPTIONAL here: pihcore's working copy adds it after Phone Number (showDuplicatePatientSection,
-//   default true) but servers that do not have the feature yet (zl-ci at the time of writing) do not. The spec detects it
+//   default true) but a server that does not have the feature yet does not (zl-ci has it since registrationapp RA-2114, 20 Oct 2026). The spec detects it
 //   (RegistrationPage.hasDuplicateCheck): the order test expects it only where it is, the phone-number tests expect the focus to
-//   go to it or, without it, to the insurance, `through()` and the register tests pass it only where it is, and the two tests of the
-//   question itself skip where it is absent.
+//   go to it or, without it, to the insurance, `through()` and the register tests pass it only where it is, and the three tests of the
+//   question itself skip where it is absent. The gate lets the clerk move on by itself when the search finds no similar patient, so the tests of skipping it
+//   answer the search themselves (page.route on getSimilarPatients).
 
 const REGISTRATION_ENCOUNTER_TYPE_UUID = '873f968a-73a8-4f9c-ac78-9f4778b751b6';
 const NAME_FAMILY = 'Tester';
@@ -60,8 +61,8 @@ const randomLetters = () => Array.from({ length: 8 }, () => String.fromCharCode(
 const uniqueGivenName = () => `AutoReg${randomLetters()}`;
 const required = (n: number) => Array<string>(n).fill('Required');
 
-// ZL EMR ID: 5 characters plus a Luhn mod 30 check character (the same algorithm as commands/patient-operations.ts, which
-// does not export it).
+// ZL EMR ID: 5 characters plus a Luhn mod 30 check character (the same algorithm as luhnMod30Identifier in @pih/pihemr-e2e, which
+// does not export its check-character function).
 const LUHN_CHARS = '0123456789ACDEFGHJKLMNPRTUVWXY';
 const manualEmrId = () => {
   const base = Array.from({ length: 5 }, () => LUHN_CHARS[Math.floor(Math.random() * LUHN_CHARS.length)]);
@@ -355,13 +356,44 @@ test.describe('registration wizard', () => {
       await registration.expectFocused(QUESTION.insurance);
     });
 
-    test('does not let the clerk skip it', async ({ page }) => {
+    // The question fails validation only while a check is pending or failed, or while the matches it found have not been reviewed (duplicateCheck.js,
+    // isSatisfied): with no similar patient it is passed by itself once the search is done. Which of the two a run sees depends on the patients of the server,
+    // so these two tests answer the search themselves (the response of getSimilarPatients) instead of relying on them.
+    const SIMILAR_PATIENTS = '**/registrationapp/matchingPatients/getSimilarPatients.action*';
+    const similarPatient = {
+      uuid: '00000000-0000-4000-8000-000000000001',
+      givenName: 'AutoReg',
+      familyName: NAME_FAMILY,
+      gender: 'F',
+      birthdate: '1990-01-01',
+      personAddress: '',
+      identifiers: [],
+      fieldResults: [],
+      strong: true,
+    };
+
+    test('does not let the clerk skip a similar patient that has not been reviewed', async ({ page }) => {
+      await page.route(SIMILAR_PATIENTS, (route) => route.fulfill({ json: [similarPatient] }));
       const registration = await RegistrationPage.open(page);
       test.skip(!(await registration.hasDuplicateCheck()), NO_DUPLICATE_CHECK);
       await through(registration, 'duplicates');
       await registration.goTo('Possible duplicates');
       await registration.goTo('Company Name');
       await registration.expectFocused(QUESTION.duplicates);
+      // reviewing them (none is the patient) lets the clerk move on
+      await registration.passDuplicateCheck();
+      await registration.expectFocused(QUESTION.insurance);
+    });
+
+    test('lets the clerk move on when no similar patient was found', async ({ page }) => {
+      await page.route(SIMILAR_PATIENTS, (route) => route.fulfill({ json: [] }));
+      const registration = await RegistrationPage.open(page);
+      test.skip(!(await registration.hasDuplicateCheck()), NO_DUPLICATE_CHECK);
+      await through(registration, 'duplicates');
+      await registration.goTo('Possible duplicates');
+      await expect(page.locator('#duplicates-none')).not.toHaveText(/checking/i); // the search is done
+      await registration.goTo('Company Name');
+      await registration.expectFocused(QUESTION.insurance);
     });
   });
 

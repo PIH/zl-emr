@@ -1,7 +1,7 @@
 import { type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type SectionEncounter, type SectionEncounterOptions } from '../../core';
 import { HIV_INTAKE_ENCOUNTER_TYPE_UUID } from '../../core/constants';
-import { SectionFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../pages';
+import { SectionFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL, pickDate } from '../../pages';
 
 // hiv/section-hiv-history.xml v4.0: "HIV History" section of the HIV intake encounter (c31d306a): program enrollment, ARV and
 // serology history, pregnancy/delivery, infant birth/feeding/mother data (< 2 y), contacts, mode of transmission, risk factors,
@@ -48,18 +48,6 @@ import { SectionFormPage, expectViewShowsSavedObs, VISIT_PAGE_URL } from '../../
 const FORM = 'hiv/section-hiv-history.xml';
 const TRANSMISSION_MEN = 'men-trans-date'; // first transmission mode (checkbox toggleDim target)
 
-// Local helpers.
-// Date inputs are read-only datepickers: set the date as the picker does, then fire the hidden input's change (mch.js listens there).
-const pickDate = async (input: Locator, isoDate: string) => {
-  await input.evaluate((el, iso) => {
-    const j = (window as unknown as { jq: (e: unknown) => { datepicker: (...a: unknown[]) => void; trigger: (n: string) => void } }).jq;
-    j(el).datepicker('setDate', new Date(`${iso}T12:00:00`));
-    j(el).trigger('change');
-  }, isoDate);
-  await input.locator('xpath=following-sibling::input[@type="hidden"]').evaluate((el) => {
-    (window as unknown as { jq: (e: unknown) => { trigger: (n: string) => void } }).jq(el).trigger('change');
-  });
-};
 // Calendar date `n` days from today (or from `from`), as yyyy-mm-dd.
 const iso = (n: number, from: Date = new Date()): string => {
   const d = new Date(Date.UTC(from.getFullYear(), from.getMonth(), from.getDate() + n));

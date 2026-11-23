@@ -3,7 +3,7 @@ import { test, expect, birthdateYearsAgo, type CustomTestFixtures } from '../../
 import { SURGICAL_POST_OP_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { EntryFormPage, ViewFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs, visitPagePath } from '../../pages';
-import { expectObs, obsDisplays } from '../../pages/form-widgets';
+import { expectObs, obsDisplays } from '../../pages';
 
 // surgicalPostOpNote.xml: "Brief post-operative note": five fieldsets (Service / Team, Description, Ins / Outs, Pathology / Complications, Plan).
 // Reached with a synthetic adult patient who has an active visit, through enterHtmlFormWithStandardUi (EntryFormPage); who offers it: the

@@ -6,7 +6,7 @@ import {
   PRIMARY_CARE_ADULT_INITIAL_ENCOUNTER_TYPE_UUID,
   PRIMARY_CARE_PEDS_INITIAL_ENCOUNTER_TYPE_UUID,
 } from '../../core/constants';
-import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
+import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs, pickDate, obsDisplays } from '../../pages';
 
 // section-history.xml (pihemr): "History": presenting history, family history, past medical history, blood type, previous
 // hospitalisation, current medications, diagnostic tests; plus parent-specific sections. On the visit page it is the `pihcore-history`
@@ -60,18 +60,6 @@ const VIEW_LABELS: Record<string, string> = {
   'Breastfeeding child: Yes': 'Currently breastfeeding',
 };
 
-// Local helpers.
-// Date inputs are read-only datepickers: set the date as the picker does, then fire the hidden input's change (mch.js listens there).
-const pickDate = async (input: Locator, isoDate: string) => {
-  await input.evaluate((el, iso) => {
-    const j = (window as unknown as { jq: (e: unknown) => { datepicker: (...a: unknown[]) => void; trigger: (n: string) => void } }).jq;
-    j(el).datepicker('setDate', new Date(`${iso}T12:00:00`));
-    j(el).trigger('change');
-  }, isoDate);
-  await input.locator('xpath=following-sibling::input[@type="hidden"]').evaluate((el) => {
-    (window as unknown as { jq: (e: unknown) => { trigger: (n: string) => void } }).jq(el).trigger('change');
-  });
-};
 // Calendar date `n` days from today as yyyy-mm-dd.
 const iso = (n: number): string => {
   const now = new Date();
@@ -81,11 +69,6 @@ const iso = (n: number): string => {
 const viewDate = (isoDate: string): string => {
   const [y, m, d] = isoDate.split('-').map(Number);
   return `${d} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]} ${y}`;
-};
-const obsDisplays = async (api: APIRequestContext, encounterUuid: string): Promise<string[]> => {
-  const res = await api.get(`obs?encounter=${encounterUuid}&v=custom:(display)&limit=300`);
-  expect(res.ok(), `get obs: ${res.status()}`).toBeTruthy();
-  return ((await res.json()).results as Array<{ display: string }>).map((o) => o.display.toLowerCase());
 };
 const expectObs = (displays: string[], ...expected: string[]) => {
   for (const e of expected) {

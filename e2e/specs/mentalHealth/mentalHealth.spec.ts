@@ -3,7 +3,7 @@ import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type EntryCon
 import { MENTAL_HEALTH_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { EntryFormPage, SectionFormPage, ViewFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
-import { isoDate, obsDisplays, pickDate, pickerDate } from '../../pages/form-widgets';
+import { isoDate, obsDisplays, pickDate, pickerDate } from '../../pages';
 
 // mentalHealth.xml: "Mental Health Assessment V2", one long page (referral and visit type, scores, mental status, suicide evaluation, 22 groups of diagnoses (~360
 // checkboxes), psychological interventions, medication (order widget), plan and disposition). Top-level form: the specs open enterHtmlFormWithStandardUi inside a

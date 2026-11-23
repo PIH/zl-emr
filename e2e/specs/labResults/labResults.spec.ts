@@ -3,7 +3,7 @@ import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type EntryCon
 import { LAB_RESULTS_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { VISIT_PAGE_URL, expectViewShowsSavedObs, visitPagePath } from '../../pages';
-import { selectDefaultProvider } from '../../pages/provider';
+import { selectDefaultProvider } from '../../pages';
 
 // labResults.xml, ZL copy v2.1 (formUuid b437d585-..., HAI-1249; it shadows pihemr's v2.0 `5e1b0c3a-...`): "Lab results", one encounter of the 7 sections of
 // the Simple UI navigator (Overview, Hematology, Biochemistry, Infectious disease, Urinalysis, Microbiology, Parasitology; ~120 result obs) with a "specimen

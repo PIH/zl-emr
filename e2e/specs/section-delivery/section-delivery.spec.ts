@@ -2,7 +2,7 @@ import { type APIRequestContext, type Locator, type Page } from '@playwright/tes
 import { test, expect, birthdateYearsAgo, type SectionEncounter } from '../../core';
 import { DELIVERY_ENCOUNTER_TYPE_UUID, KLINIK_EKSTEN_LOCATION_UUID, OBGYN_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
-import { expectObs, isoDate, obsDisplays, pickDate, pickerDate, viewDate } from '../../pages/form-widgets';
+import { expectObs, isoDate, obsDisplays, pickDate, pickerDate, viewDate } from '../../pages';
 
 // section-delivery.xml (pihemr, v3.0): "MCH Delivery section": delivery date/time, labor and delivery findings (hemorrhage, placenta, perineum, findings for baby and
 // mother), up to four newborns (obsgroup CIEL:1585 each), KPIs, the postpartum exam and the disposition. On the visit page it is the `pihcore-delivery` section of the

@@ -2,7 +2,7 @@ import { type Page } from '@playwright/test';
 import { test, expect, birthdateYearsAgo, type SectionEncounter } from '../../core';
 import { NCD_FOLLOWUP_ENCOUNTER_TYPE_UUID, NCD_INITIAL_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
-import { expectObs, isoDate, obsDisplays, pickDate, pickerDate, viewDate } from '../../pages/form-widgets';
+import { expectObs, isoDate, obsDisplays, pickDate, pickerDate, viewDate } from '../../pages';
 
 // section-sickle-cell.xml (pihemr, v1.0): "Sickle Cell": (NCD initial only) sickle-cell diagnosis radio + other text + confirmation test, then the
 // follow-up indicators for every encounter: asymptomatic yes/no/unknown and nine symptoms, complications since the last visit, transfusion in the

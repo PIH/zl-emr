@@ -3,7 +3,7 @@ import { test, expect, birthdateYearsAgo, type CustomTestFixtures, type EntryCon
 import { KLINIK_EKSTEN_LOCATION_UUID, NCD_FOLLOWUP_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterHeader, getEncounterObs, getPatientEncounters } from '../../commands';
 import { SectionFormPage, ViewFormPage, VisitPage, VISIT_PAGE_URL, visitPagePath, expectViewShowsSavedObs } from '../../pages';
-import { editEncounterUrl, enterShellForm } from '../../pages/sectioned-encounter';
+import { editEncounterUrl, enterShellForm } from '../../pages';
 
 // ncd-followup.xml: "NCD Followup", the entry form of the NCD followup encounter (NCD Followup Consult). The form has no fields of its own: it is the
 // encounter-with-sections.xml shell (heading with the encounter type's name + the encounter-provider-location-date subform, "EPLD") with EPLD's default

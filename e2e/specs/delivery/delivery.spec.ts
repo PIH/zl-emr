@@ -3,8 +3,8 @@ import { test, expect, birthdateYearsAgo, type CustomTestFixtures } from '../../
 import { DELIVERY_ENCOUNTER_TYPE_UUID, KLINIK_EKSTEN_LOCATION_UUID } from '../../core/constants';
 import { getEncounterHeader, getEncounterObs, getPatientEncounters } from '../../commands';
 import { SectionFormPage, ViewFormPage, VisitPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
-import { editEncounterUrl, enterShellForm } from '../../pages/sectioned-encounter';
-import { isoDate, pickDate } from '../../pages/form-widgets';
+import { editEncounterUrl, enterShellForm } from '../../pages';
+import { isoDate, pickDate } from '../../pages';
 
 // delivery.xml: "MCH Delivery" (v3.0), the entry form of the MCH Delivery encounter. It is only the shared encounter-with-sections.xml shell (heading with the encounter type's name,
 // the provider / location / date block of encounter-provider-location-date.xml, Next / Save / Cancel) with no clinical field: the content is entered in the sections of the visit

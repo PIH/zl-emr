@@ -8,7 +8,7 @@ import {
   PRIMARY_CARE_PEDS_FOLLOWUP_ENCOUNTER_TYPE_UUID,
   PRIMARY_CARE_PEDS_INITIAL_ENCOUNTER_TYPE_UUID,
 } from '../../core/constants';
-import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../pages';
+import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs, pickDate, obsDisplays } from '../../pages';
 
 // section-plan.xml (pihemr, v2.0): "Plan": clinical management plan text, lab orders (pihLabOrder), radiology, medication orders
 // (drug order widget), NCD-followup assistance table, disposition (encounterDisposition) + comment + return visit date. On the visit page
@@ -46,17 +46,6 @@ import { SectionFormPage, VISIT_PAGE_URL, expectViewShowsSavedObs } from '../../
 const FORM = 'section-plan.xml';
 const SAVE = '#buttons input.submitButton';
 
-// Local helpers.
-const pickDate = async (input: Locator, isoDate: string) => {
-  await input.evaluate((el, iso) => {
-    const j = (window as unknown as { jq: (e: unknown) => { datepicker: (...a: unknown[]) => void; trigger: (n: string) => void } }).jq;
-    j(el).datepicker('setDate', new Date(`${iso}T12:00:00`));
-    j(el).trigger('change');
-  }, isoDate);
-  await input.locator('xpath=following-sibling::input[@type="hidden"]').evaluate((el) => {
-    (window as unknown as { jq: (e: unknown) => { trigger: (n: string) => void } }).jq(el).trigger('change');
-  });
-};
 const iso = (n: number): string => {
   const now = new Date();
   return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + n)).toISOString().slice(0, 10);
@@ -64,11 +53,6 @@ const iso = (n: number): string => {
 const viewDate = (isoDate: string): string => {
   const [y, m, d] = isoDate.split('-').map(Number);
   return `${d} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]} ${y}`;
-};
-const obsDisplays = async (api: APIRequestContext, encounterUuid: string): Promise<string[]> => {
-  const res = await api.get(`obs?encounter=${encounterUuid}&v=custom:(display)&limit=300`);
-  expect(res.ok(), `get obs: ${res.status()}`).toBeTruthy();
-  return ((await res.json()).results as Array<{ display: string }>).map((o) => o.display.toLowerCase());
 };
 const expectObs = (displays: string[], ...expected: string[]) => {
   for (const e of expected) {
