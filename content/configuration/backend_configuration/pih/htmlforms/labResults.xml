@@ -1598,7 +1598,7 @@
                             </field>
                         </p>
                     </template>
-                    <render concept="CIEL:45" message="pregnancy" style="radio" answers="CIEL:703,CIEL:664,CIEL:1138"/>
+                    <render concept="CIEL:45" message="pregnancy" style="radio" answers="CIEL:703,CIEL:664"/>
                 </repeat>
             </includeIf>
 
@@ -1670,8 +1670,8 @@
                     </p>
                 </template>
                 <render concept="162101" message="aspect" selector="radio"
-                        answers="CIEL:162102,PIH:20147,CIEL:162103,CIEL:162104"
-                        aLabels="pihcore.clear,pihcore.slightCloudy,pihcore.cloudy,pihcore.turbid"/>
+                        answers="CIEL:162102,PIH:20147,CIEL:162103"
+                        aLabels="pihcore.clear,pihcore.slightCloudy,pihcore.cloudy"/>
             </repeat>
 
             <repeat>
@@ -1689,8 +1689,8 @@
                         </span>
                     </p>
                 </template>
-                <render concept="161441" message="leuko" answers="CIEL:703,CIEL:664,CIEL:1138" selector="radio" />
-                <render concept="161440" message="nitrite" answers="CIEL:703,CIEL:664,CIEL:1138" selector="radio" />
+                <render concept="161441" message="leuko" answers="CIEL:703,CIEL:664" selector="radio" />
+                <render concept="161440" message="nitrite" answers="CIEL:703,CIEL:664" selector="radio" />
             </repeat>
 
             <repeat>
@@ -1727,7 +1727,7 @@
                 <render concept="159734" message="glucoseQual" answers="CIEL:1365,CIEL:1364,CIEL:1363,CIEL:1362,CIEL:664" selector="radio" />
             </repeat>
 
-            <repeat>
+            <!-- <repeat>
                     <template>
                         <p class="list-inline small">
                             <label for="urine-{message}">
@@ -1742,7 +1742,7 @@
                         </p>
                     </template>
                 <render concept="159733" message="glucose" />
-            </repeat>
+            </repeat> -->
 
             <repeat>
                 <template>
