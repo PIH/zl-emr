@@ -206,7 +206,7 @@ aa455dc6-7e45-4859-82e6-4392407b2dc2,TRUE,10327,"Lactulose, Oral solution, 0.67g
 c3ecd178-91d4-11e8-9eb6-529269fb1459,,10941,"Calcium folinate, Solution for injection, 10mg/mL, 5mL vial",CIEL:78743,Vial,CIEL:78743,,,,,,,,,,,
 a275302c-b767-4d1a-96c0-e8350a968060,,12690,"Levonorgestrel, 30 microgram tablet",CIEL:78796,Tablet,CIEL:78796,30,Microgram,,,,,,,,,
 3ca1fb3f-02e6-465d-86d9-b016ee30207b,,10876,"Levonorgestrel, 750 microgram tablet",CIEL:78796,Tablet,CIEL:78796,750,Microgram,,,,,,,,,
-f1bb371a-c172-4bd1-b734-a36c801697df,,11339,"Levonorgestrel 150 microgram + Ethinylestradiol 30 microgram + Ferrous fumarate 75mg, tablet",CIEL:162296,Tablet,CIEL:78796,150,Microgram,PIH:20936,30,Microgram,CIEL:76335,75,Milligram,,,
+f1bb371a-c172-4bd1-b734-a36c801697df,,11339,"Levonorgestrel 150 microgram + Ethinylestradiol 30 microgram + Ferrous fumarate 75mg, tablet",CIEL:162296,Tablet,CIEL:78796,150,Microgram,CIEL:75973,30,Microgram,CIEL:76335,75,Milligram,,,
 1af24d20-29f7-45da-88ec-f5cd2458d6e9,,11623,"Levothyroxine sodium, 100 microgram tablet",CIEL:78809,Tablet,CIEL:78809,100,Microgram,,,,,,,,,
 e87f6cb0-de6f-4658-9ba1-246b8f9b79fa,TRUE,11417,"Lidocaine hydrochloride, Preservative free solution for injection, 1% (10mg/mL), 20mL vial",CIEL:78850,Vial,CIEL:78850,,,,,,,,,,,
 6671d643-75f9-44bc-9f3a-ddddd0c1eed5,TRUE,10832,"Lidocaine hydrochloride 1% + Adrenaline 1:200,000, 20mL vial",CIEL:104584,Vial,CIEL:78850,,,CIEL:154365,,,,,,,,
