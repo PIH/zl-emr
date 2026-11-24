@@ -6,9 +6,8 @@ import { EntryFormPage, VisitPage, VISIT_PAGE_URL, visitPagePath } from '../../p
 
 // checkin.xml v4.0: "Checkin" (Check-In encounter: type(s) of visit, payment amount, receipt number). Opened in the
 // Simple UI (one question per screen, as production does) with a synthetic patient who has an active visit, through
-// the direct URL (local helper openSimple). Who offers it: HSN (enableCheckIn, visit action + registration action);
-// at this site (CEN, the local server) the Check-In app opens checkin_v3.5.xml, and checkin.xml is only reached by
-// the registration summary's "most recent check-in" edit link (_availability.e2e.md). Availability is not exercised.
+// the direct URL (local helper openSimple). Who offers it: HSN and CEN (enableCheckIn, visit action + registration
+// action; the other Haiti sites get checkin_v3.5.xml, see _availability.e2e.md). Availability is not exercised.
 //
 // Conditions in the form, from documentation inventory (checkin.inv.md):
 //   includeIf currentAppId == 'mirebalais.liveCheckin'  :19   redirectOnSave back to the check-in app (archives :21 / :25 pick the target)

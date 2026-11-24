@@ -4,8 +4,8 @@ import { CHECKIN_ENCOUNTER_TYPE_UUID } from '../../core/constants';
 import { getEncounterObs, getPatientEncounters } from '../../commands';
 import { EntryFormPage, VisitPage, VISIT_PAGE_URL, visitPagePath } from '../../pages';
 
-// checkin_v3.5.xml: "Checkin" (Check-In encounter: type of visit, payment amount, receipt number). This is the version
-// the ZL site runs at CEN (enableCheckIn opens it for every Haiti site except HSN, which gets checkin.xml v4.0).
+// checkin_v3.5.xml: "Checkin" (Check-In encounter: type of visit, payment amount, receipt number). enableCheckIn opens
+// it for every Haiti site except HSN and CEN, which get checkin.xml v4.0; at CEN it is only reached by direct URL.
 // Opened in the Simple UI (one question per screen: details, visit type, payment amount, receipt number) by direct URL
 // with a synthetic patient who has an active visit (local helper openSimple). Availability (visit action / check-in
 // app, session location and privilege) is not exercised: the form is opened directly, as in the checkin spec.
