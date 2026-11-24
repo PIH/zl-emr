@@ -38,8 +38,8 @@
     "vct",
     "visitManagement",
     "visitNote",
-    "vitalsHomepageApp",
-    "vitals"
+    "vitals",
+    "vitalsHomepageListApp"
   ],
 
   "globalProperties": {

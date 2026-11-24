@@ -38,11 +38,11 @@
     "socioEconomics",
     "systemAdministration",
     "todaysVisits",
-    "uhmVitals",
     "vaccination",
     "visitManagement",
     "visitNote",
-    "vitalsHomepageApp"
+    "vitals",
+    "vitalsHomepageSearchApp"
   ],
 
   "globalProperties": {

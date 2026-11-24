@@ -43,11 +43,11 @@
     "surgery",
     "systemAdministration",
     "todaysVisits",
-    "uhmVitals",
     "vct",
     "visitManagement",
     "visitNote",
-    "vitalsHomepageApp",
+    "vitals",
+    "vitalsHomepageSearchApp",
     "waitingForConsult"
 	],
 
