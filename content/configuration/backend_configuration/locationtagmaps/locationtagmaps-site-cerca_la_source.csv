@@ -1,24 +1,24 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Cerca la Source,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,
-Achiv Santral | Cerca la Source,,,,,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,
-COVID-19 | Izolman | Cerca la Source,TRUE,,,,TRUE,TRUE,,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE
-Ijans | Cerca la Source,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,TRUE
-Klinik Ekstèn | Cerca la Source,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,,,TRUE,,,TRUE
-Klinik Ekstèn Jeneral | Cerca la Source,,,TRUE,,,TRUE,,,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE
-Klinik Ekstèn Famasi | Cerca la Source,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,
-Klinik MNT | Cerca la Source,,,,,,TRUE,,TRUE,,TRUE,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE
-Onkoloji | Cerca la Source,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
-Sal Aprè Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE
-Sal Aprè Operasyon | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE
-Sal Aprè Operasyon | Sante Fanm | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE
-Sal Avan Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE
-Sal Fanm | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Gason | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Izolman | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,
-Sal Reyabilitasyon | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Timoun | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE
-Sante Fanm | Cerca la Source,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,TRUE
-Swen Entansif | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Swen Entansif Neonatal | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
-Travay e Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
-UMI | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Cerca la Source,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,,,
+Achiv Santral | Cerca la Source,,,,,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,,,
+COVID-19 | Izolman | Cerca la Source,TRUE,,,,TRUE,TRUE,,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
+Ijans | Cerca la Source,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn | Cerca la Source,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn Jeneral | Cerca la Source,,,TRUE,,,TRUE,,,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE,,
+Klinik Ekstèn Famasi | Cerca la Source,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
+Klinik MNT | Cerca la Source,,,,,,TRUE,,TRUE,,TRUE,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE,,
+Onkoloji | Cerca la Source,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE,,
+Sal Aprè Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,
+Sal Aprè Operasyon | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE,,
+Sal Aprè Operasyon | Sante Fanm | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE,,
+Sal Avan Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,
+Sal Fanm | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Gason | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Izolman | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,,
+Sal Reyabilitasyon | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Timoun | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE,,
+Sante Fanm | Cerca la Source,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,TRUE,,
+Swen Entansif | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Swen Entansif Neonatal | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE,,
+Travay e Akouchman | Cerca la Source,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE,,
+UMI | Cerca la Source,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
