@@ -1,8 +1,8 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Hinche,,,,,,,,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,
-Sante Mantal | Hinche,,,,,,TRUE,,TRUE,,TRUE,,,,,,,,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE
-Sante Fanm | Hinche,,,,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,TRUE,,,,,TRUE,,TRUE
-Klinik Ekstèn | Hinche,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE
-Klinik MNT | Hinche,,,,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE
-Onkoloji | Hinche,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
-Sal Reyabilitasyon | Hinche,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Hinche,,,,,,,,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,,,
+Sante Mantal | Hinche,,,,,,TRUE,,TRUE,,TRUE,,,,,,,,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Sante Fanm | Hinche,,,,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,TRUE,,,,,TRUE,,TRUE,,
+Klinik Ekstèn | Hinche,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE,,
+Klinik MNT | Hinche,,,,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE,,
+Onkoloji | Hinche,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE,,
+Sal Reyabilitasyon | Hinche,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,

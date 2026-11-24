@@ -1,10 +1,10 @@
-Location,Archives Location,Check-In Location,Consult Note Location,Dispensing Location,Drug Order Location,ED Note Location,ED Triage Location,Identifier Assignment Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Vaccination Location,Visit Location,Vitals Location
-Saint-Marc (SSPE),,,,,,,,TRUE,,,,,,TRUE,,,,TRUE,,,,TRUE,
-Klinik Ekstèn | SSPE,,TRUE,TRUE,,TRUE,,,,TRUE,,TRUE,,,,,,TRUE,,TRUE,TRUE,,,TRUE
-Klinik Ekstèn Jeneral | SSPE,,TRUE,TRUE,,TRUE,,,,TRUE,TRUE,TRUE,,,,,,TRUE,,TRUE,TRUE,,,TRUE
-Klinik Ekstèn Famasi | SSPE,,TRUE,,TRUE,,,,,TRUE,,TRUE,,,,,,,,TRUE,TRUE,,,TRUE
-Achiv Santral | SSPE,TRUE,,,,,,,,,,TRUE,,,,,,,,TRUE,TRUE,,,TRUE
-Sante Mantal | SSPE,,TRUE,TRUE,,TRUE,,,,TRUE,,TRUE,,,,TRUE,,,,TRUE,TRUE,,,TRUE
-Sante Fanm | SSPE,,TRUE,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,,TRUE
-Ijans | SSPE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,,,TRUE
-Klinik MNT | SSPE,,,TRUE,,TRUE,,,,TRUE,,TRUE,,,,,TRUE,,,TRUE,TRUE,,,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Saint-Marc (SSPE),,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,,,
+Klinik Ekstèn | SSPE,,,,,,TRUE,,TRUE,,TRUE,,,,,,,TRUE,,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE,,
+Klinik Ekstèn Jeneral | SSPE,,,,,,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE,,
+Klinik Ekstèn Famasi | SSPE,,,,,,TRUE,,,TRUE,,,,,,,,TRUE,,TRUE,,,,,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Achiv Santral | SSPE,,,,TRUE,,,,,,,,,,,,,,,TRUE,,,,,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Sante Mantal | SSPE,,,,,,TRUE,,TRUE,,TRUE,,,,,,,TRUE,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Sante Fanm | SSPE,,,,,,TRUE,,TRUE,,TRUE,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Ijans | SSPE,,,,,,TRUE,,TRUE,,TRUE,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Klinik MNT | SSPE,,,,,,,,TRUE,,TRUE,,,,,,,TRUE,,TRUE,,,,,TRUE,,,,,,TRUE,TRUE,,,,,,,TRUE,,

@@ -1,14 +1,14 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Belladère,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Boucan-Carré,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Cange,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Cerca la Source,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Hinche,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-La Colline,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Petite Riviere,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-POZ,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Saint-Marc (HSN),,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Saint-Marc (SSPE),,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Thomonde,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Verrettes,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Mirebalais,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Belladère,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Boucan-Carré,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Cange,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Cerca la Source,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Hinche,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+La Colline,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Petite Riviere,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+POZ,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Saint-Marc (HSN),,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Saint-Marc (SSPE),,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Thomonde,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Verrettes,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,
+Mirebalais,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,,

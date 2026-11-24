@@ -1,25 +1,25 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Thomonde,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,
-Achiv Santral | Thomonde,,,,,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,
-COVID-19 | Izolman | Thomonde,TRUE,,,,TRUE,TRUE,,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE
-Ijans | Thomonde,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,TRUE
-Klinik Ekstèn | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,,,TRUE,,,TRUE
-Klinik Ekstèn Jeneral | Thomonde,,,TRUE,,,TRUE,,,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE
-Klinik Ekstèn Famasi | Thomonde,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,
-Klinik MNT | Thomonde,,,,,,TRUE,,TRUE,,TRUE,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE
-Onkoloji | Thomonde,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
-Sal Aprè Akouchman | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE
-Sal Aprè Operasyon | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE
-Sal Aprè Operasyon | Sante Fanm | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE
-Sal Avan Akouchman | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE
-Sal Fanm | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Gason | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Izolman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,
-Sal Reyabilitasyon | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Sal Timoun | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE
-Sante Fanm | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,TRUE
-Sante Mantal | Thomonde,,,,,,TRUE,,TRUE,,TRUE,,,,,,,,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE
-Swen Entansif | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
-Swen Entansif Neonatal | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
-Travay e Akouchman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
-UMI | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Drug Order Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Thomonde,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,,,
+Achiv Santral | Thomonde,,,,,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,,,
+COVID-19 | Izolman | Thomonde,TRUE,,,,TRUE,TRUE,,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
+Ijans | Thomonde,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn Jeneral | Thomonde,,,TRUE,,,TRUE,,,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE,,
+Klinik Ekstèn Famasi | Thomonde,,,TRUE,,,,,,TRUE,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
+Klinik MNT | Thomonde,,,,,,TRUE,,TRUE,,TRUE,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE,,
+Onkoloji | Thomonde,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE,,
+Sal Aprè Akouchman | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,
+Sal Aprè Operasyon | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE,,
+Sal Aprè Operasyon | Sante Fanm | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE,,
+Sal Avan Akouchman | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,
+Sal Fanm | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Gason | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Izolman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,,
+Sal Reyabilitasyon | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Timoun | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE,,
+Sante Fanm | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,TRUE,,
+Sante Mantal | Thomonde,,,,,,TRUE,,TRUE,,TRUE,,,,,,,,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Swen Entansif | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Swen Entansif Neonatal | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE,,
+Travay e Akouchman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE,,
+UMI | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
