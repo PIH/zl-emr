@@ -26,3 +26,15 @@ export const requireTargetEnv = (name: string): string => {
 };
 
 export const STORAGE_STATE = TARGET ? `storageState.${TARGET}.json` : 'storageState.json';
+
+// What the shared code of @pih/pihemr-e2e reads from the environment, set from the chosen target:
+// - E2E_DEFAULT_PROVIDER_NAME: the provider its pages select (a target may name its own, E2E_HIV_CI_DEFAULT_PROVIDER_NAME).
+// - E2E_PROFILE: which profile of _availability.e2e.json the run is. The HIV server is the `hiv` profile; without this its run would use the default profile (central),
+//   which does not offer the Comment form, and includeSpecs() would skip that spec.
+const provider = targetEnv('DEFAULT_PROVIDER_NAME');
+if (provider) {
+  process.env.E2E_DEFAULT_PROVIDER_NAME = provider;
+}
+if (TARGET === 'hiv-ci') {
+  process.env.E2E_PROFILE ??= 'hiv';
+}

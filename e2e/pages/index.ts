@@ -1,7 +1,4 @@
-export * from './section-form-page';
-export * from './entry-form-page';
+// The page objects shared by every config repo are in @pih/pihemr-e2e (section / entry forms, VIEW, visit page, registration summary, form widgets, provider);
+// only what is ZL's own is here.
+export * from '@pih/pihemr-e2e/src/pages';
 export * from './registration-page';
-export * from './view-form-page';
-export * from './provider';
-export * from './visit-page';
-export * from './registration-summary-page';

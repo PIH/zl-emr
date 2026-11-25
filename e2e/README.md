@@ -1,6 +1,6 @@
 # End-to-end tests
 
-Playwright tests for the Haiti (ZL) HTML forms. The layout follows `pihmalawi-emr/e2e` (`core/`, `fixtures/`, `commands/`, `pages/`, `specs/`); some fixtures and commands are duplicated from `pihsl-emr/e2e` for now and can move to a shared package later.
+Playwright tests for the Haiti (ZL) HTML forms. The layout follows `pihmalawi-emr/e2e` (`core/`, `commands/`, `pages/`, `specs/`). What is not specific to ZL is in `@pih/pihemr-e2e` (pihemr `e2e/`): the fixtures (`test`, patient and visit creation, cleanup), the page objects, the REST reads and writes (`getPatientEncounters`, `getEncounterObs`, `getEncounterHeader`, `addObs`), and the specs of 34 forms that pihemr defines and that ZL tests ( listed under *Specs that live in pihemr* below). `commands/index.ts` and `pages/index.ts` here only re-export them (`pages/` also holds ZL's own `registration-page.ts`); this repo describes its site in `core/site.ts` and takes the shared specs in with `specs/shared/pihemr.spec.ts`.
 
 ## Running locally
 
@@ -35,13 +35,13 @@ A setting a target leaves out falls back to the primary's (except the base URL, 
 
 ### Cleanup and leftover patients
 
-After each test the fixtures **void** everything the test created (`commands/cleanup.ts`): its encounters (with their obs and orders), visits and program enrollments, then the patient. Nothing is purged, so the login does not need the Purge privileges (Purge Obs, Encounters, Visits, Orders, Patients, Persons), and a saved order does not stop the cleanup. The registration specs create their patients through the UI and void them the same way (`cleanupPatient`).
+After each test the fixtures **void** everything the test created (`cleanupPatient` in `@pih/pihemr-e2e`): its encounters (with their obs and orders), visits and program enrollments, then the patient. Nothing is purged, so the login does not need the Purge privileges (Purge Obs, Encounters, Visits, Orders, Patients, Persons), and a saved order does not stop the cleanup. The registration specs create their patients through the UI and void them the same way (`cleanupPatient`).
 
 The voided `Auto… Tester` patients stay in the database. They are test data and can be left, or removed with a name-filtered database cleanup.
 
 ## Forms tested
 
-One spec per form, in `specs/<xml file name without .xml>/`. *Form name*, *Form version*, *Form uuid* and *Encounter uuid* are the `formName`, `formVersion`, `formUuid` and `formEncounterType` of the form's `<htmlform>` element; *Encounter* is the name of that encounter type. Keep a row here when you add, rename or remove a spec, and update it when the form's version or uuid changes. `specs/registration` tests the "Register a patient" wizard, not a form, so it has no row.
+One spec per form, in `specs/<xml file name without .xml>/` here, or in pihemr (`e2e/src/specs/<xml file name without .xml>.spec.ts`) for the forms listed under *Specs that live in pihemr*. *Form name*, *Form version*, *Form uuid* and *Encounter uuid* are the `formName`, `formVersion`, `formUuid` and `formEncounterType` of the form's `<htmlform>` element; *Encounter* is the name of that encounter type. Keep a row here when you add, rename or remove a spec, and update it when the form's version or uuid changes. `specs/registration` tests the "Register a patient" wizard, not a form, so it has no row.
 
 ### Top-level (entry) forms
 
@@ -154,6 +154,16 @@ A `section-*` form has no `formEncounterType`: its *Encounter* column lists the 
 - Many forms use the HFE `<submit>` tag, which renders `input.submitButton` inside `#buttons`, not `#submit`.
 - `vitalsInpatient` and `vitalsPregnant` are not launched by anything; their unit converters only run in the Simple UI (`enterHtmlFormWithSimpleUi.page`), which the behaviour tests use.
 - The HIV forms are not offered on the `haiti-central` config at all (only `haiti-hiv`); the specs open them by direct URL.
+
+## Specs that live in pihemr
+
+The specs of these 34 forms are in pihemr (`e2e/src/specs/<form>.spec.ts`), because the forms are pihemr's. ZL offers all of them; the Sierra Leone Demo profile (no server runs it) offers `echocardiogram` and `edNote` too, and every other Sierra Leone and Liberia profile skips them with the reason in the test title (`_availability.e2e.json`). They run here through `specs/shared/pihemr.spec.ts`, so a filter is `npx playwright test specs/shared -g "<form>"` and the report lists them under `specs/shared/pihemr.spec.ts`.
+
+`admissionNote`, `cancelAdmission`, `chemotherapyTreatment`, `comment`, `covid19Discharge`, `covid19Followup`, `covid19Intake`, `drugOrder`, `echocardiogram`, `edNote`, `obGyn`, `oncologyIntakeConsult`, `oncologyTreatment`, `primary-care-adult-followup`, `primary-care-adult-initial`, `primary-care-peds-followup`, `primary-care-peds-initial`, `section-c-section`, `section-comments`, `section-dx-obgyn`, `section-education-subjects`, `section-family-planning-simple`, `section-maternal-danger-signs`, `section-maternal-vital-signs`, `section-mch-referral`, `section-ncd`, `section-obgyn-initial`, `section-obgyn-plan`, `section-oncology-history`, `section-oncology-plan`, `section-postpartum-counsel`, `section-return-visit-date`, `socio-econ`, `vaccination-only`.
+
+- What differs by site is read from `core/site.ts` (`getSite()`): the session location (`sessionLocationUuid`), and for some specs their facts (`specs: { admissionNote: { ward, otherWard }, edNote: { location }, drugOrder: { drug }, 'section-obgyn-plan': { drug }, 'section-oncology-plan': { drug } }`). A shared spec that needs a fact the site does not give fails with the fact's name.
+- `comment` is offered only by the hiv profile, so it runs only with `E2E_TARGET=hiv-ci` (`core/target.ts` then sets `E2E_PROFILE=hiv`, and the spec carries the tag `@hiv-ci`).
+- The encounter types of these forms are in pihemr (`src/encounter-types.ts`); `core/constants.ts` re-exports them for the specs that stayed.
 
 ## Registration specs
 
